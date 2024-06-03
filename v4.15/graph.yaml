@@ -6,6 +6,16 @@ entries:
   - name: rhtas-operator.v1.0.0
   - name: rhtas-operator.v1.0.1
     replaces: rhtas-operator.v1.0.0
+  - name: rhtas-operator.v1.0.2
+    replaces: rhtas-operator.v1.0.0, rhtas-operator.v1.0.1
+name: candidate-v1.0
+package: rhtas-operator
+schema: olm.channel
+---
+entries:
+  - name: rhtas-operator.v1.0.0
+  - name: rhtas-operator.v1.0.1
+    replaces: rhtas-operator.v1.0.0
 name: stable-v1.0
 package: rhtas-operator
 schema: olm.channel
@@ -25,4 +35,8 @@ image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:436bd1212fdd707987f
 schema: olm.bundle
 image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:fce368e485b71a4a2867b10255fe8f7a89060a77f3f59ca93a3882dbf87e3ebc
 # rhtas-bundle-registry v1.0.1
+---
+schema: olm.bundle
+image: quay.io/redhat-user-workloads/rhtas-tenant/operator/rhtas-operator-bundle:7b3aff508e3b7a3b13af7fe55ff78fce9d46ff70
+# rhtas-bundle-registry v1.0.2
 ---
