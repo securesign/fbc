@@ -39,6 +39,6 @@ image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:fce368e485b71a4a286
 # rhtas-bundle-registry v1.0.1
 ---
 schema: olm.bundle
-image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:e59018df0bda69086e38cd1e5a998a5b9ff6395d56471f575512bbdac59d2d50
+image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:08e6da18718a3ecb57fdff35822ff954484886b2b8112abf4630011234ba5f05
 # rhtas-bundle-registry v1.0.2
 ---
