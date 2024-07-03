@@ -23,7 +23,7 @@ spec:
   - name: git-url
     value: '{{source_url}}'
   - name: output-image
-    value: quay.io/redhat-user-workloads/rhtas-tenant/fbc-v4-13/fbc-v4-13:{{revision}}
+    value: quay.io/securesign/fbc-v4-13:{{revision}}
   - name: path-context
     value: v4.13
   - name: revision
