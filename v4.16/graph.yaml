@@ -10,14 +10,6 @@ entries:
     replaces: rhtas-operator.v1.0.0
     skips:
       - rhtas-operator.v1.0.1
-name: candidate-v1.0
-package: rhtas-operator
-schema: olm.channel
----
-entries:
-  - name: rhtas-operator.v1.0.0
-  - name: rhtas-operator.v1.0.1
-    replaces: rhtas-operator.v1.0.0
 name: stable-v1.0
 package: rhtas-operator
 schema: olm.channel
@@ -26,6 +18,10 @@ entries:
   - name: rhtas-operator.v1.0.0
   - name: rhtas-operator.v1.0.1
     replaces: rhtas-operator.v1.0.0
+  - name: rhtas-operator.v1.0.2
+    replaces: rhtas-operator.v1.0.0
+    skips:
+      - rhtas-operator.v1.0.1
 name: stable
 package: rhtas-operator
 schema: olm.channel
