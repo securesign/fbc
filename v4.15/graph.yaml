@@ -3,6 +3,12 @@ name: rhtas-operator
 defaultChannel: stable
 ---
 entries:
+  - name: rhtas-operator.v1.1.0
+name: stable-v1.1
+package: rhtas-operator
+schema: olm.channel
+---
+entries:
   - name: rhtas-operator.v1.0.0
   - name: rhtas-operator.v1.0.1
     replaces: rhtas-operator.v1.0.0
@@ -22,6 +28,11 @@ entries:
     replaces: rhtas-operator.v1.0.0
     skips:
       - rhtas-operator.v1.0.1
+  - name: rhtas-operator.v1.1.0
+    replaces: rhtas-operator.v1.0.0
+    skips:
+      - rhtas-operator.v1.0.1
+      - rhtas-operator.v1.0.2
 name: stable
 package: rhtas-operator
 schema: olm.channel
@@ -37,4 +48,8 @@ image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:fce368e485b71a4a286
 schema: olm.bundle
 image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:496b29b00a9831278eb3a8316bd5fb233ad73cb9a6217b1ff4a5f72a91b87414
 # rhtas-bundle-registry v1.0.2
+---
+schema: olm.bundle
+image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:58bda2ce20fe66fb2d4346c49aed10a13f459df124d01a306588c4524df85e0e
+# rhtas-bundle-registry v1.1.0
 ---
