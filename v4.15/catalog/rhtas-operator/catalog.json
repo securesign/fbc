@@ -50,14 +50,6 @@
             "skips": [
                 "rhtas-operator.v1.0.1"
             ]
-        },
-        {
-            "name": "rhtas-operator.v1.1.0",
-            "replaces": "rhtas-operator.v1.0.0",
-            "skips": [
-                "rhtas-operator.v1.0.1",
-                "rhtas-operator.v1.0.2"
-            ]
         }
     ]
 }
@@ -79,16 +71,6 @@
             "skips": [
                 "rhtas-operator.v1.0.1"
             ]
-        }
-    ]
-}
-{
-    "schema": "olm.channel",
-    "name": "stable-v1.1",
-    "package": "rhtas-operator",
-    "entries": [
-        {
-            "name": "rhtas-operator.v1.1.0"
         }
     ]
 }
