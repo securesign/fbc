@@ -5,6 +5,35 @@
 }
 {
     "schema": "olm.channel",
+    "name": "candidate-v1.1.0",
+    "package": "rhtas-operator",
+    "entries": [
+        {
+            "name": "rhtas-operator.v1.0.0"
+        },
+        {
+            "name": "rhtas-operator.v1.0.1",
+            "replaces": "rhtas-operator.v1.0.0"
+        },
+        {
+            "name": "rhtas-operator.v1.0.2",
+            "replaces": "rhtas-operator.v1.0.0",
+            "skips": [
+                "rhtas-operator.v1.0.1"
+            ]
+        },
+        {
+            "name": "rhtas-operator.v1.1.0",
+            "replaces": "rhtas-operator.v1.0.0",
+            "skips": [
+                "rhtas-operator.v1.0.1",
+                "rhtas-operator.v1.0.2"
+            ]
+        }
+    ]
+}
+{
+    "schema": "olm.channel",
     "name": "stable",
     "package": "rhtas-operator",
     "entries": [
