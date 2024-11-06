@@ -1172,18 +1172,6 @@
         },
         {
             "name": "",
-            "image": "registry.redhat.io/rhtas/client-server-cg-rhel9@sha256:2001b985e143dd27864b8f4b6c60685dc51c320bda8fa41b9f71234b96d22a35"
-        },
-        {
-            "name": "",
-            "image": "registry.redhat.io/rhtas/client-server-re-rhel9@sha256:6b2b848033f05ff964aa2dbfe057a55d853e6aa99d0f6834c954839cf9cb5f21"
-        },
-        {
-            "name": "",
-            "image": "registry.redhat.io/rhtas/client-server-f-rhel9@sha256:b4ac3e6d22305d71d48e55ec214253d732624c201ef13dc0e424e6f312320a16"
-        },
-        {
-            "name": "",
             "image": "registry.redhat.io/rhtas/client-server-rhel9@sha256:9537329d0166b8d41ffd5f5d79c052fc27abe426a20cba5733c84030013c4e29"
         },
         {
