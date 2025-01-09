@@ -57,3 +57,23 @@ schema: olm.bundle
 image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:d423c8f491a008886926520e12fdd86a5878ce6b5b169100ba495689cff42f2c
 # rhtas-bundle-registry v1.1.0
 ---
+schema: olm.deprecations
+package: rhtas-operator
+entries:
+  - reference:
+      schema: olm.channel
+      name: stable-v1.0
+    message: channel stable-v1.0 is no longer supported.  Please switch to channel 'stable' or channel 'stable-v1.1'.
+  - reference:
+      schema: olm.bundle
+      name: rhtas-operator.v1.0.0
+    message: rhtas-operator.v1.0.0 is deprecated. Uninstall and install rhtas-operator.v1.1.0 for support.
+  - reference:
+      schema: olm.bundle
+      name: rhtas-operator.v1.0.1
+    message: rhtas-operator.v1.0.1 is deprecated. Uninstall and install rhtas-operator.v1.1.0 for support.
+  - reference:
+      schema: olm.bundle
+      name: rhtas-operator.v1.0.2
+    message: rhtas-operator.v1.0.2 is deprecated. Uninstall and install rhtas-operator.v1.1.0 for support.
+---
