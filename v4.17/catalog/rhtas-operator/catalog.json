@@ -9,21 +9,18 @@
     "package": "rhtas-operator",
     "entries": [
         {
-            "name": "rhtas-operator.v1.0.0",
-            "message": "This version is deprecated. Please upgrade to rhtas-operator.v1.1.0."
+            "name": "rhtas-operator.v1.0.0"
         },
         {
             "name": "rhtas-operator.v1.0.1",
-            "replaces": "rhtas-operator.v1.0.0",
-            "message": "This version is deprecated. Please upgrade to rhtas-operator.v1.1.0."
+            "replaces": "rhtas-operator.v1.0.0"
         },
         {
             "name": "rhtas-operator.v1.0.2",
             "replaces": "rhtas-operator.v1.0.0",
             "skips": [
                 "rhtas-operator.v1.0.1"
-            ],
-            "message": "This version is deprecated. Please upgrade to rhtas-operator.v1.1.0."
+            ]
         },
         {
             "name": "rhtas-operator.v1.1.0",
@@ -31,8 +28,7 @@
             "skips": [
                 "rhtas-operator.v1.0.1",
                 "rhtas-operator.v1.0.2"
-            ],
-            "message": "This version is deprecated. Please upgrade to rhtas-operator.v1.1.0."
+            ]
         }
     ]
 }
@@ -42,21 +38,18 @@
     "package": "rhtas-operator",
     "entries": [
         {
-            "name": "rhtas-operator.v1.0.0",
-            "message": "This version is deprecated. Please upgrade to rhtas-operator.v1.1.0."
+            "name": "rhtas-operator.v1.0.0"
         },
         {
             "name": "rhtas-operator.v1.0.1",
-            "replaces": "rhtas-operator.v1.0.0",
-            "message": "This version is deprecated. Please upgrade to rhtas-operator.v1.1.0."
+            "replaces": "rhtas-operator.v1.0.0"
         },
         {
             "name": "rhtas-operator.v1.0.2",
             "replaces": "rhtas-operator.v1.0.0",
             "skips": [
                 "rhtas-operator.v1.0.1"
-            ],
-            "message": "This version is deprecated. Please upgrade to rhtas-operator.v1.1.0."
+            ]
         }
     ]
 }
@@ -1202,4 +1195,38 @@
             "image": "registry.redhat.io/rhtas/tuffer-rhel9@sha256:79340be7918034c68a334a210ab872161827c99c2a1551a4fce8d5d27560a234"
         }
     ]
+}
+{
+    "entries": [
+        {
+            "message": "channel stable-v1.0 is no longer supported.  Please switch to channel 'stable' or channel 'stable-v1.1'.",
+            "reference": {
+                "name": "stable-v1.0",
+                "schema": "olm.channel"
+            }
+        },
+        {
+            "message": "rhtas-operator.v1.0.0 is deprecated. Uninstall and install rhtas-operator.v1.1.1 for support.",
+            "reference": {
+                "name": "rhtas-operator.v1.0.0",
+                "schema": "olm.bundle"
+            }
+        },
+        {
+            "message": "rhtas-operator.v1.0.1 is deprecated. Uninstall and install rhtas-operator.v1.1.1 for support.",
+            "reference": {
+                "name": "rhtas-operator.v1.0.1",
+                "schema": "olm.bundle"
+            }
+        },
+        {
+            "message": "rhtas-operator.v1.0.2 is deprecated. Uninstall and install rhtas-operator.v1.1.1 for support.",
+            "reference": {
+                "name": "rhtas-operator.v1.0.2",
+                "schema": "olm.bundle"
+            }
+        }
+    ],
+    "package": "rhtas-operator",
+    "schema": "olm.deprecations"
 }
