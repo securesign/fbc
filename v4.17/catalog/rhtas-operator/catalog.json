@@ -1196,3 +1196,37 @@
         }
     ]
 }
+{
+    "entries": [
+        {
+            "message": "channel stable-v1.0 is no longer supported.  Please switch to channel 'stable' or channel 'stable-v1.1'.",
+            "reference": {
+                "name": "stable-v1.0",
+                "schema": "olm.channel"
+            }
+        },
+        {
+            "message": "rhtas-operator.v1.0.0 is deprecated. Uninstall and install rhtas-operator.v1.1.1 for support.",
+            "reference": {
+                "name": "rhtas-operator.v1.0.0",
+                "schema": "olm.bundle"
+            }
+        },
+        {
+            "message": "rhtas-operator.v1.0.1 is deprecated. Uninstall and install rhtas-operator.v1.1.1 for support.",
+            "reference": {
+                "name": "rhtas-operator.v1.0.1",
+                "schema": "olm.bundle"
+            }
+        },
+        {
+            "message": "rhtas-operator.v1.0.2 is deprecated. Uninstall and install rhtas-operator.v1.1.1 for support.",
+            "reference": {
+                "name": "rhtas-operator.v1.0.2",
+                "schema": "olm.bundle"
+            }
+        }
+    ],
+    "package": "rhtas-operator",
+    "schema": "olm.deprecations"
+}
