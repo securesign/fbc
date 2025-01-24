@@ -70,7 +70,7 @@ image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:d423c8f491a00888692
 # rhtas-bundle-registry v1.1.0
 ---
 schema: olm.bundle
-image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:d242d0ad5bfe638036796f2f69809ae9135ca8e07483f15bf64870eeb10717cd
+image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:6db817ed76948417f358d402e737df7b320f82462ad164b002ded15e560a0fdf
 # rhtas-bundle-registry v1.1.1
 ---
 schema: olm.deprecations
