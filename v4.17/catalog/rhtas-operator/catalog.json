@@ -1498,7 +1498,7 @@
         },
         {
             "name": "",
-            "image": "registry.redhat.io/rhtas/segment-reporting-rhel9@sha256:d8e65cbeb56bcc0a2ff0cd3afea3d35448695787835fe44c85a8991e6920bdb5"
+            "image": "registry.redhat.io/rhtas/segment-reporting-rhel9@sha256:649af310d15dc3fc8e07f3a771f9f002f2b62756b8b6d9960760feb9a5a8091b"
         },
         {
             "name": "",
