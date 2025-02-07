@@ -858,7 +858,7 @@
     "schema": "olm.bundle",
     "name": "rhtas-operator.v1.1.1",
     "package": "rhtas-operator",
-    "image": "quay.io/securesign/rhtas-operator-bundle-v1-1@sha256:acf451a0726a0e937edc38d30a022f59d05808566a132f611d8c4b79d6c71a73",
+    "image": "registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:acf451a0726a0e937edc38d30a022f59d05808566a132f611d8c4b79d6c71a73",
     "properties": [
         {
             "type": "olm.gvk",
