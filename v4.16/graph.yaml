@@ -1,95 +1,83 @@
-schema: olm.package
-name: rhtas-operator
-defaultChannel: stable
 ---
 entries:
-  - name: rhtas-operator.v1.1.0
-    replaces: rhtas-operator.v1.0.0
-    skips:
-    - rhtas-operator.v1.0.1
-    - rhtas-operator.v1.0.2
-  - name: rhtas-operator.v1.1.1
-    replaces: rhtas-operator.v1.0.0
-    skips:
-    - rhtas-operator.v1.0.1
-    - rhtas-operator.v1.0.2
-    - rhtas-operator.v1.1.0
-name: stable-v1.1
-package: rhtas-operator
-schema: olm.channel
----
-entries:
-  - name: rhtas-operator.v1.0.0
-  - name: rhtas-operator.v1.0.1
-    replaces: rhtas-operator.v1.0.0
-  - name: rhtas-operator.v1.0.2
-    replaces: rhtas-operator.v1.0.0
-    skips:
-      - rhtas-operator.v1.0.1
-name: stable-v1.0
-package: rhtas-operator
-schema: olm.channel
----
-entries:
-  - name: rhtas-operator.v1.0.0
-  - name: rhtas-operator.v1.0.1
-    replaces: rhtas-operator.v1.0.0
-  - name: rhtas-operator.v1.0.2
-    replaces: rhtas-operator.v1.0.0
-    skips:
-      - rhtas-operator.v1.0.1
-  - name: rhtas-operator.v1.1.0
-    replaces: rhtas-operator.v1.0.0
-    skips:
-    - rhtas-operator.v1.0.1
-    - rhtas-operator.v1.0.2
-  - name: rhtas-operator.v1.1.1
-    replaces: rhtas-operator.v1.0.0
-    skips:
-    - rhtas-operator.v1.0.1
-    - rhtas-operator.v1.0.2
-    - rhtas-operator.v1.1.0
-name: stable
-package: rhtas-operator
-schema: olm.channel
----
-schema: olm.bundle
-image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:436bd1212fdd707987f3f2158d18912a85493299218e7ab6ad5cb212076ffb3d
-# rhtas-bundle-registry v1.0.0
----
-schema: olm.bundle
-image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:fce368e485b71a4a2867b10255fe8f7a89060a77f3f59ca93a3882dbf87e3ebc
-# rhtas-bundle-registry v1.0.1
----
-schema: olm.bundle
-image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:496b29b00a9831278eb3a8316bd5fb233ad73cb9a6217b1ff4a5f72a91b87414
-# rhtas-bundle-registry v1.0.2
----
-schema: olm.bundle
-image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:d423c8f491a008886926520e12fdd86a5878ce6b5b169100ba495689cff42f2c
-# rhtas-bundle-registry v1.1.0
----
-schema: olm.bundle
-image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:acf451a0726a0e937edc38d30a022f59d05808566a132f611d8c4b79d6c71a73
-# rhtas-bundle-registry v1.1.1
----
-schema: olm.deprecations
-package: rhtas-operator
-entries:
-  - reference:
-      schema: olm.channel
-      name: stable-v1.0
-    message: channel stable-v1.0 is no longer supported.  Please switch to channel 'stable' or channel 'stable-v1.1'.
-  - reference:
-      schema: olm.bundle
-      name: rhtas-operator.v1.0.0
-    message: rhtas-operator.v1.0.0 is deprecated. Uninstall and install rhtas-operator.v1.1.1 for support.
-  - reference:
-      schema: olm.bundle
-      name: rhtas-operator.v1.0.1
-    message: rhtas-operator.v1.0.1 is deprecated. Uninstall and install rhtas-operator.v1.1.1 for support.
-  - reference:
-      schema: olm.bundle
-      name: rhtas-operator.v1.0.2
-    message: rhtas-operator.v1.0.2 is deprecated. Uninstall and install rhtas-operator.v1.1.1 for support.
----
+  - defaultChannel: stable
+    name: rhtas-operator
+    schema: olm.package
+  - entries:
+      - name: rhtas-operator.v1.1.0
+        replaces: rhtas-operator.v1.0.0
+        skips:
+          - rhtas-operator.v1.0.1
+          - rhtas-operator.v1.0.2
+      - name: rhtas-operator.v1.1.1
+        replaces: rhtas-operator.v1.0.0
+        skips:
+          - rhtas-operator.v1.0.1
+          - rhtas-operator.v1.0.2
+          - rhtas-operator.v1.1.0
+    name: stable-v1.1
+    package: rhtas-operator
+    schema: olm.channel
+  - entries:
+      - name: rhtas-operator.v1.0.0
+      - name: rhtas-operator.v1.0.1
+        replaces: rhtas-operator.v1.0.0
+      - name: rhtas-operator.v1.0.2
+        replaces: rhtas-operator.v1.0.0
+        skips:
+          - rhtas-operator.v1.0.1
+    name: stable-v1.0
+    package: rhtas-operator
+    schema: olm.channel
+  - entries:
+      - name: rhtas-operator.v1.0.0
+      - name: rhtas-operator.v1.0.1
+        replaces: rhtas-operator.v1.0.0
+      - name: rhtas-operator.v1.0.2
+        replaces: rhtas-operator.v1.0.0
+        skips:
+          - rhtas-operator.v1.0.1
+      - name: rhtas-operator.v1.1.0
+        replaces: rhtas-operator.v1.0.0
+        skips:
+          - rhtas-operator.v1.0.1
+          - rhtas-operator.v1.0.2
+      - name: rhtas-operator.v1.1.1
+        replaces: rhtas-operator.v1.0.0
+        skips:
+          - rhtas-operator.v1.0.1
+          - rhtas-operator.v1.0.2
+          - rhtas-operator.v1.1.0
+    name: stable
+    package: rhtas-operator
+    schema: olm.channel
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:436bd1212fdd707987f3f2158d18912a85493299218e7ab6ad5cb212076ffb3d
+    schema: olm.bundle
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:fce368e485b71a4a2867b10255fe8f7a89060a77f3f59ca93a3882dbf87e3ebc
+    schema: olm.bundle
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:496b29b00a9831278eb3a8316bd5fb233ad73cb9a6217b1ff4a5f72a91b87414
+    schema: olm.bundle
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:d423c8f491a008886926520e12fdd86a5878ce6b5b169100ba495689cff42f2c
+    schema: olm.bundle
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:acf451a0726a0e937edc38d30a022f59d05808566a132f611d8c4b79d6c71a73
+    schema: olm.bundle
+  - entries:
+      - message: channel stable-v1.0 is no longer supported.  Please switch to channel 'stable' or channel 'stable-v1.1'.
+        reference:
+          name: stable-v1.0
+          schema: olm.channel
+      - message: rhtas-operator.v1.0.0 is deprecated. Uninstall and install rhtas-operator.v1.1.1 for support.
+        reference:
+          name: rhtas-operator.v1.0.0
+          schema: olm.bundle
+      - message: rhtas-operator.v1.0.1 is deprecated. Uninstall and install rhtas-operator.v1.1.1 for support.
+        reference:
+          name: rhtas-operator.v1.0.1
+          schema: olm.bundle
+      - message: rhtas-operator.v1.0.2 is deprecated. Uninstall and install rhtas-operator.v1.1.1 for support.
+        reference:
+          name: rhtas-operator.v1.0.2
+          schema: olm.bundle
+    package: rhtas-operator
+    schema: olm.deprecations
+schema: olm.template.basic
