@@ -1,4 +1,5 @@
 # The base image is expected to contain
+#dummy PR invoke IT test 
 ## /bin/opm (with a serve subcommand) and /bin/grpc_health_probe
 FROM brew.registry.redhat.io/rh-osbs/openshift-ose-operator-registry-rhel9:v4.16
 
