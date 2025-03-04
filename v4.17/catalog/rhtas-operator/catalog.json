@@ -1511,36 +1511,36 @@
     ]
 }
 {
+    "schema": "olm.deprecations",
+    "package": "rhtas-operator",
     "entries": [
         {
-            "message": "channel stable-v1.0 is no longer supported.  Please switch to channel 'stable' or channel 'stable-v1.1'.",
             "reference": {
-                "name": "stable-v1.0",
-                "schema": "olm.channel"
-            }
+                "schema": "olm.channel",
+                "name": "stable-v1.0"
+            },
+            "message": "channel stable-v1.0 is no longer supported.  Please switch to channel 'stable' or channel 'stable-v1.1'."
         },
         {
-            "message": "rhtas-operator.v1.0.0 is deprecated. Uninstall and install rhtas-operator.v1.1.1 for support.",
             "reference": {
-                "name": "rhtas-operator.v1.0.0",
-                "schema": "olm.bundle"
-            }
+                "schema": "olm.bundle",
+                "name": "rhtas-operator.v1.0.0"
+            },
+            "message": "rhtas-operator.v1.0.0 is deprecated. Uninstall and install rhtas-operator.v1.1.1 for support."
         },
         {
-            "message": "rhtas-operator.v1.0.1 is deprecated. Uninstall and install rhtas-operator.v1.1.1 for support.",
             "reference": {
-                "name": "rhtas-operator.v1.0.1",
-                "schema": "olm.bundle"
-            }
+                "schema": "olm.bundle",
+                "name": "rhtas-operator.v1.0.1"
+            },
+            "message": "rhtas-operator.v1.0.1 is deprecated. Uninstall and install rhtas-operator.v1.1.1 for support."
         },
         {
-            "message": "rhtas-operator.v1.0.2 is deprecated. Uninstall and install rhtas-operator.v1.1.1 for support.",
             "reference": {
-                "name": "rhtas-operator.v1.0.2",
-                "schema": "olm.bundle"
-            }
+                "schema": "olm.bundle",
+                "name": "rhtas-operator.v1.0.2"
+            },
+            "message": "rhtas-operator.v1.0.2 is deprecated. Uninstall and install rhtas-operator.v1.1.1 for support."
         }
-    ],
-    "package": "rhtas-operator",
-    "schema": "olm.deprecations"
+    ]
 }
