@@ -28,13 +28,13 @@ spec:
         - quay.io/securesign/rhtas-operator-bundle-v1-0
         - quay.io/securesign/rhtas-operator-bundle-v1-1
         - quay.io/securesign/rhtas-operator-bundle-v1-2
-      source: registry.redhat.io/rhtas/rhtas-operator-bundle   
+      source: registry.redhat.io/rhtas/rhtas-operator-bundle
     - mirrors:
         - quay.io/securesign/rhtas-operator
         - quay.io/securesign/rhtas-operator-v1-0
         - quay.io/securesign/rhtas-operator-v1-1
         - quay.io/securesign/rhtas-operator-v1-2
-      source: registry.redhat.io/rhtas/rhtas-rhel9-operator      
+      source: registry.redhat.io/rhtas/rhtas-rhel9-operator
     - mirrors:
         - quay.io/securesign/fulcio-server
       source: registry.redhat.io/rhtas/fulcio-rhel9
@@ -58,7 +58,7 @@ spec:
       source: registry.redhat.io/rhtas/trillian-logsigner-rhel9
     - mirrors:
         - quay.io/securesign/trillian-database
-      source: registry.redhat.io/rhtas/trillian-database-rhel9   
+      source: registry.redhat.io/rhtas/trillian-database-rhel9
     - mirrors:
         - quay.io/securesign/trillian-redis
       source: registry.redhat.io/rhtas/trillian-redis-rhel9
