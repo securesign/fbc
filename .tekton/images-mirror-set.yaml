@@ -24,10 +24,10 @@ spec:
         - quay.io/securesign/client-server
       source: registry.redhat.io/rhtas/client-server-rhel9
     - mirrors:
-        - quay.io/securesign/rhtas-operator-bundle
+        - quay.io/securesign/rhtas-operator-bundle-v1-2
       source: registry.redhat.io/rhtas/rhtas-operator-bundle
     - mirrors:
-        - quay.io/securesign/rhtas-operator
+        - quay.io/securesign/rhtas-operator-v1-2
       source: registry.redhat.io/rhtas/rhtas-rhel9-operator
     - mirrors:
         - quay.io/securesign/fulcio-server
