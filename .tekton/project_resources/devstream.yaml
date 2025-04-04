@@ -1,0 +1,79 @@
+apiVersion: projctl.konflux.dev/v1beta1
+kind: ProjectDevelopmentStream
+metadata:
+  name: fbc-v4-14-project-dev-stream
+spec:
+  project: fbc
+  template:
+    name: fbc-project-template
+    values:
+      - name: fbcVersion
+        value: "fbc-v4-14-v1-1"
+      - name: gitRevision
+        value: "release-1.1"
+      - name: gitContext
+        value: "v4.14"
+---
+apiVersion: projctl.konflux.dev/v1beta1
+kind: ProjectDevelopmentStream
+metadata:
+  name: fbc-v4-15-project-dev-stream
+spec:
+  project: fbc
+  template:
+    name: fbc-project-template
+    values:
+      - name: fbcVersion
+        value: "fbc-v4-15-v1-1"
+      - name: gitRevision
+        value: "release-1.1"
+      - name: gitContext
+        value: "v4.15"
+---
+apiVersion: projctl.konflux.dev/v1beta1
+kind: ProjectDevelopmentStream
+metadata:
+  name: fbc-v4-16-project-dev-stream
+spec:
+  project: fbc
+  template:
+    name: fbc-project-template
+    values:
+      - name: fbcVersion
+        value: "fbc-v4-16-v1-1"
+      - name: gitRevision
+        value: "release-1.1"
+      - name: gitContext
+        value: "v4.16"
+---
+apiVersion: projctl.konflux.dev/v1beta1
+kind: ProjectDevelopmentStream
+metadata:
+  name: fbc-v4-17-project-dev-stream
+spec:
+  project: fbc
+  template:
+    name: fbc-project-template
+    values:
+      - name: fbcVersion
+        value: "fbc-v4-17-v1-1"
+      - name: gitRevision
+        value: "release-1.1"
+      - name: gitContext
+        value: "v4.17"
+---
+apiVersion: projctl.konflux.dev/v1beta1
+kind: ProjectDevelopmentStream
+metadata:
+  name: fbc-v4-18-project-dev-stream
+spec:
+  project: fbc
+  template:
+    name: fbc-project-template
+    values:
+      - name: fbcVersion
+        value: "fbc-v4-18-v1-1"
+      - name: gitRevision
+        value: "release-1.1"
+      - name: gitContext
+        value: "v4.18"
