@@ -6,14 +6,14 @@ metadata:
     build.appstudio.redhat.com/commit_sha: '{{revision}}'
     build.appstudio.redhat.com/target_branch: '{{target_branch}}'
     pipelinesascode.tekton.dev/max-keep-runs: "3"
-    pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch == "main" && 
+    pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch == "release-1.1" && 
       ( "v4.17/***".pathChanged() || ".tekton/fbc-v4-17-push.yaml".pathChanged() || "trigger-konflux-builds.txt".pathChanged() )
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: fbc-v4-17
-    appstudio.openshift.io/component: fbc-v4-17
+    appstudio.openshift.io/application: fbc-v4-17-v1-1
+    appstudio.openshift.io/component: fbc-v4-17-v1-1
     pipelines.appstudio.openshift.io/type: build
-  name: fbc-v4-17-on-push
+  name: fbc-v4-17-v1-1-on-push
   namespace: rhtas-tenant
 spec:
   params:
@@ -22,7 +22,7 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/securesign/fbc-v4-17:{{revision}}
+    value: quay.io/securesign/fbc-v4-17-v1-1:{{revision}}
   - name: dockerfile
     value: catalog.Dockerfile
   - name: path-context
