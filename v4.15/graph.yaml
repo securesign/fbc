@@ -15,6 +15,13 @@ entries:
           - rhtas-operator.v1.0.1
           - rhtas-operator.v1.0.2
           - rhtas-operator.v1.1.0
+      - name: rhtas-operator.v1.1.2
+        replaces: rhtas-operator.v1.0.0
+        skips:
+          - rhtas-operator.v1.0.1
+          - rhtas-operator.v1.0.2
+          - rhtas-operator.v1.1.0
+          - rhtas-operator.v1.1.1
     name: stable-v1.1
     package: rhtas-operator
     schema: olm.channel
@@ -48,6 +55,13 @@ entries:
           - rhtas-operator.v1.0.1
           - rhtas-operator.v1.0.2
           - rhtas-operator.v1.1.0
+      - name: rhtas-operator.v1.1.2
+        replaces: rhtas-operator.v1.0.0
+        skips:
+          - rhtas-operator.v1.0.1
+          - rhtas-operator.v1.0.2
+          - rhtas-operator.v1.1.0
+          - rhtas-operator.v1.1.1
     name: stable
     package: rhtas-operator
     schema: olm.channel
@@ -65,6 +79,9 @@ entries:
     schema: olm.bundle
   - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:b1d631bc3fc76af8154e900b34aabcc0192b3f9ca930d4bec35d6c0a22de1e11
     name: rhtas-operator.v1.1.1
+    schema: olm.bundle
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:603a2ffa54df0bd45ff42ac710dd16331560eda2be93442232b045c959773c4d
+    name: rhtas-operator.v1.1.2
     schema: olm.bundle
   - entries:
       - message: channel stable-v1.0 is no longer supported.  Please switch to channel 'stable' or channel 'stable-v1.1'.
