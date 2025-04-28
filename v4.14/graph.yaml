@@ -116,7 +116,7 @@ entries:
           schema: olm.bundle
     package: rhtas-operator
     schema: olm.deprecations
-  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:8aa08aa05bd427376b16e694d46658d8056860fd6beb28873467e75774ca35ee
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:47933b3e4c66935cdf3b404f1fb7c30adedc69e437399936f4872443b92f9f9b
     name: rhtas-operator.v1.2.0
     schema: olm.bundle
 schema: olm.template.basic
