@@ -6,8 +6,9 @@ metadata:
     build.appstudio.redhat.com/commit_sha: '{{revision}}'
     build.appstudio.redhat.com/target_branch: '{{target_branch}}'
     pipelinesascode.tekton.dev/max-keep-runs: "3"
-    pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch == "main" && 
-      ( "v4.15/***".pathChanged() || ".tekton/fbc-v4-15-push.yaml".pathChanged() || "trigger-konflux-builds.txt".pathChanged() )
+    pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
+      == "main" && ( "v4.15/***".pathChanged() || ".tekton/fbc-v4-15-push.yaml".pathChanged()
+      || "trigger-konflux-builds.txt".pathChanged() )
   creationTimestamp: null
   labels:
     appstudio.openshift.io/application: fbc-v4-15
@@ -28,15 +29,16 @@ spec:
   - name: revision
     value: '{{revision}}'
   pipelineRef:
-    resolver: git
     params:
-      - name: url
-        value: 'https://github.com/securesign/pipelines.git'
-      - name: revision
-        value: 'main'
-      - name: pathInRepo
-        value: 'pipelines/fbc-builder.yaml'
-  taskRunTemplate: {}
+    - name: url
+      value: https://github.com/securesign/pipelines.git
+    - name: revision
+      value: main
+    - name: pathInRepo
+      value: pipelines/fbc-builder.yaml
+    resolver: git
+  taskRunTemplate:
+    serviceAccountName: build-pipeline-fbc-v4-15
   workspaces:
   - name: git-auth
     secret:
