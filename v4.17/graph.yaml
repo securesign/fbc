@@ -137,7 +137,7 @@ entries:
   - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:47933b3e4c66935cdf3b404f1fb7c30adedc69e437399936f4872443b92f9f9b
     name: rhtas-operator.v1.2.0
     schema: olm.bundle
-  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:8e2b31b5348bade39851d73b2f462b3b9ba50aa1e7600b64b0a536593b356907
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:29cc36c3046622cfb43ecd90a8f1c147aa84d626a8aa7e18a5023dbc12d95a7f
     name: rhtas-operator.v1.3.0
     schema: olm.bundle
 schema: olm.template.basic
