@@ -35,6 +35,12 @@ entries:
           - rhtas-operator.v1.0.2
           - rhtas-operator.v1.1.0
           - rhtas-operator.v1.1.1
+      - name: rhtas-operator.v1.1.3
+        replaces: rhtas-operator.v1.1.0
+        skips:
+          - rhtas-operator.v1.1.0
+          - rhtas-operator.v1.1.1
+          - rhtas-operator.v1.1.2
     name: stable-v1.1
     package: rhtas-operator
     schema: olm.channel
