@@ -2,7 +2,8 @@
 set -euo pipefail
 
 # OCP_VERSION="v4.13"
-# CATALOG_FILE="v4.13/catalog/rhtas-operator/catalog.json"
+# FBC_DIR="rhtas-operator"
+# CATALOG_FILE="v4.13/${FBC_DIR}/catalog/rhtas-operator/catalog.json"
 
 minor=${OCP_VERSION#v4.}
 minor=${minor%%.*}
@@ -31,7 +32,7 @@ if (( minor >= 17 )); then
     migrate_flag="--migrate-level=bundle-object-to-csv-metadata"
 fi
 
-opm alpha render-template $migrate_flag basic "${OCP_VERSION}/graph.yaml" > "$CATALOG_FILE"
+opm alpha render-template $migrate_flag basic "${OCP_VERSION}/${FBC_DIR}/graph.yaml" > "$CATALOG_FILE"
 
 jq -s --indent 4 --argjson related_images "$related_images" '
     map(
