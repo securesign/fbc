@@ -4,6 +4,11 @@ entries:
     name: rhtas-operator
     schema: olm.package
   - entries:
+      - name: rhtas-operator.v1.2.1
+    name: stable-v1.2.1
+    package: rhtas-operator
+    schema: olm.channel
+  - entries:
       - name: rhtas-operator.v1.2.0
     name: stable-v1.2
     package: rhtas-operator
