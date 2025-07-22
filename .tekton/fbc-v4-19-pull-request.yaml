@@ -9,7 +9,7 @@ metadata:
     pipelinesascode.tekton.dev/cancel-in-progress: "true"
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "pull_request" && target_branch
-      == "main" && ( "v4.19/***".pathChanged() || ".tekton/fbc-v4-19-pull-request.yaml".pathChanged()
+      == "main" && ( "v4.19/rhtas-operator/***".pathChanged() || ".tekton/fbc-v4-19-pull-request.yaml".pathChanged()
       )
   creationTimestamp: null
   labels:
@@ -34,7 +34,7 @@ spec:
   - name: dockerfile
     value: catalog.Dockerfile
   - name: path-context
-    value: v4.19
+    value: v4.19/rhtas-operator
   pipelineRef:
     params:
     - name: url

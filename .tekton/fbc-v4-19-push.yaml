@@ -30,7 +30,7 @@ spec:
   - name: dockerfile
     value: catalog.Dockerfile
   - name: path-context
-    value: v4.19
+    value: v4.19/rhtas-operator
   pipelineRef:
     params:
     - name: url
