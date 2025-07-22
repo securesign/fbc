@@ -2167,7 +2167,7 @@
     "schema": "olm.bundle",
     "name": "rhtas-operator.v1.3.0",
     "package": "rhtas-operator",
-    "image": "registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:3f5165c58a6a2e6c612df8e092f53c44478f346d5cc702f9eaefd915d9a97ea0",
+    "image": "registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:8201922b645b1ececfc01bfdd8449829d3c89ab54a7247a98ef9bc8d442779e9",
     "properties": [
         {
             "type": "olm.gvk",
@@ -2238,8 +2238,8 @@
                 "annotations": {
                     "alm-examples": "[\n  {\n    \"apiVersion\": \"rhtas.redhat.com/v1alpha1\",\n    \"kind\": \"CTlog\",\n    \"metadata\": {\n      \"labels\": {\n        \"app.kubernetes.io/instance\": \"securesign-sample\",\n        \"app.kubernetes.io/name\": \"securesign-sample\",\n        \"app.kubernetes.io/part-of\": \"trusted-artifact-signer\"\n      },\n      \"name\": \"ctlog-sample\"\n    },\n    \"spec\": {}\n  },\n  {\n    \"apiVersion\": \"rhtas.redhat.com/v1alpha1\",\n    \"kind\": \"Fulcio\",\n    \"metadata\": {\n      \"labels\": {\n        \"app.kubernetes.io/instance\": \"securesign-sample\",\n        \"app.kubernetes.io/name\": \"securesign-sample\",\n        \"app.kubernetes.io/part-of\": \"trusted-artifact-signer\"\n      },\n      \"name\": \"fulcio-sample\"\n    },\n    \"spec\": {\n      \"certificate\": {\n        \"commonName\": \"fulcio.hostname\",\n        \"organizationEmail\": \"jdoe@redhat.com\",\n        \"organizationName\": \"Red Hat\"\n      },\n      \"config\": {\n        \"OIDCIssuers\": [\n          {\n            \"ClientID\": \"trusted-artifact-signer\",\n            \"Issuer\": \"https://your-oidc-issuer-url\",\n            \"IssuerURL\": \"https://your-oidc-issuer-url\",\n            \"Type\": \"email\"\n          }\n        ]\n      },\n      \"externalAccess\": {\n        \"enabled\": true\n      }\n    }\n  },\n  {\n    \"apiVersion\": \"rhtas.redhat.com/v1alpha1\",\n    \"kind\": \"Rekor\",\n    \"metadata\": {\n      \"labels\": {\n        \"app.kubernetes.io/instance\": \"securesign-sample\",\n        \"app.kubernetes.io/name\": \"securesign-sample\",\n        \"app.kubernetes.io/part-of\": \"trusted-artifact-signer\"\n      },\n      \"name\": \"rekor-sample\"\n    },\n    \"spec\": {\n      \"externalAccess\": {\n        \"enabled\": true\n      }\n    }\n  },\n  {\n    \"apiVersion\": \"rhtas.redhat.com/v1alpha1\",\n    \"kind\": \"Securesign\",\n    \"metadata\": {\n      \"annotations\": {\n        \"rhtas.redhat.com/metrics\": \"true\"\n      },\n      \"labels\": {\n        \"app.kubernetes.io/instance\": \"securesign-sample\",\n        \"app.kubernetes.io/name\": \"securesign-sample\",\n        \"app.kubernetes.io/part-of\": \"trusted-artifact-signer\"\n      },\n      \"name\": \"securesign-sample\"\n    },\n    \"spec\": {\n      \"ctlog\": null,\n      \"fulcio\": {\n        \"certificate\": {\n          \"commonName\": \"fulcio.hostname\",\n          \"organizationEmail\": \"jdoe@redhat.com\",\n          \"organizationName\": \"Red Hat\"\n        },\n        \"config\": {\n          \"OIDCIssuers\": [\n            {\n              \"ClientID\": \"trusted-artifact-signer\",\n              \"Issuer\": \"https://your-oidc-issuer-url\",\n              \"IssuerURL\": \"https://your-oidc-issuer-url\",\n              \"Type\": \"email\"\n            }\n          ]\n        },\n        \"externalAccess\": {\n          \"enabled\": true\n        },\n        \"monitoring\": {\n          \"enabled\": true\n        }\n      },\n      \"rekor\": {\n        \"externalAccess\": {\n          \"enabled\": true\n        },\n        \"monitoring\": {\n          \"enabled\": true\n        }\n      },\n      \"trillian\": {\n        \"database\": {\n          \"create\": true\n        }\n      },\n      \"tsa\": {\n        \"externalAccess\": {\n          \"enabled\": true\n        },\n        \"monitoring\": {\n          \"enabled\": true\n        },\n        \"ntpMonitoring\": {\n          \"enabled\": true\n        },\n        \"signer\": {\n          \"certificateChain\": {\n            \"intermediateCA\": [\n              {\n                \"commonName\": \"tsa.hostname-intermediate\",\n                \"organizationEmail\": \"jdoe@redhat.com\",\n                \"organizationName\": \"Red Hat\"\n              }\n            ],\n            \"leafCA\": {\n              \"commonName\": \"tsa.hostname-leaf\",\n              \"organizationEmail\": \"jdoe@redhat.com\",\n              \"organizationName\": \"Red Hat\"\n            },\n            \"rootCA\": {\n              \"commonName\": \"tsa.hostname-root\",\n              \"organizationEmail\": \"jdoe@redhat.com\",\n              \"organizationName\": \"Red Hat\"\n            }\n          }\n        }\n      },\n      \"tuf\": {\n        \"externalAccess\": {\n          \"enabled\": true\n        },\n        \"keys\": [\n          {\n            \"name\": \"rekor.pub\"\n          },\n          {\n            \"name\": \"ctfe.pub\"\n          },\n          {\n            \"name\": \"fulcio_v1.crt.pem\"\n          },\n          {\n            \"name\": \"tsa.certchain.pem\"\n          }\n        ],\n        \"pvc\": {\n          \"accessModes\": [\n            \"ReadWriteOnce\"\n          ],\n          \"retain\": true,\n          \"size\": \"100Mi\"\n        },\n        \"rootKeySecretRef\": {\n          \"name\": \"tuf-root-keys\"\n        }\n      }\n    }\n  },\n  {\n    \"apiVersion\": \"rhtas.redhat.com/v1alpha1\",\n    \"kind\": \"TimestampAuthority\",\n    \"metadata\": {\n      \"labels\": {\n        \"app.kubernetes.io/created-by\": \"rhtas-operator\",\n        \"app.kubernetes.io/instance\": \"timestampauthority-sample\",\n        \"app.kubernetes.io/managed-by\": \"kustomize\",\n        \"app.kubernetes.io/name\": \"timestampauthority\",\n        \"app.kubernetes.io/part-of\": \"rhtas-operator\"\n      },\n      \"name\": \"timestampauthority-sample\"\n    },\n    \"spec\": {\n      \"externalAccess\": {\n        \"enabled\": true\n      },\n      \"monitoring\": {\n        \"enabled\": true\n      },\n      \"ntpMonitoring\": {\n        \"enabled\": true\n      },\n      \"signer\": {\n        \"certificateChain\": {\n          \"intermediateCA\": [\n            {\n              \"commonName\": \"tsa.hostname-intermediate\",\n              \"organizationEmail\": \"jdoe@redhat.com\",\n              \"organizationName\": \"Red Hat\"\n            }\n          ],\n          \"leafCA\": {\n            \"commonName\": \"tsa.hostname-leaf\",\n            \"organizationEmail\": \"jdoe@redhat.com\",\n            \"organizationName\": \"Red Hat\"\n          },\n          \"rootCA\": {\n            \"commonName\": \"tsa.hostname-root\",\n            \"organizationEmail\": \"jdoe@redhat.com\",\n            \"organizationName\": \"Red Hat\"\n          }\n        }\n      }\n    }\n  },\n  {\n    \"apiVersion\": \"rhtas.redhat.com/v1alpha1\",\n    \"kind\": \"Trillian\",\n    \"metadata\": {\n      \"labels\": {\n        \"app.kubernetes.io/instance\": \"securesign-sample\",\n        \"app.kubernetes.io/name\": \"securesign-sample\",\n        \"app.kubernetes.io/part-of\": \"trusted-artifact-signer\"\n      },\n      \"name\": \"trillian-sample\"\n    },\n    \"spec\": {\n      \"database\": {\n        \"create\": true\n      },\n      \"server\": {\n        \"replicas\": 1\n      },\n      \"signer\": {\n        \"replicas\": 1\n      }\n    }\n  },\n  {\n    \"apiVersion\": \"rhtas.redhat.com/v1alpha1\",\n    \"kind\": \"Tuf\",\n    \"metadata\": {\n      \"labels\": {\n        \"app.kubernetes.io/instance\": \"securesign-sample\",\n        \"app.kubernetes.io/name\": \"securesign-sample\",\n        \"app.kubernetes.io/part-of\": \"trusted-artifact-signer\"\n      },\n      \"name\": \"tuf-sample\"\n    },\n    \"spec\": {\n      \"externalAccess\": {\n        \"enabled\": true\n      },\n      \"keys\": [\n        {\n          \"name\": \"rekor.pub\",\n          \"secretRef\": {\n            \"key\": \"public\",\n            \"name\": \"rekor-pub-key\"\n          }\n        },\n        {\n          \"name\": \"fulcio_v1.crt.pem\",\n          \"secretRef\": {\n            \"key\": \"cert\",\n            \"name\": \"fulcio-pub-key\"\n          }\n        },\n        {\n          \"name\": \"ctfe.pub\",\n          \"secretRef\": {\n            \"key\": \"public\",\n            \"name\": \"ctlog-pub-key\"\n          }\n        },\n        {\n          \"name\": \"tsa.certchain.pem\",\n          \"secretRef\": {\n            \"key\": \"certificateChain\",\n            \"name\": \"tsa-cert-chain\"\n          }\n        }\n      ],\n      \"pvc\": {\n        \"accessModes\": [\n          \"ReadWriteMany\"\n        ],\n        \"retain\": true,\n        \"size\": \"100Mi\"\n      }\n    }\n  }\n]",
                     "capabilities": "Seamless Upgrades",
-                    "containerImage": "registry.redhat.io/rhtas/rhtas-rhel9-operator@sha256:61db1dccdffa3a8167b433a11a5a49215294e05b0415add67b9cfe644e403ff9",
-                    "createdAt": "2025-07-10T20:33:00Z",
+                    "containerImage": "registry.redhat.io/rhtas/rhtas-rhel9-operator@sha256:f1a87995075c14885cc2d9b8a9131d071ef064978c96e818ed80e9ca1eb490de",
+                    "createdAt": "2025-07-22T08:55:19Z",
                     "features.operators.openshift.io/cnf": "false",
                     "features.operators.openshift.io/cni": "false",
                     "features.operators.openshift.io/csi": "false",
@@ -2362,7 +2362,89 @@
                             "version": "v1alpha1",
                             "kind": "Rekor",
                             "displayName": "Rekor",
-                            "description": "Rekor is the Schema for the rekors API"
+                            "description": "Rekor is the Schema for the rekors API",
+                            "specDescriptors": [
+                                {
+                                    "path": "replicas",
+                                    "displayName": "Replicas",
+                                    "description": "The desired number of member Pods.",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:podCount"
+                                    ]
+                                },
+                                {
+                                    "path": "resources",
+                                    "displayName": "Resource Requirements",
+                                    "description": "Limits describes the minimum/maximum amount of compute resources required/allowed",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:resourceRequirements"
+                                    ]
+                                },
+                                {
+                                    "path": "affinity.nodeAffinity",
+                                    "displayName": "Node Affinity",
+                                    "description": "Node affinity is a group of node affinity scheduling",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:nodeAffinity"
+                                    ]
+                                },
+                                {
+                                    "path": "affinity.podAffinity",
+                                    "displayName": "Pod Affinity",
+                                    "description": "Pod affinity is a group of inter pod affinity scheduling rules.",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:podAffinity"
+                                    ]
+                                },
+                                {
+                                    "path": "affinity.podAntiAffinity",
+                                    "displayName": "Pod Anti Affinity",
+                                    "description": "Pod anti affinity is a group of inter pod anti affinity scheduling rules.",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:podAntiAffinity"
+                                    ]
+                                },
+                                {
+                                    "path": "rekorSearchUI.replicas",
+                                    "displayName": "Replicas",
+                                    "description": "The desired number of member Pods.",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:podCount"
+                                    ]
+                                },
+                                {
+                                    "path": "rekorSearchUI.resources",
+                                    "displayName": "Resource Requirements",
+                                    "description": "Limits describes the minimum/maximum amount of compute resources required/allowed",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:resourceRequirements"
+                                    ]
+                                },
+                                {
+                                    "path": "rekorSearchUI.affinity.nodeAffinity",
+                                    "displayName": "Node Affinity",
+                                    "description": "Node affinity is a group of node affinity scheduling",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:nodeAffinity"
+                                    ]
+                                },
+                                {
+                                    "path": "rekorSearchUI.affinity.podAffinity",
+                                    "displayName": "Pod Affinity",
+                                    "description": "Pod affinity is a group of inter pod affinity scheduling rules.",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:podAffinity"
+                                    ]
+                                },
+                                {
+                                    "path": "rekorSearchUI.affinity.podAntiAffinity",
+                                    "displayName": "Pod Anti Affinity",
+                                    "description": "Pod anti affinity is a group of inter pod anti affinity scheduling rules.",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:podAntiAffinity"
+                                    ]
+                                }
+                            ]
                         },
                         {
                             "name": "securesigns.rhtas.redhat.com",
@@ -2445,6 +2527,86 @@
                                 },
                                 {
                                     "path": "fulcio.affinity.podAntiAffinity",
+                                    "displayName": "Pod Anti Affinity",
+                                    "description": "Pod anti affinity is a group of inter pod anti affinity scheduling rules.",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:podAntiAffinity"
+                                    ]
+                                },
+                                {
+                                    "path": "rekor.replicas",
+                                    "displayName": "Replicas",
+                                    "description": "The desired number of member Pods.",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:podCount"
+                                    ]
+                                },
+                                {
+                                    "path": "rekor.resources",
+                                    "displayName": "Resource Requirements",
+                                    "description": "Limits describes the minimum/maximum amount of compute resources required/allowed",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:resourceRequirements"
+                                    ]
+                                },
+                                {
+                                    "path": "rekor.affinity.nodeAffinity",
+                                    "displayName": "Node Affinity",
+                                    "description": "Node affinity is a group of node affinity scheduling",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:nodeAffinity"
+                                    ]
+                                },
+                                {
+                                    "path": "rekor.affinity.podAffinity",
+                                    "displayName": "Pod Affinity",
+                                    "description": "Pod affinity is a group of inter pod affinity scheduling rules.",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:podAffinity"
+                                    ]
+                                },
+                                {
+                                    "path": "rekor.affinity.podAntiAffinity",
+                                    "displayName": "Pod Anti Affinity",
+                                    "description": "Pod anti affinity is a group of inter pod anti affinity scheduling rules.",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:podAntiAffinity"
+                                    ]
+                                },
+                                {
+                                    "path": "rekor.rekorSearchUI.replicas",
+                                    "displayName": "Replicas",
+                                    "description": "The desired number of member Pods.",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:podCount"
+                                    ]
+                                },
+                                {
+                                    "path": "rekor.rekorSearchUI.resources",
+                                    "displayName": "Resource Requirements",
+                                    "description": "Limits describes the minimum/maximum amount of compute resources required/allowed",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:resourceRequirements"
+                                    ]
+                                },
+                                {
+                                    "path": "rekor.rekorSearchUI.affinity.nodeAffinity",
+                                    "displayName": "Node Affinity",
+                                    "description": "Node affinity is a group of node affinity scheduling",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:nodeAffinity"
+                                    ]
+                                },
+                                {
+                                    "path": "rekor.rekorSearchUI.affinity.podAffinity",
+                                    "displayName": "Pod Affinity",
+                                    "description": "Pod affinity is a group of inter pod affinity scheduling rules.",
+                                    "x-descriptors": [
+                                        "urn:alm:descriptor:com.tectonic.ui:podAffinity"
+                                    ]
+                                },
+                                {
+                                    "path": "rekor.rekorSearchUI.affinity.podAntiAffinity",
                                     "displayName": "Pod Anti Affinity",
                                     "description": "Pod anti affinity is a group of inter pod anti affinity scheduling rules.",
                                     "x-descriptors": [
@@ -2879,11 +3041,11 @@
     "relatedImages": [
         {
             "name": "",
-            "image": "registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:3f5165c58a6a2e6c612df8e092f53c44478f346d5cc702f9eaefd915d9a97ea0"
+            "image": "registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:8201922b645b1ececfc01bfdd8449829d3c89ab54a7247a98ef9bc8d442779e9"
         },
         {
             "name": "trillian-netcat",
-            "image": "registry.redhat.io/openshift4/ose-tools-rhel9@sha256:22fd1559657a52b71229c2ae4b94f4a7db52b8058ac2aa73046302b1c4d73ac2"
+            "image": "registry.redhat.io/openshift4/ose-tools-rhel9@sha256:580050a91bcd43fc6096cc6e4e420ee7fcd07e0867cb997ebd68224d668ba87f"
         },
         {
             "name": "ctlog",
@@ -2915,7 +3077,7 @@
         },
         {
             "name": "",
-            "image": "registry.redhat.io/rhtas/rhtas-rhel9-operator@sha256:61db1dccdffa3a8167b433a11a5a49215294e05b0415add67b9cfe644e403ff9"
+            "image": "registry.redhat.io/rhtas/rhtas-rhel9-operator@sha256:f1a87995075c14885cc2d9b8a9131d071ef064978c96e818ed80e9ca1eb490de"
         },
         {
             "name": "segment-reporting",
@@ -2947,7 +3109,7 @@
         },
         {
             "name": "http-server",
-            "image": "registry.redhat.io/ubi9/httpd-24@sha256:6c4ead523eba179e6a693292c12588c506b844d4c00b542ea773b27614ea0b96"
+            "image": "registry.redhat.io/ubi9/httpd-24@sha256:4896430ea7717cfe52786dd32a5b63f0a06108906c6a2757df3f8027c2e86ff5"
         }
     ]
 }
