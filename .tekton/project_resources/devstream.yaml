@@ -157,3 +157,19 @@ spec:
         value: "release-1.2"
       - name: gitContext
         value: "v4.18"
+---
+apiVersion: projctl.konflux.dev/v1beta1
+kind: ProjectDevelopmentStream
+metadata:
+  name: fbc-v4-19-project-dev-stream-v1-2
+spec:
+  project: fbc
+  template:
+    name: fbc-project-template
+    values:
+      - name: fbcVersion
+        value: "fbc-v4-19-v1-2"
+      - name: gitRevision
+        value: "release-1.2"
+      - name: gitContext
+        value: "v4.19"
