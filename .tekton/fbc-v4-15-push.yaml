@@ -28,6 +28,13 @@ spec:
   - name: revision
     value: '{{revision}}'
   pipelineRef:
+    params:
+    - name: url
+      value: https://github.com/securesign/pipelines.git
+    - name: revision
+      value: main
+    - name: pathInRepo
+      value: pipelines/fbc-builder.yaml
     resolver: git
   taskRunTemplate:
     serviceAccountName: build-pipeline-fbc-v4-15-v1-2
