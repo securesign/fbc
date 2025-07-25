@@ -32,17 +32,6 @@ spec:
   taskRunTemplate:
     serviceAccountName: build-pipeline-fbc-v4-16-v1-2
   workspaces:
-  - name: workspace
-    volumeClaimTemplate:
-      metadata:
-        creationTimestamp: null
-      spec:
-        accessModes:
-        - ReadWriteOnce
-        resources:
-          requests:
-            storage: 1Gi
-      status: {}
   - name: git-auth
     secret:
       secretName: '{{ git_auth_secret }}'
