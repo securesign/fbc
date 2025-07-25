@@ -6,14 +6,14 @@ metadata:
     build.appstudio.redhat.com/commit_sha: '{{revision}}'
     build.appstudio.redhat.com/target_branch: '{{target_branch}}'
     pipelinesascode.tekton.dev/max-keep-runs: "3"
-    pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch == "main" &&
+    pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch == "release-1.2" &&
       ( "v4.16/***".pathChanged() || ".tekton/fbc-v4-16-push.yaml".pathChanged() || "trigger-konflux-builds.txt".pathChanged() )
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: fbc-v4-16
-    appstudio.openshift.io/component: fbc-v4-16
+    appstudio.openshift.io/application: fbc-v4-16-v1-2
+    appstudio.openshift.io/component: fbc-v4-16-v1-2
     pipelines.appstudio.openshift.io/type: build
-  name: fbc-v4-16-on-push
+  name: fbc-v4-16-v1-2-on-push
   namespace: rhtas-tenant
 spec:
   params:
@@ -22,23 +22,25 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/securesign/fbc-v4-16:{{revision}}
+    value: quay.io/securesign/fbc-v4-16-v1-2:{{revision}}
   - name: dockerfile
     value: catalog.Dockerfile
   - name: path-context
     value: v4.16
   pipelineRef:
-    resolver: git
     params:
-      - name: url
-        value: 'https://github.com/securesign/pipelines.git'
-      - name: revision
-        value: 'main'
-      - name: pathInRepo
-        value: 'pipelines/fbc-builder.yaml'
-  taskRunTemplate: {}
+    - name: url
+      value: https://github.com/securesign/pipelines.git
+    - name: revision
+      value: main
+    - name: pathInRepo
+      value: pipelines/fbc-builder.yaml
+    resolver: git
+  taskRunTemplate:
+    serviceAccountName: build-pipeline-fbc-v4-16-v1-2
   workspaces:
   - name: git-auth
     secret:
       secretName: '{{ git_auth_secret }}'
 status: {}
+
