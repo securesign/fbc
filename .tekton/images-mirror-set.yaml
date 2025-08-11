@@ -93,8 +93,8 @@ spec:
         - quay.io/securesign/policy-controller
       source: registry.redhat.io/rhtas/policy-controller-rhel9
     - mirrors:
-        - quay.io/securesign/policy-controller-operator 
-      source: registry.redhat.io/rhtas/policy-controller-rhel9-operator 
+        - quay.io/securesign/policy-controller-operator
+      source: registry.redhat.io/rhtas/policy-controller-rhel9-operator
     - mirrors:
         - quay.io/securesign/policy-controller-operator-bundle
-      source: registry.redhat.io/rhtas/policy-controller-operator-bundle 
+      source: registry.redhat.io/rhtas/policy-controller-operator-bundle
