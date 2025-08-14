@@ -60,6 +60,18 @@
                 "rhtas-operator.v1.1.1",
                 "rhtas-operator.v1.1.2"
             ]
+        },
+        {
+            "name": "rhtas-operator.v1.2.1",
+            "replaces": "rhtas-operator.v1.0.0",
+            "skips": [
+                "rhtas-operator.v1.0.1",
+                "rhtas-operator.v1.0.2",
+                "rhtas-operator.v1.1.0",
+                "rhtas-operator.v1.1.1",
+                "rhtas-operator.v1.1.2",
+                "rhtas-operator.v1.2.0"
+            ]
         }
     ]
 }
@@ -115,6 +127,16 @@
                 "rhtas-operator.v1.1.0",
                 "rhtas-operator.v1.1.1"
             ]
+        }
+    ]
+}
+{
+    "schema": "olm.channel",
+    "name": "stable-v1.2",
+    "package": "rhtas-operator",
+    "entries": [
+        {
+            "name": "rhtas-operator.v1.2.0"
         },
         {
             "name": "rhtas-operator.v1.2.1",
@@ -127,16 +149,6 @@
                 "rhtas-operator.v1.1.2",
                 "rhtas-operator.v1.2.0"
             ]
-        }
-    ]
-}
-{
-    "schema": "olm.channel",
-    "name": "stable-v1.2",
-    "package": "rhtas-operator",
-    "entries": [
-        {
-            "name": "rhtas-operator.v1.2.0"
         }
     ]
 }
