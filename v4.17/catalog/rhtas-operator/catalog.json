@@ -2152,7 +2152,7 @@
     "schema": "olm.bundle",
     "name": "rhtas-operator.v1.2.1",
     "package": "rhtas-operator",
-    "image": "quay.io/securesign/rhtas-operator-bundle-v1-2@sha256:a62dafbb2d96ce875764663108077e594cec431a9edaa52e297a42c6d6a768f6",
+    "image": "registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:a62dafbb2d96ce875764663108077e594cec431a9edaa52e297a42c6d6a768f6",
     "properties": [
         {
             "type": "olm.gvk",
@@ -2372,7 +2372,7 @@
     "relatedImages": [
         {
             "name": "",
-            "image": "quay.io/securesign/rhtas-operator-bundle-v1-2@sha256:a62dafbb2d96ce875764663108077e594cec431a9edaa52e297a42c6d6a768f6"
+            "image": "registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:a62dafbb2d96ce875764663108077e594cec431a9edaa52e297a42c6d6a768f6"
         },
         {
             "name": "trillian-netcat",
