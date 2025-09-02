@@ -8,14 +8,14 @@ metadata:
     pipelinesascode.tekton.dev/cancel-in-progress: "false"
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
-      == "release-1.2" && ( "v4.19/***".pathChanged() || ".tekton/fbc-v4-19-v1-2-pull-request.yaml".pathChanged()
+      == "main" && ( "v4.19/***".pathChanged() || ".tekton/fbc-v4-19-pull-request.yaml".pathChanged()
       )
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: fbc-v4-19-v1-2
-    appstudio.openshift.io/component: fbc-v4-19-v1-2
+    appstudio.openshift.io/application: fbc-v4-19
+    appstudio.openshift.io/component: fbc-v4-19
     pipelines.appstudio.openshift.io/type: build
-  name: fbc-v4-19-v1-2-on-push
+  name: fbc-v4-19-on-push
   namespace: rhtas-tenant
 spec:
   params:
@@ -24,7 +24,7 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/securesign/fbc-v4-19-v1-2:{{revision}}
+    value: quay.io/securesign/fbc-v4-19:{{revision}}
   - name: dockerfile
     value: catalog.Dockerfile
   - name: path-context
@@ -39,7 +39,7 @@ spec:
       value: pipelines/fbc-builder.yaml
     resolver: git
   taskRunTemplate:
-    serviceAccountName: build-pipeline-fbc-v4-19-v1-2
+    serviceAccountName: build-pipeline-fbc-v4-19
   workspaces:
   - name: git-auth
     secret:
