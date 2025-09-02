@@ -108,7 +108,6 @@ entries:
           - rhtas-operator.v1.1.1
           - rhtas-operator.v1.1.2
           - rhtas-operator.v1.2.0
-          - rhtas-operator.v1.3.0
     name: stable
     package: rhtas-operator
     schema: olm.channel
