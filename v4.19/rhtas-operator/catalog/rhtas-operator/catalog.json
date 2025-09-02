@@ -75,7 +75,8 @@
                 "rhtas-operator.v1.1.0",
                 "rhtas-operator.v1.1.1",
                 "rhtas-operator.v1.1.2",
-                "rhtas-operator.v1.2.0"
+                "rhtas-operator.v1.2.0",
+                "rhtas-operator.v1.2.1"
             ]
         },
         {
