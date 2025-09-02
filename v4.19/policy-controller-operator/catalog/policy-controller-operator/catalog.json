@@ -21,7 +21,7 @@
     "schema": "olm.bundle",
     "name": "policy-controller-operator.v0.0.1-techpreview",
     "package": "policy-controller-operator",
-    "image": "registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:5722751b2629a76352564b4ffd10d1f0c6e59c88453e186db19841a90b2197c8",
+    "image": "registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:c6d1b14d50b6b5b278a39405df67f7424bc9339a76f43adde78a53105f23d84b",
     "properties": [
         {
             "type": "olm.gvk",
@@ -68,8 +68,8 @@
                 "annotations": {
                     "alm-examples": "[\n  {\n    \"apiVersion\": \"policy.sigstore.dev/v1alpha1\",\n    \"kind\": \"TrustRoot\",\n    \"metadata\": {\n      \"name\": \"trust-root\"\n    },\n    \"spec\": {\n      \"remote\": {\n        \"mirror\": \"https://tuf.example.com\",\n        \"root\": \"\\u003cbase64 encode trust root\\u003e\\n\"\n      }\n    }\n  },\n  {\n    \"apiVersion\": \"policy.sigstore.dev/v1beta1\",\n    \"kind\": \"ClusterImagePolicy\",\n    \"metadata\": {\n      \"name\": \"cluster-image-policy\"\n    },\n    \"spec\": {\n      \"authorities\": [\n        {\n          \"ctlog\": {\n            \"trustRootRef\": \"trust-root-ref\",\n            \"url\": \"https://rekor.example.com\"\n          },\n          \"keyless\": {\n            \"identities\": [\n              {\n                \"issuer\": \"https://oidc.example.com\",\n                \"subject\": \"oidc-issuer-subject\"\n              }\n            ],\n            \"trustRootRef\": \"trust-root-ref\",\n            \"url\": \"https://fulcio.example.com\"\n          }\n        }\n      ],\n      \"images\": [\n        {\n          \"glob\": \"**\"\n        }\n      ]\n    }\n  },\n  {\n    \"apiVersion\": \"rhtas.charts.redhat.com/v1alpha1\",\n    \"kind\": \"PolicyController\",\n    \"metadata\": {\n      \"name\": \"policycontroller-sample\"\n    },\n    \"spec\": {\n      \"policy-controller\": {\n        \"cosign\": {\n          \"webhookName\": \"policy.rhtas.com\"\n        },\n        \"webhook\": {\n          \"extraArgs\": {\n            \"mutating-webhook-name\": \"defaulting.clusterimagepolicy.rhtas.com\",\n            \"validating-webhook-name\": \"validating.clusterimagepolicy.rhtas.com\",\n            \"webhook-name\": \"policy.rhtas.com\"\n          },\n          \"failurePolicy\": \"Fail\",\n          \"name\": \"webhook\",\n          \"namespaceSelector\": {\n            \"matchExpressions\": [\n              {\n                \"key\": \"policy.rhtas.com/include\",\n                \"operator\": \"In\",\n                \"values\": [\n                  \"true\"\n                ]\n              }\n            ]\n          },\n          \"webhookNames\": {\n            \"defaulting\": \"defaulting.clusterimagepolicy.rhtas.com\",\n            \"validating\": \"validating.clusterimagepolicy.rhtas.com\"\n          }\n        }\n      }\n    }\n  }\n]",
                     "capabilities": "Basic Install",
-                    "containerImage": "registry.redhat.io/rhtas/policy-controller-rhel9-operator@sha256:4c7032dcca6fcc3abacff503c53c330ce29918d1d4418b31468660ba4d4d38aa",
-                    "createdAt": "2025-08-25T11:36:53Z",
+                    "containerImage": "registry.redhat.io/rhtas/policy-controller-rhel9-operator@sha256:d863768ca2d66a60a3ae9d2a597af18ca7bbdab13439c46370284c27d96eb0e3",
+                    "createdAt": "2025-09-02T14:26:50Z",
                     "features.operators.openshift.io/cnf": "false",
                     "features.operators.openshift.io/cni": "false",
                     "features.operators.openshift.io/csi": "false",
@@ -168,7 +168,7 @@
     "relatedImages": [
         {
             "name": "",
-            "image": "registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:5722751b2629a76352564b4ffd10d1f0c6e59c88453e186db19841a90b2197c8"
+            "image": "registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:c6d1b14d50b6b5b278a39405df67f7424bc9339a76f43adde78a53105f23d84b"
         },
         {
             "name": "ose-cli",
@@ -176,7 +176,7 @@
         },
         {
             "name": "",
-            "image": "registry.redhat.io/rhtas/policy-controller-rhel9-operator@sha256:4c7032dcca6fcc3abacff503c53c330ce29918d1d4418b31468660ba4d4d38aa"
+            "image": "registry.redhat.io/rhtas/policy-controller-rhel9-operator@sha256:d863768ca2d66a60a3ae9d2a597af18ca7bbdab13439c46370284c27d96eb0e3"
         },
         {
             "name": "policy-controller",
