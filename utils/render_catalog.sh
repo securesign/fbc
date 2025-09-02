@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# OCP_VERSION="v4.13"
-# FBC_DIR="rhtas-operator"
-# CATALOG_FILE="v4.13/${FBC_DIR}/catalog/rhtas-operator/catalog.json"
+#OCP_VERSION="v4.19"
+#FBC_DIR="rhtas-operator"
+#CATALOG_FILE="v4.19/${FBC_DIR}/catalog/rhtas-operator/catalog.json"
 
 minor=${OCP_VERSION#v4.}
 minor=${minor%%.*}
@@ -12,14 +12,16 @@ minor=${minor%%.*}
 related_images=$(jq -s '
 reduce .[] as $item ({}; 
     if ($item.schema == "olm.bundle" and 
-        $item.name != "rhtas-operator.v1.2.0" and 
+        $item.name != "rhtas-operator.v1.3.0" and 
         (
         ($item.name | contains("v1.0.0")) or 
         ($item.name | contains("v1.0.1")) or 
         ($item.name | contains("v1.0.2")) or 
         ($item.name | contains("v1.1.0")) or 
         ($item.name | contains("v1.1.1")) or
-        ($item.name | contains("v1.1.2")) 
+        ($item.name | contains("v1.1.2")) or
+        ($item.name | contains("v1.2.0")) or
+        ($item.name | contains("v1.2.1"))
         )
     ) 
     then .[$item.name] = $item.relatedImages 
