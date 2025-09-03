@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-OCP_VERSION="v4.19"
-FBC_DIR="rhtas-operator"
-CATALOG_FILE="v4.19/${FBC_DIR}/catalog/rhtas-operator/catalog.json"
+#OCP_VERSION="v4.19"
+#FBC_DIR="rhtas-operator"
+#CATALOG_FILE="v4.19/${FBC_DIR}/catalog/rhtas-operator/catalog.json"
 
 minor=${OCP_VERSION#v4.}
 minor=${minor%%.*}
