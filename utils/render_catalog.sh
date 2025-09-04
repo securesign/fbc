@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# OCP_VERSION="v4.13"
-# FBC_DIR="rhtas-operator"
-# CATALOG_FILE="v4.13/${FBC_DIR}/catalog/rhtas-operator/catalog.json"
+#OCP_VERSION="v4.19"
+#FBC_DIR="rhtas-operator"
+#CATALOG_FILE="v4.19/${FBC_DIR}/catalog/rhtas-operator/catalog.json"
 
 minor=${OCP_VERSION#v4.}
 minor=${minor%%.*}
@@ -19,7 +19,7 @@ reduce .[] as $item ({};
         ($item.name | contains("v1.0.2")) or 
         ($item.name | contains("v1.1.0")) or 
         ($item.name | contains("v1.1.1")) or
-        ($item.name | contains("v1.1.2")) 
+        ($item.name | contains("v1.1.2"))
         )
     ) 
     then .[$item.name] = $item.relatedImages 

@@ -1,9 +1,9 @@
 #!/bin/bash
 set -euo pipefail
 
-# export BUNDLE_NAME="rhtas-operator.v1.2.0"
-# export CHANNELS="stable,stable-v1.2"
-# export GRAPH="v4.13/graph.yaml"
+#export BUNDLE_NAME="rhtas-operator.v1.2.1"
+#export CHANNELS="stable,stable-v1.2"
+#export GRAPH="v4.19/rhtas-operator/graph.yaml"
 
 export PACKAGE_NAME=$(yq e '.entries[] | select(.schema=="olm.package") | .name' $GRAPH)
 IFS=',' read -ra channel_list <<< "$CHANNELS"
