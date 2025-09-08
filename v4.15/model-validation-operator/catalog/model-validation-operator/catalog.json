@@ -84,7 +84,7 @@
     "relatedImages": [
         {
             "name": "",
-            "image": "registry.redhat.io/model-validation-operator-bundle@sha256:6fdc9e863307d69d14c648ede700d6dd3a4972940196cdaf7bf0a0bffbcb7041"
+            "image": "registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:6fdc9e863307d69d14c648ede700d6dd3a4972940196cdaf7bf0a0bffbcb7041"
         },
         {
             "name": "",
