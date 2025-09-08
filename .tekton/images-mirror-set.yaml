@@ -98,3 +98,9 @@ spec:
     - mirrors:
         - quay.io/securesign/policy-controller-operator-bundle
       source: registry.redhat.io/rhtas/policy-controller-operator-bundle
+    - mirrors:
+        - quay.io/securesign/model-validation-operator-bundle
+      source: registry.redhat.io/rhtas/model-validation-operator-bundle
+    - mirrors:
+        - quay.io/securesign/model-validation-operator
+      source: registry.redhat.io/rhtas/model-validation-rhel9-operator
