@@ -13,7 +13,7 @@
     "package": "model-validation-operator",
     "entries": [
         {
-            "name": "model-validation-operator.v0.0.1-techpreview"
+            "name": "model-validation-operator.v0.0.1"
         }
     ]
 }
