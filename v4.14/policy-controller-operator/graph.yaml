@@ -11,6 +11,6 @@ entries:
     name: tech-preview
     package: policy-controller-operator
     schema: olm.channel
-  - image: registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:c6d1b14d50b6b5b278a39405df67f7424bc9339a76f43adde78a53105f23d84b
+  - image: registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:99a235e90f8e42f528f6e92825c55eb0c471ebb0edaa509c5c925b20c7fe4d4f
     name: policy-controller-operator.v0.0.1-techpreview
     schema: olm.bundle
