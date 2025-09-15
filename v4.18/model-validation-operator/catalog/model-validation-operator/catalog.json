@@ -21,7 +21,7 @@
     "schema": "olm.bundle",
     "name": "model-validation-operator.v0.0.1",
     "package": "model-validation-operator",
-    "image": "registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:6fdc9e863307d69d14c648ede700d6dd3a4972940196cdaf7bf0a0bffbcb7041",
+    "image": "registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:ff92b467706553398737b25e8919c170d2110284beecc288b70a09c78dfbd672",
     "properties": [
         {
             "type": "olm.gvk",
@@ -45,7 +45,7 @@
                     "alm-examples": "[\n  {\n    \"apiVersion\": \"ml.sigstore.dev/v1alpha1\",\n    \"kind\": \"ModelValidation\",\n    \"metadata\": {\n      \"labels\": {\n        \"app.kubernetes.io/managed-by\": \"kustomize\",\n        \"app.kubernetes.io/name\": \"model-validation-operator\"\n      },\n      \"name\": \"modelvalidation-sample\"\n    },\n    \"spec\": null\n  }\n]",
                     "capabilities": "Basic Install",
                     "containerImage": "placeholder",
-                    "createdAt": "2025-09-08T10:02:27Z",
+                    "createdAt": "2025-09-15T10:59:24Z",
                     "features.operators.openshift.io/cnf": "false",
                     "features.operators.openshift.io/cni": "false",
                     "features.operators.openshift.io/csi": "false",
@@ -138,11 +138,11 @@
     "relatedImages": [
         {
             "name": "",
-            "image": "registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:6fdc9e863307d69d14c648ede700d6dd3a4972940196cdaf7bf0a0bffbcb7041"
+            "image": "registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:ff92b467706553398737b25e8919c170d2110284beecc288b70a09c78dfbd672"
         },
         {
             "name": "",
-            "image": "registry.redhat.io/rhtas/model-validation-rhel9-operator@sha256:5599f26b99839242bb6331e0e600254a8795d1bf4538bc7cd8ff14fb1b58ecb9"
+            "image": "registry.redhat.io/rhtas/model-validation-rhel9-operator@sha256:13bdb45438e1c423ac7f8a1b692632570956a9a7e16db61ca76ffeeffe102d9b"
         }
     ]
 }
