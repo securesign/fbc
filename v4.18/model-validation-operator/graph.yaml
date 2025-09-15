@@ -11,6 +11,6 @@ entries:
     name: tech-preview
     package: model-validation-operator
     schema: olm.channel
-  - image: registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:6fdc9e863307d69d14c648ede700d6dd3a4972940196cdaf7bf0a0bffbcb7041
+  - image: registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:ff92b467706553398737b25e8919c170d2110284beecc288b70a09c78dfbd672
     name: model-validation-operator.v0.0.1
     schema: olm.bundle
