@@ -103,7 +103,6 @@ entries:
         skips:
           - rhtas-operator.v1.2.0
           - rhtas-operator.v1.2.1
-
     name: stable
     package: rhtas-operator
     schema: olm.channel
@@ -150,7 +149,7 @@ entries:
   - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:7c4e739622f68cd924afcb41cc788cdadc34c725283a097e564d620f39637bac
     name: rhtas-operator.v1.2.1
     schema: olm.bundle
-  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:d9f4d856283ccec8b6de64145944f07b921763525d034fadf17ac4e074a92111
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:10979a097b67c3754d4bae175c45c0012f91b57241594a8dd56a6dd5b6525684
     name: rhtas-operator.v1.3.0
     schema: olm.bundle
 schema: olm.template.basic
