@@ -21,7 +21,7 @@
     "schema": "olm.bundle",
     "name": "model-validation-operator.v0.0.1",
     "package": "model-validation-operator",
-    "image": "registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:ff92b467706553398737b25e8919c170d2110284beecc288b70a09c78dfbd672",
+    "image": "registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:11dc96bd93f0a99a87ed49beefa13c959b9b8c029cc77cf93d228eccf7a599cb",
     "properties": [
         {
             "type": "olm.gvk",
@@ -42,10 +42,10 @@
             "type": "olm.csv.metadata",
             "value": {
                 "annotations": {
-                    "alm-examples": "[\n  {\n    \"apiVersion\": \"ml.sigstore.dev/v1alpha1\",\n    \"kind\": \"ModelValidation\",\n    \"metadata\": {\n      \"labels\": {\n        \"app.kubernetes.io/managed-by\": \"kustomize\",\n        \"app.kubernetes.io/name\": \"model-validation-operator\"\n      },\n      \"name\": \"modelvalidation-sample\"\n    },\n    \"spec\": null\n  }\n]",
+                    "alm-examples": "[\n  {\n    \"apiVersion\": \"ml.sigstore.dev/v1alpha1\",\n    \"kind\": \"ModelValidation\",\n    \"metadata\": {\n      \"labels\": {\n        \"app.kubernetes.io/managed-by\": \"kustomize\",\n        \"app.kubernetes.io/name\": \"model-validation-operator\"\n      },\n      \"name\": \"modelvalidation-sample\",\n      \"namespace\": \"model-validation-operator-system\"\n    },\n    \"spec\": null\n  }\n]",
                     "capabilities": "Basic Install",
                     "containerImage": "placeholder",
-                    "createdAt": "2025-09-15T10:59:24Z",
+                    "createdAt": "2025-09-18T12:59:45Z",
                     "features.operators.openshift.io/cnf": "false",
                     "features.operators.openshift.io/cni": "false",
                     "features.operators.openshift.io/csi": "false",
@@ -138,11 +138,11 @@
     "relatedImages": [
         {
             "name": "",
-            "image": "registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:ff92b467706553398737b25e8919c170d2110284beecc288b70a09c78dfbd672"
+            "image": "registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:11dc96bd93f0a99a87ed49beefa13c959b9b8c029cc77cf93d228eccf7a599cb"
         },
         {
             "name": "",
-            "image": "registry.redhat.io/rhtas/model-validation-rhel9-operator@sha256:13bdb45438e1c423ac7f8a1b692632570956a9a7e16db61ca76ffeeffe102d9b"
+            "image": "registry.redhat.io/rhtas/model-validation-rhel9-operator@sha256:4bf17874e73df887bfb73ee4a04faa370b598191476d304bcf5ac11a5c93cfd7"
         }
     ]
 }
