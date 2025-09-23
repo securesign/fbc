@@ -138,7 +138,7 @@
     "relatedImages": [
         {
             "name": "",
-            "image": "registry.redhat.io/rhtas/securesign/model-validation-operator-bundle@sha256:038892c9f860fed924e79f50f9e3d75197d0fe1c99258ff565f8b9552d007bfe"
+            "image": "registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:038892c9f860fed924e79f50f9e3d75197d0fe1c99258ff565f8b9552d007bfe"
         },
         {
             "name": "",
