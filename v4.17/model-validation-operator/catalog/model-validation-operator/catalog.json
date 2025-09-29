@@ -21,7 +21,7 @@
     "schema": "olm.bundle",
     "name": "model-validation-operator.v0.0.1",
     "package": "model-validation-operator",
-    "image": "registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:038892c9f860fed924e79f50f9e3d75197d0fe1c99258ff565f8b9552d007bfe",
+    "image": "registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:9b89c809d36c124a80fc210e111cc3fc22513c77bd37b1dd18360a5b85066bac",
     "properties": [
         {
             "type": "olm.gvk",
@@ -45,7 +45,7 @@
                     "alm-examples": "[\n  {\n    \"apiVersion\": \"ml.sigstore.dev/v1alpha1\",\n    \"kind\": \"ModelValidation\",\n    \"metadata\": {\n      \"labels\": {\n        \"app.kubernetes.io/managed-by\": \"kustomize\",\n        \"app.kubernetes.io/name\": \"model-validation-operator\"\n      },\n      \"name\": \"modelvalidation-sample\",\n      \"namespace\": \"model-validation-operator-system\"\n    },\n    \"spec\": null\n  }\n]",
                     "capabilities": "Basic Install",
                     "containerImage": "placeholder",
-                    "createdAt": "2025-09-23T11:21:50Z",
+                    "createdAt": "2025-09-26T15:39:29Z",
                     "features.operators.openshift.io/cnf": "false",
                     "features.operators.openshift.io/cni": "false",
                     "features.operators.openshift.io/csi": "false",
@@ -138,11 +138,11 @@
     "relatedImages": [
         {
             "name": "",
-            "image": "registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:038892c9f860fed924e79f50f9e3d75197d0fe1c99258ff565f8b9552d007bfe"
+            "image": "registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:9b89c809d36c124a80fc210e111cc3fc22513c77bd37b1dd18360a5b85066bac"
         },
         {
             "name": "",
-            "image": "registry.redhat.io/rhtas/model-validation-rhel9-operator@sha256:f39278fdfc8c2737481266b60a3f979466dd834247ecdc2158553d684b12edb5"
+            "image": "registry.redhat.io/rhtas/model-validation-rhel9-operator@sha256:57b56733231fe2e882ee25d62e214d59c8f550248e9e083d9fc2a1a7e44303e1"
         }
     ]
 }
