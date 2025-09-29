@@ -50,11 +50,13 @@ spec:
     - computeResources:
         limits:
           memory: 3Gi
+      name: fbc-fips-check
   - pipelineTaskName: fbc-target-index-pruning-check
     stepSpecs:
     - computeResources:
         limits:
           memory: 3Gi
+      name: fbc-target-index-pruning
   taskRunTemplate:
     serviceAccountName: build-pipeline-mvo-fbc-v4-14
   workspaces:
