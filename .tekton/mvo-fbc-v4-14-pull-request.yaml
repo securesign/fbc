@@ -44,6 +44,19 @@ spec:
     - name: pathInRepo
       value: pipelines/fbc-builder.yaml
     resolver: git
+  taskRunSpecs:
+  - pipelineTaskName: fbc-fips-check-oci-ta
+    stepSpecs:
+    - computeResources:
+        limits:
+          memory: 3Gi
+      name: fbc-fips-check-oci-ta
+  - pipelineTaskName: fbc-target-index-pruning-check
+    stepSpecs:
+    - computeResources:
+        limits:
+          memory: 3Gi
+      name: fbc-target-index-pruning-check
   taskRunTemplate:
     serviceAccountName: build-pipeline-mvo-fbc-v4-14
   workspaces:
