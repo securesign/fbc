@@ -50,13 +50,13 @@ spec:
     - computeResources:
         limits:
           memory: 3Gi
-      name: fbc-fips-check
+      name: use-trusted-artifact
   - pipelineTaskName: fbc-target-index-pruning-check
     stepSpecs:
     - computeResources:
         limits:
           memory: 3Gi
-      name: fbc-target-index-pruning
+      name: pull-rendered-catalog
   taskRunTemplate:
     serviceAccountName: build-pipeline-mvo-fbc-v4-14
   workspaces:
