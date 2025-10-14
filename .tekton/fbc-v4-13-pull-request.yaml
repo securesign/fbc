@@ -31,6 +31,8 @@ spec:
     value: v4.13/rhtas-operator
   - name: revision
     value: '{{revision}}'
+  - name: ocp-release-version
+    value: "v4.13"
   pipelineRef:
     params:
     - name: url
