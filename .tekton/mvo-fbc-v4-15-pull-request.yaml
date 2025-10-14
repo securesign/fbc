@@ -35,8 +35,6 @@ spec:
     value: catalog.Dockerfile
   - name: path-context
     value: v4.15/model-validation-operator
-  - name: ocp-release-version
-    value: "v4.15"
   pipelineRef:
     params:
     - name: url
