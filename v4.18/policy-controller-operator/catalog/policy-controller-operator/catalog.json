@@ -9,6 +9,26 @@
 }
 {
     "schema": "olm.channel",
+    "name": "stable",
+    "package": "policy-controller-operator",
+    "entries": [
+        {
+            "name": "policy-controller-operator.v1.0.0"
+        }
+    ]
+}
+{
+    "schema": "olm.channel",
+    "name": "stable-v1.0",
+    "package": "policy-controller-operator",
+    "entries": [
+        {
+            "name": "policy-controller-operator.v1.0.0"
+        }
+    ]
+}
+{
+    "schema": "olm.channel",
     "name": "tech-preview",
     "package": "policy-controller-operator",
     "entries": [
@@ -167,12 +187,12 @@
     ],
     "relatedImages": [
         {
-            "name": "",
-            "image": "registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:0f31421a30a1cefa861e3edd4c3ca740afe4bef9a9fd0e2857a3a6529a675d95"
-        },
-        {
             "name": "ose-cli",
             "image": "registry.redhat.io/openshift4/ose-cli@sha256:2bc6e85e12269f8fe42bebcc69587714715bcf69c60a541096a07683cc158fa5"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:0f31421a30a1cefa861e3edd4c3ca740afe4bef9a9fd0e2857a3a6529a675d95"
         },
         {
             "name": "",
@@ -181,6 +201,173 @@
         {
             "name": "policy-controller",
             "image": "registry.redhat.io/rhtas/policy-controller-rhel9@sha256:a876c38c134f41259a469f2fd3ce33e6b07a7a4ddbf29bb6768316c5c4d64004"
+        }
+    ]
+}
+{
+    "schema": "olm.bundle",
+    "name": "policy-controller-operator.v1.0.0",
+    "package": "policy-controller-operator",
+    "image": "registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:3cad9caca98a18778c21b1554a9f08d440f9ffe0eb6906409593428683ffdbad",
+    "properties": [
+        {
+            "type": "olm.gvk",
+            "value": {
+                "group": "policy.sigstore.dev",
+                "kind": "ClusterImagePolicy",
+                "version": "v1alpha1"
+            }
+        },
+        {
+            "type": "olm.gvk",
+            "value": {
+                "group": "policy.sigstore.dev",
+                "kind": "ClusterImagePolicy",
+                "version": "v1beta1"
+            }
+        },
+        {
+            "type": "olm.gvk",
+            "value": {
+                "group": "policy.sigstore.dev",
+                "kind": "TrustRoot",
+                "version": "v1alpha1"
+            }
+        },
+        {
+            "type": "olm.gvk",
+            "value": {
+                "group": "rhtas.charts.redhat.com",
+                "kind": "PolicyController",
+                "version": "v1alpha1"
+            }
+        },
+        {
+            "type": "olm.package",
+            "value": {
+                "packageName": "policy-controller-operator",
+                "version": "1.0.0"
+            }
+        },
+        {
+            "type": "olm.csv.metadata",
+            "value": {
+                "annotations": {
+                    "alm-examples": "[\n  {\n    \"apiVersion\": \"policy.sigstore.dev/v1alpha1\",\n    \"kind\": \"TrustRoot\",\n    \"metadata\": {\n      \"name\": \"trust-root\"\n    },\n    \"spec\": {\n      \"remote\": {\n        \"mirror\": \"https://tuf.example.com\",\n        \"root\": \"\\u003cbase64 encode trust root\\u003e\\n\"\n      }\n    }\n  },\n  {\n    \"apiVersion\": \"policy.sigstore.dev/v1beta1\",\n    \"kind\": \"ClusterImagePolicy\",\n    \"metadata\": {\n      \"name\": \"cluster-image-policy\"\n    },\n    \"spec\": {\n      \"authorities\": [\n        {\n          \"ctlog\": {\n            \"trustRootRef\": \"trust-root-ref\",\n            \"url\": \"https://rekor.example.com\"\n          },\n          \"keyless\": {\n            \"identities\": [\n              {\n                \"issuer\": \"https://oidc.example.com\",\n                \"subject\": \"oidc-issuer-subject\"\n              }\n            ],\n            \"trustRootRef\": \"trust-root-ref\",\n            \"url\": \"https://fulcio.example.com\"\n          }\n        }\n      ],\n      \"images\": [\n        {\n          \"glob\": \"**\"\n        }\n      ]\n    }\n  },\n  {\n    \"apiVersion\": \"rhtas.charts.redhat.com/v1alpha1\",\n    \"kind\": \"PolicyController\",\n    \"metadata\": {\n      \"name\": \"policycontroller-sample\"\n    },\n    \"spec\": {\n      \"policy-controller\": {\n        \"cosign\": {\n          \"webhookName\": \"policy.rhtas.com\"\n        },\n        \"webhook\": {\n          \"extraArgs\": {\n            \"mutating-webhook-name\": \"defaulting.clusterimagepolicy.rhtas.com\",\n            \"validating-webhook-name\": \"validating.clusterimagepolicy.rhtas.com\",\n            \"webhook-name\": \"policy.rhtas.com\"\n          },\n          \"failurePolicy\": \"Fail\",\n          \"name\": \"webhook\",\n          \"namespaceSelector\": {\n            \"matchExpressions\": [\n              {\n                \"key\": \"policy.rhtas.com/include\",\n                \"operator\": \"In\",\n                \"values\": [\n                  \"true\"\n                ]\n              }\n            ]\n          },\n          \"webhookNames\": {\n            \"defaulting\": \"defaulting.clusterimagepolicy.rhtas.com\",\n            \"validating\": \"validating.clusterimagepolicy.rhtas.com\"\n          }\n        }\n      }\n    }\n  }\n]",
+                    "capabilities": "Basic Install",
+                    "containerImage": "registry.redhat.io/rhtas/policy-controller-rhel9-operator@sha256:f048de45228d14a340165e4a56a93bdfac38cb07f4ed4afdadb544cee5b921fa",
+                    "createdAt": "2025-10-16T13:09:25Z",
+                    "features.operators.openshift.io/cnf": "false",
+                    "features.operators.openshift.io/cni": "false",
+                    "features.operators.openshift.io/csi": "false",
+                    "features.operators.openshift.io/disconnected": "false",
+                    "features.operators.openshift.io/fips-compliant": "false",
+                    "features.operators.openshift.io/proxy-aware": "false",
+                    "features.operators.openshift.io/tls-profiles": "false",
+                    "features.operators.openshift.io/token-auth-aws": "false",
+                    "features.operators.openshift.io/token-auth-azure": "false",
+                    "features.operators.openshift.io/token-auth-gcp": "false",
+                    "operators.openshift.io/valid-subscription": "[\"Red Hat Trusted Artifact Signer\"]",
+                    "operators.operatorframework.io/builder": "operator-sdk-v1.36.1-ocp",
+                    "operators.operatorframework.io/project_layout": "helm.sdk.operatorframework.io/v1",
+                    "repository": "https://github.com/securesign/policy-controller-operator",
+                    "support": "Red Hat"
+                },
+                "apiServiceDefinitions": {},
+                "crdDescriptions": {
+                    "owned": [
+                        {
+                            "name": "clusterimagepolicies.policy.sigstore.dev",
+                            "version": "v1alpha1",
+                            "kind": "ClusterImagePolicy",
+                            "displayName": "Cluster Image Policy",
+                            "description": "Cluster Image Policy is the Schema for the clusterimagepolicies API"
+                        },
+                        {
+                            "name": "clusterimagepolicies.policy.sigstore.dev",
+                            "version": "v1beta1",
+                            "kind": "ClusterImagePolicy",
+                            "displayName": "Cluster Image Policy",
+                            "description": "Cluster Image Policy is the Schema for the clusterimagepolicies API"
+                        },
+                        {
+                            "name": "policycontrollers.rhtas.charts.redhat.com",
+                            "version": "v1alpha1",
+                            "kind": "PolicyController",
+                            "displayName": "Policy Controller",
+                            "description": "Policy Controller is the Schema for the policycontrollers API"
+                        },
+                        {
+                            "name": "trustroots.policy.sigstore.dev",
+                            "version": "v1alpha1",
+                            "kind": "TrustRoot",
+                            "displayName": "Trust Root",
+                            "description": "Trust Root is the Schema for the trustroots API"
+                        }
+                    ]
+                },
+                "description": "A Helm-managed Operator that installs and maintains the Red Hat Trusted Artifact Signer's (RHTAS) Policy Controller on OpenShift.\nThe Operator deploys an admission-webhook that evaluates every create and update request against Cluster Image Policies, this lets cluster administrators\nblock non-compliant workloads and enforce supply-chain, security, and compliance standards across any namespaces.\n",
+                "displayName": "Policy Controller Operator",
+                "installModes": [
+                    {
+                        "type": "OwnNamespace",
+                        "supported": true
+                    },
+                    {
+                        "type": "SingleNamespace",
+                        "supported": false
+                    },
+                    {
+                        "type": "MultiNamespace",
+                        "supported": false
+                    },
+                    {
+                        "type": "AllNamespaces",
+                        "supported": true
+                    }
+                ],
+                "keywords": [
+                    "security",
+                    "rhtas",
+                    "trust",
+                    "admissions controller",
+                    "policy controller"
+                ],
+                "links": [
+                    {
+                        "name": "Policy Controller Operator",
+                        "url": "https://github.com/securesign/policy-controller-operator"
+                    }
+                ],
+                "maintainers": [
+                    {
+                        "name": "Jason Power",
+                        "email": "japower@redhat.com"
+                    }
+                ],
+                "maturity": "stable",
+                "provider": {
+                    "name": "Red Hat"
+                }
+            }
+        }
+    ],
+    "relatedImages": [
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:3cad9caca98a18778c21b1554a9f08d440f9ffe0eb6906409593428683ffdbad"
+        },
+        {
+            "name": "ose-cli",
+            "image": "registry.redhat.io/openshift4/ose-cli@sha256:2bc6e85e12269f8fe42bebcc69587714715bcf69c60a541096a07683cc158fa5"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/policy-controller-rhel9-operator@sha256:f048de45228d14a340165e4a56a93bdfac38cb07f4ed4afdadb544cee5b921fa"
+        },
+        {
+            "name": "policy-controller",
+            "image": "registry.redhat.io/rhtas/policy-controller-rhel9@sha256:ea4ac2b005571bc28270f8420dff30a0f02381bcd78153e1014f9006d1a17609"
         }
     ]
 }
