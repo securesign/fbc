@@ -32,6 +32,8 @@ spec:
     value: catalog.Dockerfile
   - name: path-context
     value: v4.19/rhtas-operator
+  - name: ocp-release-version
+    value: "v4.19"
   pipelineRef:
     params:
     - name: url
