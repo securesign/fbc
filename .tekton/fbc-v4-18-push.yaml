@@ -8,7 +8,7 @@ metadata:
     pipelinesascode.tekton.dev/cancel-in-progress: "false"
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
-      == "main" && ( "v4.18/rhtas-operator/***".pathChanged() || ".tekton/fbc-v4-18-push.yaml".pathChanged()
+      == "stage" && ( "v4.18/rhtas-operator/***".pathChanged() || ".tekton/fbc-v4-18-push.yaml".pathChanged()
       || "trigger-konflux-builds.txt".pathChanged() )
   creationTimestamp: null
   labels:

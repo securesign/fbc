@@ -8,7 +8,7 @@ metadata:
     pipelinesascode.tekton.dev/cancel-in-progress: "false"
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
-      == "main" && ( "v4.20/policy-controller-operator/***".pathChanged() || ".tekton/pco-fbc-v4-20-push.yaml".pathChanged()
+      == "stage" && ( "v4.20/policy-controller-operator/***".pathChanged() || ".tekton/pco-fbc-v4-20-push.yaml".pathChanged()
       )
   creationTimestamp: null
   labels:
