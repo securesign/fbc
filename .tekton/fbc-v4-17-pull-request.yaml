@@ -12,10 +12,10 @@ metadata:
       || "trigger-konflux-builds.txt".pathChanged() )
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: fbc-v4-17
-    appstudio.openshift.io/component: fbc-v4-17
+    appstudio.openshift.io/application: rhtas-fbc-stage
+    appstudio.openshift.io/component: rhtas-fbc-stage-v4-17
     pipelines.appstudio.openshift.io/type: build
-  name: fbc-v4-17-on-pull-request
+  name: rhtas-fbc-stage-v4-17-on-pull-request
   namespace: rhtas-tenant
 spec:
   params:

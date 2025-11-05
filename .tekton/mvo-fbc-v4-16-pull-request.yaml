@@ -13,10 +13,10 @@ metadata:
       )
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: mvo-fbc-v4-16
-    appstudio.openshift.io/component: mvo-fbc-v4-16
+    appstudio.openshift.io/application: mvo-fbc-stage
+    appstudio.openshift.io/component: mvo-fbc-stage-v4-16
     pipelines.appstudio.openshift.io/type: build
-  name: mvo-fbc-v4-16-on-pull-request
+  name: mvo-fbc-stage-v4-16-on-pull-request
   namespace: rhtas-tenant
 spec:
   params:

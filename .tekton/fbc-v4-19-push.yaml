@@ -12,10 +12,10 @@ metadata:
       )
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: fbc-v4-19
-    appstudio.openshift.io/component: fbc-v4-19
+    appstudio.openshift.io/application: rhtas-fbc-stage
+    appstudio.openshift.io/component: rhtas-fbc-stage-v4-19
     pipelines.appstudio.openshift.io/type: build
-  name: fbc-v4-19-on-push
+  name: rhtas-fbc-stage-v4-19-on-push
   namespace: rhtas-tenant
 spec:
   params:
