@@ -8,6 +8,10 @@ entries:
       mediatype: image/svg+xml
   - entries:
       - name: rhtas-operator.v1.3.0
+      - name: rhtas-operator.v1.3.1
+        replaces: rhtas-operator.v1.3.0
+        skips:
+          - rhtas-operator.v1.3.0
     name: stable-v1.3
     package: rhtas-operator
     schema: olm.channel
@@ -63,23 +67,29 @@ entries:
         skips:
           - rhtas-operator.v1.2.0
           - rhtas-operator.v1.2.1
+      - name: rhtas-operator.v1.3.1
+        replaces: rhtas-operator.v1.3.0
+        skips:
+          - rhtas-operator.v1.2.0
+          - rhtas-operator.v1.2.1
+          - rhtas-operator.v1.3.0
     name: stable
     package: rhtas-operator
     schema: olm.channel
   - entries:
-      - message: "stable-v1.1 is no longer supported. Please switch to channel 'stable' or channel 'stable-v1.2' for continued support."
+      - message: stable-v1.1 is no longer supported. Please switch to channel 'stable' or channel 'stable-v1.2' for continued support.
         reference:
           name: stable-v1.1
           schema: olm.channel
-      - message: "rhtas-operator.v1.1.0 is deprecated. Please consider updating for continued support."
+      - message: rhtas-operator.v1.1.0 is deprecated. Please consider updating for continued support.
         reference:
           name: rhtas-operator.v1.1.0
           schema: olm.bundle
-      - message: "rhtas-operator.v1.1.1 is deprecated. Please consider updating for continued support."
+      - message: rhtas-operator.v1.1.1 is deprecated. Please consider updating for continued support.
         reference:
           name: rhtas-operator.v1.1.1
           schema: olm.bundle
-      - message: "rhtas-operator.v1.1.2 is deprecated. Please consider updating for continued support."
+      - message: rhtas-operator.v1.1.2 is deprecated. Please consider updating for continued support.
         reference:
           name: rhtas-operator.v1.1.2
           schema: olm.bundle
@@ -102,5 +112,8 @@ entries:
     schema: olm.bundle
   - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:a910a6fb09bb6332b8f28a93a0420cdc5876cc2dd512afb44afa508311700fbc
     name: rhtas-operator.v1.3.0
+    schema: olm.bundle
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:24015d12273fae1994b24aec450aecf225cd0b88c0f1429d662b7ed8c38a640c
+    name: rhtas-operator.v1.3.1
     schema: olm.bundle
 schema: olm.template.basic
