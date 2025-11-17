@@ -8,9 +8,14 @@ entries:
       mediatype: image/svg+xml
   - entries:
       - name: model-validation-operator.v0.0.1
+      - name: model-validation-operator.v0.0.2
+        replaces: model-validation-operator.v0.0.1
     name: tech-preview
     package: model-validation-operator
     schema: olm.channel
   - image: registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:9b89c809d36c124a80fc210e111cc3fc22513c77bd37b1dd18360a5b85066bac
     name: model-validation-operator.v0.0.1
+    schema: olm.bundle
+  - image: registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:a48214bb858cb4f05c580e0d1e0bd2f246fc8185420d0f6a2a3e39eecabc947f
+    name: model-validation-operator.v0.0.2
     schema: olm.bundle
