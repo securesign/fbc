@@ -8,14 +8,14 @@ metadata:
     pipelinesascode.tekton.dev/cancel-in-progress: "false"
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
-      == "main" && ( "v4.20/policy-controller-operator/***".pathChanged() || ".tekton/pco-fbc-v4-20-push.yaml".pathChanged()
+      == "stage" && ( "v4.20/policy-controller-operator/***".pathChanged() || ".tekton/pco-fbc-v4-20-push.yaml".pathChanged()
       )
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: pco-fbc-v4-20
-    appstudio.openshift.io/component: pco-fbc-v4-20
+    appstudio.openshift.io/application: pco-fbc-stage
+    appstudio.openshift.io/component: pco-fbc-stage-v4-20
     pipelines.appstudio.openshift.io/type: build
-  name: pco-fbc-v4-20-on-push
+  name: pco-fbc-stage-v4-20-on-push
   namespace: rhtas-tenant
 spec:
   params:
