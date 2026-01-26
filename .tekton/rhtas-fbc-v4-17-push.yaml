@@ -7,14 +7,14 @@ metadata:
     build.appstudio.redhat.com/target_branch: '{{target_branch}}'
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
-      == "main" && ( "v4.16/rhtas-operator/***".pathChanged() || ".tekton/fbc-v4-16-push.yaml".pathChanged()
+      == "stage" && ( "v4.17/rhtas-operator/***".pathChanged() || ".tekton/rhtas-fbc-v4-17-push.yaml".pathChanged()
       || "trigger-konflux-builds.txt".pathChanged() )
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: fbc-v4-16
-    appstudio.openshift.io/component: fbc-v4-16
+    appstudio.openshift.io/application: rhtas-fbc-stage
+    appstudio.openshift.io/component: rhtas-fbc-stage-v4-17
     pipelines.appstudio.openshift.io/type: build
-  name: fbc-v4-16-on-push
+  name: rhtas-fbc-v4-17-on-push
   namespace: rhtas-tenant
 spec:
   params:
@@ -23,13 +23,13 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/securesign/fbc-v4-16:{{revision}}
+    value: quay.io/securesign/fbc-v4-17:{{revision}}
   - name: dockerfile
     value: catalog.Dockerfile
   - name: path-context
-    value: v4.16/rhtas-operator
+    value: v4.17/rhtas-operator
   - name: ocp-release-version
-    value: "v4.16"
+    value: "v4.17"
   pipelineRef:
     params:
     - name: url
@@ -40,7 +40,7 @@ spec:
       value: pipelines/fbc-builder.yaml
     resolver: git
   taskRunTemplate:
-    serviceAccountName: build-pipeline-fbc-v4-16
+    serviceAccountName: build-pipeline-rhtas-fbc-stage-v4-17
   workspaces:
   - name: git-auth
     secret:
