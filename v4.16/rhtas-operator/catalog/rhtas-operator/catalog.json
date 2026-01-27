@@ -40,16 +40,6 @@
             ]
         },
         {
-            "name": "rhtas-operator.v1.2.1",
-            "replaces": "rhtas-operator.v1.1.0",
-            "skips": [
-                "rhtas-operator.v1.1.0",
-                "rhtas-operator.v1.1.1",
-                "rhtas-operator.v1.1.2",
-                "rhtas-operator.v1.2.0"
-            ]
-        },
-        {
             "name": "rhtas-operator.v1.3.0",
             "replaces": "rhtas-operator.v1.2.0",
             "skips": [
@@ -64,6 +54,15 @@
                 "rhtas-operator.v1.2.0",
                 "rhtas-operator.v1.2.1",
                 "rhtas-operator.v1.3.0"
+            ]
+        },
+        {
+            "name": "rhtas-operator.v1.2.1",
+            "replaces": "rhtas-operator.v1.3.0",
+            "skips": [
+                "rhtas-operator.v1.2.0",
+                "rhtas-operator.v1.3.0",
+                "rhtas-operator.v1.3.1"
             ]
         }
     ]
@@ -973,7 +972,7 @@
     "schema": "olm.bundle",
     "name": "rhtas-operator.v1.2.1",
     "package": "rhtas-operator",
-    "image": "registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:7c4e739622f68cd924afcb41cc788cdadc34c725283a097e564d620f39637bac",
+    "image": "registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:6c4eb3840ed07bb045831fd8a261148efcab6843ddb0dc5e0fd8cff5b3f5469f",
     "properties": [
         {
             "type": "olm.gvk",
@@ -1113,6 +1112,10 @@
     ],
     "relatedImages": [
         {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:6c4eb3840ed07bb045831fd8a261148efcab6843ddb0dc5e0fd8cff5b3f5469f"
+        },
+        {
             "name": "trillian-netcat",
             "image": "registry.redhat.io/openshift4/ose-tools-rhel9@sha256:030986ea26f33db3a192c67a93cd2bde352f23c68a17b062fc062955675c3c51"
         },
@@ -1139,10 +1142,6 @@
         {
             "name": "rekor-server",
             "image": "registry.redhat.io/rhtas/rekor-server-rhel9@sha256:02fbd4772c185edf38fcee4e5c5e1c9dad82b77c9da824addaebc445b67d35ac"
-        },
-        {
-            "name": "",
-            "image": "registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:7c4e739622f68cd924afcb41cc788cdadc34c725283a097e564d620f39637bac"
         },
         {
             "name": "",
@@ -1535,10 +1534,6 @@
     ],
     "relatedImages": [
         {
-            "name": "",
-            "image": "registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:1c0f0f18fdb80179d431e0fe63f4517f323b97d4adad556131281efa20798823"
-        },
-        {
             "name": "trillian-netcat",
             "image": "registry.redhat.io/openshift4/ose-tools-rhel9@sha256:b2873114e9da894239de944828f07c4fba21aac0224d802acc47aef5ce161b41"
         },
@@ -1573,6 +1568,10 @@
         {
             "name": "rekor-server",
             "image": "registry.redhat.io/rhtas/rekor-server-rhel9@sha256:799b0b86f83f0fdf450ecbd2726419570b15f6ec5ba5b814750d45b8269e4dac"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:1c0f0f18fdb80179d431e0fe63f4517f323b97d4adad556131281efa20798823"
         },
         {
             "name": "",
