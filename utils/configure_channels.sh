@@ -44,7 +44,7 @@ for channel in "${channel_list[@]}"; do
       fi
     done
     [[ -z "$REPLACES" ]] && REPLACES="$REPLACES_FALLBACK"
-    [[ -n "$REPLACES" ]] && SKIPS=$(echo "$SKIPS" | tr ',' '\n' | grep -v "^${REPLACES}$" | paste -sd ',' -)
+    [[ -n "$REPLACES" ]] && SKIPS=$(echo "$SKIPS" | tr ',' '\n' | { grep -v "^${REPLACES}$" || true; } | paste -sd ',' -)
 
     # Add bundle with replaces/skips
     export REPLACES SKIPS
