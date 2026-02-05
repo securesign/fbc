@@ -8,14 +8,35 @@ entries:
       mediatype: image/svg+xml
   - entries:
       - name: policy-controller-operator.v1.0.0
+        replaces: policy-controller-operator.v0.0.1-techpreview
     name: stable-v1.0
     package: policy-controller-operator
     schema: olm.channel
   - entries:
       - name: policy-controller-operator.v1.0.0
+        replaces: policy-controller-operator.v0.0.1-techpreview
     name: stable
     package: policy-controller-operator
     schema: olm.channel
+  - entries:
+      - name: policy-controller-operator.v0.0.1-techpreview
+    name: tech-preview
+    package: policy-controller-operator
+    schema: olm.channel
+  - image: registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:0f31421a30a1cefa861e3edd4c3ca740afe4bef9a9fd0e2857a3a6529a675d95
+    name: policy-controller-operator.v0.0.1-techpreview
+    schema: olm.bundle
   - image: registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:5fc84a0c6e851a524c505240f9692cc9519f25a83cbae8917ef824b2f4fdcc55
     name: policy-controller-operator.v1.0.0
     schema: olm.bundle
+  - entries:
+      - message: tech-preview is no longer supported. Please switch to channel 'stable' or channel 'stable-v1.0' for continued support.
+        reference:
+          name: stable-v1.0
+          schema: olm.channel
+      - message: policy-controller-operator.v0.0.1-techpreview is deprecated. Please consider updating for continued support.
+        reference:
+          name: policy-controller-operator.v0.0.1-techpreview
+          schema: olm.bundle
+    package: policy-controller-operator
+    schema: olm.deprecations
