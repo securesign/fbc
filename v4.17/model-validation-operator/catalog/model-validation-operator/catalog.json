@@ -154,7 +154,7 @@
     "schema": "olm.bundle",
     "name": "model-validation-operator.v0.0.2",
     "package": "model-validation-operator",
-    "image": "registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:a48214bb858cb4f05c580e0d1e0bd2f246fc8185420d0f6a2a3e39eecabc947f",
+    "image": "registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:7eb7858c0b3acfed89c94f97c2c06b91b9c6e2a3beb5d78286bae44b0acbebd1",
     "properties": [
         {
             "type": "olm.gvk",
@@ -178,7 +178,7 @@
                     "alm-examples": "[\n  {\n    \"apiVersion\": \"ml.sigstore.dev/v1alpha1\",\n    \"kind\": \"ModelValidation\",\n    \"metadata\": {\n      \"labels\": {\n        \"app.kubernetes.io/managed-by\": \"kustomize\",\n        \"app.kubernetes.io/name\": \"model-validation-operator\"\n      },\n      \"name\": \"modelvalidation-sample\",\n      \"namespace\": \"model-validation-operator-system\"\n    },\n    \"spec\": null\n  }\n]",
                     "capabilities": "Basic Install",
                     "containerImage": "placeholder",
-                    "createdAt": "2025-11-17T11:44:47Z",
+                    "createdAt": "2026-01-27T10:32:57Z",
                     "features.operators.openshift.io/cnf": "false",
                     "features.operators.openshift.io/cni": "false",
                     "features.operators.openshift.io/csi": "false",
@@ -271,11 +271,11 @@
     "relatedImages": [
         {
             "name": "",
-            "image": "registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:a48214bb858cb4f05c580e0d1e0bd2f246fc8185420d0f6a2a3e39eecabc947f"
+            "image": "registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:7eb7858c0b3acfed89c94f97c2c06b91b9c6e2a3beb5d78286bae44b0acbebd1"
         },
         {
             "name": "",
-            "image": "registry.redhat.io/rhtas/model-validation-rhel9-operator@sha256:281c79ee9b27e95a723f478889ea1d7297b152a47e32c58a599b5ea6f046d787"
+            "image": "registry.redhat.io/rhtas/model-validation-rhel9-operator@sha256:75adfe8c0f56d48e371c80b3ce0e23482b6644e9750f11da60d9cda9511e0865"
         }
     ]
 }

@@ -16,6 +16,6 @@ entries:
   - image: registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:9b89c809d36c124a80fc210e111cc3fc22513c77bd37b1dd18360a5b85066bac
     name: model-validation-operator.v0.0.1
     schema: olm.bundle
-  - image: registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:a48214bb858cb4f05c580e0d1e0bd2f246fc8185420d0f6a2a3e39eecabc947f
+  - image: registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:7eb7858c0b3acfed89c94f97c2c06b91b9c6e2a3beb5d78286bae44b0acbebd1
     name: model-validation-operator.v0.0.2
     schema: olm.bundle
