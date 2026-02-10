@@ -1,0 +1,52 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  annotations:
+    build.appstudio.openshift.io/repo: https://github.com/securesign/fbc?rev={{revision}}
+    build.appstudio.redhat.com/commit_sha: '{{revision}}'
+    build.appstudio.redhat.com/target_branch: '{{target_branch}}'
+    pipelinesascode.tekton.dev/cancel-in-progress: "false"
+    pipelinesascode.tekton.dev/max-keep-runs: "3"
+    pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
+      == "main" && ( "v4.21/policy-controller-operator/***".pathChanged() || ".tekton/pco-fbc-v4-21-push.yaml".pathChanged()
+      )
+  creationTimestamp: null
+  labels:
+    appstudio.openshift.io/application: pco-fbc-v4-21
+    appstudio.openshift.io/component: pco-fbc-v4-21
+    pipelines.appstudio.openshift.io/type: build
+  name: pco-fbc-v4-21-on-push
+  namespace: rhtas-tenant
+spec:
+  params:
+  - name: git-url
+    value: '{{source_url}}'
+  - name: revision
+    value: '{{revision}}'
+  - name: output-image
+    value: quay.io/securesign/pco-fbc-v4-21:{{revision}}
+  - name: build-platforms
+    value:
+    - linux/x86_64
+  - name: dockerfile
+    value: catalog.Dockerfile
+  - name: path-context
+    value: v4.21/policy-controller-operator
+  - name: ocp-release-version
+    value: "v4.21"
+  pipelineRef:
+    params:
+    - name: url
+      value: https://github.com/securesign/pipelines.git
+    - name: revision
+      value: main
+    - name: pathInRepo
+      value: pipelines/fbc-builder.yaml
+    resolver: git
+  taskRunTemplate:
+    serviceAccountName: build-pipeline-pco-fbc-v4-21
+  workspaces:
+  - name: git-auth
+    secret:
+      secretName: '{{ git_auth_secret }}'
+status: {}
