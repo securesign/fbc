@@ -1635,7 +1635,7 @@
     "schema": "olm.bundle",
     "name": "rhtas-operator.v1.2.2",
     "package": "rhtas-operator",
-    "image": "registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:6cfbeb14c1b23a50ca924446fba126071c52e21eefb13efef8b58a473890c7a7",
+    "image": "quay.io/securesign/rhtas-operator-bundle-v1-2@sha256:9e4a194864b8530f442aba5e8300e348dcfa0cb9a5957e1ad9f22474ebd8b343",
     "properties": [
         {
             "type": "olm.gvk",
@@ -1706,8 +1706,8 @@
                 "annotations": {
                     "alm-examples": "[\n  {\n    \"apiVersion\": \"rhtas.redhat.com/v1alpha1\",\n    \"kind\": \"CTlog\",\n    \"metadata\": {\n      \"labels\": {\n        \"app.kubernetes.io/instance\": \"securesign-sample\",\n        \"app.kubernetes.io/name\": \"securesign-sample\",\n        \"app.kubernetes.io/part-of\": \"trusted-artifact-signer\"\n      },\n      \"name\": \"ctlog-sample\"\n    },\n    \"spec\": null\n  },\n  {\n    \"apiVersion\": \"rhtas.redhat.com/v1alpha1\",\n    \"kind\": \"Fulcio\",\n    \"metadata\": {\n      \"labels\": {\n        \"app.kubernetes.io/instance\": \"securesign-sample\",\n        \"app.kubernetes.io/name\": \"securesign-sample\",\n        \"app.kubernetes.io/part-of\": \"trusted-artifact-signer\"\n      },\n      \"name\": \"fulcio-sample\"\n    },\n    \"spec\": {\n      \"certificate\": {\n        \"commonName\": \"fulcio.hostname\",\n        \"organizationEmail\": \"jdoe@redhat.com\",\n        \"organizationName\": \"Red Hat\"\n      },\n      \"config\": {\n        \"OIDCIssuers\": [\n          {\n            \"ClientID\": \"trusted-artifact-signer\",\n            \"Issuer\": \"https://your-oidc-issuer-url\",\n            \"IssuerURL\": \"https://your-oidc-issuer-url\",\n            \"Type\": \"email\"\n          }\n        ]\n      },\n      \"externalAccess\": {\n        \"enabled\": true\n      }\n    }\n  },\n  {\n    \"apiVersion\": \"rhtas.redhat.com/v1alpha1\",\n    \"kind\": \"Rekor\",\n    \"metadata\": {\n      \"labels\": {\n        \"app.kubernetes.io/instance\": \"securesign-sample\",\n        \"app.kubernetes.io/name\": \"securesign-sample\",\n        \"app.kubernetes.io/part-of\": \"trusted-artifact-signer\"\n      },\n      \"name\": \"rekor-sample\"\n    },\n    \"spec\": {\n      \"externalAccess\": {\n        \"enabled\": true\n      }\n    }\n  },\n  {\n    \"apiVersion\": \"rhtas.redhat.com/v1alpha1\",\n    \"kind\": \"Securesign\",\n    \"metadata\": {\n      \"annotations\": {\n        \"rhtas.redhat.com/metrics\": \"true\"\n      },\n      \"labels\": {\n        \"app.kubernetes.io/instance\": \"securesign-sample\",\n        \"app.kubernetes.io/name\": \"securesign-sample\",\n        \"app.kubernetes.io/part-of\": \"trusted-artifact-signer\"\n      },\n      \"name\": \"securesign-sample\"\n    },\n    \"spec\": {\n      \"ctlog\": null,\n      \"fulcio\": {\n        \"certificate\": {\n          \"commonName\": \"fulcio.hostname\",\n          \"organizationEmail\": \"jdoe@redhat.com\",\n          \"organizationName\": \"Red Hat\"\n        },\n        \"config\": {\n          \"OIDCIssuers\": [\n            {\n              \"ClientID\": \"trusted-artifact-signer\",\n              \"Issuer\": \"https://your-oidc-issuer-url\",\n              \"IssuerURL\": \"https://your-oidc-issuer-url\",\n              \"Type\": \"email\"\n            }\n          ]\n        },\n        \"externalAccess\": {\n          \"enabled\": true\n        },\n        \"monitoring\": {\n          \"enabled\": true\n        }\n      },\n      \"rekor\": {\n        \"externalAccess\": {\n          \"enabled\": true\n        },\n        \"monitoring\": {\n          \"enabled\": true\n        }\n      },\n      \"trillian\": {\n        \"database\": {\n          \"create\": true\n        }\n      },\n      \"tsa\": {\n        \"externalAccess\": {\n          \"enabled\": true\n        },\n        \"monitoring\": {\n          \"enabled\": true\n        },\n        \"ntpMonitoring\": {\n          \"enabled\": true\n        },\n        \"signer\": {\n          \"certificateChain\": {\n            \"intermediateCA\": [\n              {\n                \"commonName\": \"tsa.hostname\",\n                \"organizationEmail\": \"jdoe@redhat.com\",\n                \"organizationName\": \"Red Hat\"\n              }\n            ],\n            \"leafCA\": {\n              \"commonName\": \"tsa.hostname\",\n              \"organizationEmail\": \"jdoe@redhat.com\",\n              \"organizationName\": \"Red Hat\"\n            },\n            \"rootCA\": {\n              \"commonName\": \"tsa.hostname\",\n              \"organizationEmail\": \"jdoe@redhat.com\",\n              \"organizationName\": \"Red Hat\"\n            }\n          }\n        }\n      },\n      \"tuf\": {\n        \"externalAccess\": {\n          \"enabled\": true\n        },\n        \"keys\": [\n          {\n            \"name\": \"rekor.pub\"\n          },\n          {\n            \"name\": \"ctfe.pub\"\n          },\n          {\n            \"name\": \"fulcio_v1.crt.pem\"\n          },\n          {\n            \"name\": \"tsa.certchain.pem\"\n          }\n        ],\n        \"pvc\": {\n          \"accessModes\": [\n            \"ReadWriteOnce\"\n          ],\n          \"retain\": true,\n          \"size\": \"100Mi\"\n        },\n        \"rootKeySecretRef\": {\n          \"name\": \"tuf-root-keys\"\n        }\n      }\n    }\n  },\n  {\n    \"apiVersion\": \"rhtas.redhat.com/v1alpha1\",\n    \"kind\": \"TimestampAuthority\",\n    \"metadata\": {\n      \"labels\": {\n        \"app.kubernetes.io/created-by\": \"rhtas-operator\",\n        \"app.kubernetes.io/instance\": \"timestampauthority-sample\",\n        \"app.kubernetes.io/managed-by\": \"kustomize\",\n        \"app.kubernetes.io/name\": \"timestampauthority\",\n        \"app.kubernetes.io/part-of\": \"rhtas-operator\"\n      },\n      \"name\": \"timestampauthority-sample\"\n    },\n    \"spec\": {\n      \"externalAccess\": {\n        \"enabled\": true\n      },\n      \"monitoring\": {\n        \"enabled\": true\n      },\n      \"ntpMonitoring\": {\n        \"enabled\": true\n      },\n      \"signer\": {\n        \"certificateChain\": {\n          \"intermediateCA\": [\n            {\n              \"commonName\": \"tsa.hostname\",\n              \"organizationEmail\": \"jdoe@redhat.com\",\n              \"organizationName\": \"Red Hat\"\n            }\n          ],\n          \"leafCA\": {\n            \"commonName\": \"tsa.hostname\",\n            \"organizationEmail\": \"jdoe@redhat.com\",\n            \"organizationName\": \"Red Hat\"\n          },\n          \"rootCA\": {\n            \"commonName\": \"tsa.hostname\",\n            \"organizationEmail\": \"jdoe@redhat.com\",\n            \"organizationName\": \"Red Hat\"\n          }\n        }\n      }\n    }\n  },\n  {\n    \"apiVersion\": \"rhtas.redhat.com/v1alpha1\",\n    \"kind\": \"Trillian\",\n    \"metadata\": {\n      \"labels\": {\n        \"app.kubernetes.io/instance\": \"securesign-sample\",\n        \"app.kubernetes.io/name\": \"securesign-sample\",\n        \"app.kubernetes.io/part-of\": \"trusted-artifact-signer\"\n      },\n      \"name\": \"trillian-sample\"\n    },\n    \"spec\": null\n  },\n  {\n    \"apiVersion\": \"rhtas.redhat.com/v1alpha1\",\n    \"kind\": \"Tuf\",\n    \"metadata\": {\n      \"labels\": {\n        \"app.kubernetes.io/instance\": \"securesign-sample\",\n        \"app.kubernetes.io/name\": \"securesign-sample\",\n        \"app.kubernetes.io/part-of\": \"trusted-artifact-signer\"\n      },\n      \"name\": \"tuf-sample\"\n    },\n    \"spec\": {\n      \"externalAccess\": {\n        \"enabled\": true\n      },\n      \"keys\": [\n        {\n          \"name\": \"rekor.pub\",\n          \"secretRef\": {\n            \"key\": \"public\",\n            \"name\": \"rekor-pub-key\"\n          }\n        },\n        {\n          \"name\": \"fulcio_v1.crt.pem\",\n          \"secretRef\": {\n            \"key\": \"cert\",\n            \"name\": \"fulcio-pub-key\"\n          }\n        },\n        {\n          \"name\": \"ctfe.pub\",\n          \"secretRef\": {\n            \"key\": \"public\",\n            \"name\": \"ctlog-pub-key\"\n          }\n        },\n        {\n          \"name\": \"tsa.certchain.pem\",\n          \"secretRef\": {\n            \"key\": \"certificateChain\",\n            \"name\": \"tsa-cert-chain\"\n          }\n        }\n      ],\n      \"pvc\": {\n        \"accessModes\": [\n          \"ReadWriteMany\"\n        ],\n        \"retain\": true,\n        \"size\": \"100Mi\"\n      }\n    }\n  }\n]",
                     "capabilities": "Seamless Upgrades",
-                    "containerImage": "registry.redhat.io/rhtas/rhtas-rhel9-operator@sha256:25d764bb7cc9e56dfcf9c27be429483234299d472156c2cdd6c0e6ee88233588",
-                    "createdAt": "2026-02-05T10:29:41Z",
+                    "containerImage": "registry.redhat.io/rhtas/rhtas-rhel9-operator@sha256:159a6f3a707ba3f8f1289b4fc1aa474db74798f7b62320d13e5644b68b8c3a59",
+                    "createdAt": "2026-02-11T10:55:24Z",
                     "features.operators.openshift.io/cnf": "false",
                     "features.operators.openshift.io/cni": "false",
                     "features.operators.openshift.io/csi": "false",
@@ -1719,7 +1719,7 @@
                     "features.operators.openshift.io/token-auth-azure": "false",
                     "features.operators.openshift.io/token-auth-gcp": "false",
                     "operators.openshift.io/valid-subscription": "[\"Red Hat Trusted Artifact Signer\"]",
-                    "operators.operatorframework.io/builder": "operator-sdk-v1.38.0-ocp",
+                    "operators.operatorframework.io/builder": "operator-sdk-v1.36.1-ocp",
                     "operators.operatorframework.io/project_layout": "go.kubebuilder.io/v4",
                     "repository": "https://github.com/securesign/secure-sign-operator",
                     "support": "Red Hat"
@@ -1855,7 +1855,7 @@
     "relatedImages": [
         {
             "name": "",
-            "image": "registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:6cfbeb14c1b23a50ca924446fba126071c52e21eefb13efef8b58a473890c7a7"
+            "image": "quay.io/securesign/rhtas-operator-bundle-v1-2@sha256:9e4a194864b8530f442aba5e8300e348dcfa0cb9a5957e1ad9f22474ebd8b343"
         },
         {
             "name": "trillian-netcat",
@@ -1863,63 +1863,63 @@
         },
         {
             "name": "ctlog",
-            "image": "registry.redhat.io/rhtas/certificate-transparency-rhel9@sha256:cf9f9b51686a3d5960eaf8e1f0bdabb186712624aa67f7f1bd07dc775139c282"
+            "image": "registry.redhat.io/rhtas/certificate-transparency-rhel9@sha256:7e70be684d2bc550f1d31b89eadcac24e6385b3578ad29d8bdaa17b260f9dbce"
         },
         {
             "name": "client-server",
-            "image": "registry.redhat.io/rhtas/client-server-rhel9@sha256:556b082c1ea6f294b16c1a7140859699749e4455afc58e6a831fbe453c090bff"
+            "image": "registry.redhat.io/rhtas/client-server-rhel9@sha256:47071a0613d6d262110af4ce6703ce99db72c7ab58e3a6051b82f3098b372a49"
         },
         {
             "name": "fulcio-server",
-            "image": "registry.redhat.io/rhtas/fulcio-rhel9@sha256:f4c86a4e6a58a078d8b87f8821e0b336f292690375e49cbc07d4f8ca9964d888"
+            "image": "registry.redhat.io/rhtas/fulcio-rhel9@sha256:c9289244939c0fd2737e8768ac089d09d15ca42ea34e2512c13a73c159338ab7"
         },
         {
             "name": "backfill-redis",
-            "image": "registry.redhat.io/rhtas/rekor-backfill-redis-rhel9@sha256:9d6b993562b04338bbdfefe005800dd35b03c5256ff5acf2e5fcf190a79514f9"
+            "image": "registry.redhat.io/rhtas/rekor-backfill-redis-rhel9@sha256:9b91bac976cf7c30b15f9a022996142e48711110ecd1c52663504e53dcfdcf09"
         },
         {
             "name": "rekor-search-ui",
-            "image": "registry.redhat.io/rhtas/rekor-search-ui-rhel9@sha256:add1b50cb7c77e874cb3b21330d2d4206e13c5b00824a56e044e5da71a0774f0"
+            "image": "registry.redhat.io/rhtas/rekor-search-ui-rhel9@sha256:1e3a46ade52215e2c78df9229f36301c94099e8397ee74ab99fb8bd504ce7aa2"
         },
         {
             "name": "rekor-server",
-            "image": "registry.redhat.io/rhtas/rekor-server-rhel9@sha256:3c7381faf54ca4c59c981ce6a2c7cd59f5db124801f2c78689e0e5c934cf911d"
+            "image": "registry.redhat.io/rhtas/rekor-server-rhel9@sha256:4afca53f27929243177a80a08e1ca77bd8978a50e8e0e7929781bb7b14a85cd2"
         },
         {
             "name": "",
-            "image": "registry.redhat.io/rhtas/rhtas-rhel9-operator@sha256:25d764bb7cc9e56dfcf9c27be429483234299d472156c2cdd6c0e6ee88233588"
+            "image": "registry.redhat.io/rhtas/rhtas-rhel9-operator@sha256:159a6f3a707ba3f8f1289b4fc1aa474db74798f7b62320d13e5644b68b8c3a59"
         },
         {
             "name": "segment-reporting",
-            "image": "registry.redhat.io/rhtas/segment-reporting-rhel9@sha256:68191dc5405647f5b72daa1a4ee0247a5f2ad72f10dcb6e9035f9ff1ba2e0d4d"
+            "image": "registry.redhat.io/rhtas/segment-reporting-rhel9@sha256:433385e5a9d3524baea007bf67ea785b2ee76b8218debf21fedf935950ab284e"
         },
         {
             "name": "timestamp-authority",
-            "image": "registry.redhat.io/rhtas/timestamp-authority-rhel9@sha256:0b90598c0916413a0df1a67e42abd64843e6426f0920f7d157448fc56fe59eae"
+            "image": "registry.redhat.io/rhtas/timestamp-authority-rhel9@sha256:576d4fc358fffe5bedb93eb3fec68b9c040b1d50e6c4c56a3f8d49084c169e4f"
         },
         {
             "name": "trillian-db",
-            "image": "registry.redhat.io/rhtas/trillian-database-rhel9@sha256:cb974500d58b4c00807fa649e1bb70f35315af5034dc9f3dad07d43e4e3dc859"
+            "image": "registry.redhat.io/rhtas/trillian-database-rhel9@sha256:50bc20bb57e8ee31e56637cafccfed2658982d81ca9bf1e71db9de4b82a2be36"
         },
         {
             "name": "trillian-log-server",
-            "image": "registry.redhat.io/rhtas/trillian-logserver-rhel9@sha256:c399b5c1d43c5e16f5b0886c59b1480d2619a4125acbcf4db49a687a3c59432b"
+            "image": "registry.redhat.io/rhtas/trillian-logserver-rhel9@sha256:b246d096ad6d2b19decfa3d87bca9ab2b78000aee28b717c0a33d1202a1b2d6b"
         },
         {
             "name": "trillian-log-signer",
-            "image": "registry.redhat.io/rhtas/trillian-logsigner-rhel9@sha256:039063b7b019e931c5370bde0d98f9594782b7ede859971133f078ced31076d0"
+            "image": "registry.redhat.io/rhtas/trillian-logsigner-rhel9@sha256:d0f8b68e55173b010fd381e374f232a40fba6d03282cfd870bd9c12c492e4aec"
         },
         {
             "name": "rekor-redis",
-            "image": "registry.redhat.io/rhtas/trillian-redis-rhel9@sha256:0370b5238d68631d3e9db0ff41e79fd2b53fcba8b224accfaab177cab1e89704"
+            "image": "registry.redhat.io/rhtas/trillian-redis-rhel9@sha256:d97e6688aabf25ed1da6a8bf2012efb1772beed49b91456288418f6023a38dac"
         },
         {
             "name": "tuf",
-            "image": "registry.redhat.io/rhtas/tuffer-rhel9@sha256:d76e77120bb61e3dc624783adc921d29192696f95698ea0d96642d8369f9e4c3"
+            "image": "registry.redhat.io/rhtas/tuffer-rhel9@sha256:743bbe6b3a666225eb8ac30f667d20f3daeb0586a6c2d7005d3096c0e823dac5"
         },
         {
             "name": "http-server",
-            "image": "registry.redhat.io/ubi9/httpd-24@sha256:47a0b3f12211320d1828524a324ab3ec9deac97c17b9d3f056c87d3384d9eb79"
+            "image": "registry.redhat.io/ubi9/httpd-24@sha256:e2e144ca85e32837f004ac72ecfd562c17d679df28915274bd03d0138b72d55c"
         }
     ]
 }
