@@ -1,0 +1,188 @@
+name: Create Production FBC PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_stream:
+        description: 'Release stream'
+        required: true
+        type: choice
+        options:
+          - '1.2'
+          - '1.3'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+# OCP version defaults by release (update when new OCP versions are supported)
+env:
+  OPERATOR_NAME: rhtas-operator
+  OCP_VERSIONS_1_2: "v4.14,v4.15,v4.16,v4.17,v4.18"
+  OCP_VERSIONS_1_3: "v4.16,v4.17,v4.18,v4.19,v4.20"
+
+jobs:
+  create-production-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout FBC main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: fbc-main
+
+      - name: Checkout FBC production branch
+        uses: actions/checkout@v4
+        with:
+          ref: production
+          path: fbc-production
+
+      - name: Install opm
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          source: "github"
+          github_pat: ${{ github.token }}
+          opm: "1.61.0"
+
+      - name: Log in to registry.redhat.io
+        uses: redhat-actions/podman-login@v1
+        with:
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+          registry: registry.redhat.io
+          auth_file_path: /tmp/config.json
+
+      - name: Derive version, channels, and OCP versions
+        id: derive
+        run: |
+          OPERATOR="${{ env.OPERATOR_NAME }}"
+          RELEASE_STREAM="${{ inputs.release_stream }}"
+
+          echo "Operator: $OPERATOR"
+          echo "Release stream: $RELEASE_STREAM"
+
+          VAR_NAME="OCP_VERSIONS_${RELEASE_STREAM//./_}"
+          OCP_VERSIONS="${!VAR_NAME}"
+          if [[ -z "$OCP_VERSIONS" ]]; then
+            echo "Unknown release stream: $RELEASE_STREAM"
+            echo "Please add ${VAR_NAME} to env section"
+            exit 1
+          fi
+          echo "ocp_versions=$OCP_VERSIONS" >> $GITHUB_OUTPUT
+          echo "Derived OCP versions: $OCP_VERSIONS"
+
+          FIRST_OCP=$(echo "$OCP_VERSIONS" | cut -d',' -f1)
+          GRAPH="fbc-main/${FIRST_OCP}/${OPERATOR}/graph.yaml"
+          echo "Using graph: $GRAPH"
+
+          # Find latest version for this release stream (e.g., 1.2 -> 1.2.2)
+          LATEST_BUNDLE=$(yq e ".entries[] | select(.schema == \"olm.bundle\") | .name" "$GRAPH" \
+            | grep "^${OPERATOR}\.v${RELEASE_STREAM}\." | sort -V | tail -1)
+
+          if [[ -z "$LATEST_BUNDLE" ]]; then
+            echo "Error: No bundle found for ${OPERATOR} v${RELEASE_STREAM}.x in main branch"
+            exit 1
+          fi
+
+          BUNDLE_VERSION=$(echo "$LATEST_BUNDLE" | sed "s/^${OPERATOR}\.v//")
+          echo "Derived bundle version: $BUNDLE_VERSION"
+          echo "bundle_version=$BUNDLE_VERSION" >> $GITHUB_OUTPUT
+          echo "bundle_name=$LATEST_BUNDLE" >> $GITHUB_OUTPUT
+
+          export LATEST_BUNDLE
+          BUNDLE_IMAGE=$(yq e ".entries[] | select(.schema == \"olm.bundle\" and .name == env(LATEST_BUNDLE)) | .image" "$GRAPH")
+          echo "Derived bundle image: $BUNDLE_IMAGE"
+          echo "bundle_image=$BUNDLE_IMAGE" >> $GITHUB_OUTPUT
+
+          CHANNELS="stable-v${RELEASE_STREAM},stable"
+          echo "channels=$CHANNELS" >> $GITHUB_OUTPUT
+          echo "Derived channels: $CHANNELS"
+
+      - name: Filter and prepare production content
+        run: |
+          cd fbc-main
+
+          # Set auth file for skopeo
+          export AUTH_FILE="--authfile /tmp/config.json"
+          # Cache skopeo results across OCP versions
+          export SKOPEO_CACHE_FILE="/tmp/skopeo-cache"
+
+          IFS=',' read -ra versions <<< "${{ steps.derive.outputs.ocp_versions }}"
+          for ocp_version in "${versions[@]}"; do
+            echo "=========================================="
+            echo "Processing OCP version: $ocp_version"
+            echo "=========================================="
+
+            GRAPH="${ocp_version}/${{ env.OPERATOR_NAME }}/graph.yaml"
+
+            if [[ ! -f "$GRAPH" ]]; then
+              echo "Warning: Graph file not found: $GRAPH, skipping..."
+              continue
+            fi
+
+            # Filter main to keep only bundles that exist in registry.redhat.io
+            ./utils/filter_for_production.sh "$GRAPH"
+
+            # Add the new bundle with derived channels
+            export BUNDLE_NAME="${{ steps.derive.outputs.bundle_name }}"
+            export BUNDLE_IMAGE="${{ steps.derive.outputs.bundle_image }}"
+            export CHANNELS="${{ steps.derive.outputs.channels }}"
+            export GRAPH
+            ./utils/configure_channels.sh
+            ./utils/configure_bundles.sh
+
+            # Render catalog
+            export OCP_VERSION=$ocp_version
+            export FBC_DIR=${{ env.OPERATOR_NAME }}
+            export CATALOG_FILE="${ocp_version}/${{ env.OPERATOR_NAME }}/catalog/${{ env.OPERATOR_NAME }}/catalog.json"
+            ./utils/render_catalog.sh
+          done
+
+      - name: Copy to production directory
+        run: |
+          IFS=',' read -ra versions <<< "${{ steps.derive.outputs.ocp_versions }}"
+          for ocp_version in "${versions[@]}"; do
+            if [[ -d "fbc-main/${ocp_version}/${{ env.OPERATOR_NAME }}" ]]; then
+              rm -rf "fbc-production/${ocp_version}/${{ env.OPERATOR_NAME }}"
+              mkdir -p "fbc-production/${ocp_version}"
+              cp -r "fbc-main/${ocp_version}/${{ env.OPERATOR_NAME }}" \
+                    "fbc-production/${ocp_version}/"
+            fi
+          done
+
+      - name: Create PR
+        working-directory: fbc-production
+        run: |
+          git config user.name "RHTAS-build-bot"
+          git config user.email "RHTAS-build-bot@users.noreply.github.com"
+
+          BRANCH="release-${{ env.OPERATOR_NAME }}-v${{ steps.derive.outputs.bundle_version }}"
+          git checkout -b "$BRANCH"
+          git add .
+
+          # Check if there are changes to commit
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git commit -m ":package: Release ${{ env.OPERATOR_NAME }} v${{ steps.derive.outputs.bundle_version }}"
+          git push -u origin "$BRANCH"
+
+          PR_BODY="## Automated Production Release PR
+
+          ### Release Details
+          - **Operator**: ${{ env.OPERATOR_NAME }}
+          - **Release Stream**: ${{ inputs.release_stream }}
+          - **Version**: ${{ steps.derive.outputs.bundle_version }}
+          - **Bundle Image**: \`${{ steps.derive.outputs.bundle_image }}\`
+          - **OCP Versions**: ${{ steps.derive.outputs.ocp_versions }}
+          - **Channels**: ${{ steps.derive.outputs.channels }}"
+
+          gh pr create \
+            --base production \
+            --head "$BRANCH" \
+            --title ":package: Release ${{ env.OPERATOR_NAME }} v${{ steps.derive.outputs.bundle_version }}" \
+            --body "$PR_BODY"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
