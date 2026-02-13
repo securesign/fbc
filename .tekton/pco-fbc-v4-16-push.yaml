@@ -8,14 +8,14 @@ metadata:
     pipelinesascode.tekton.dev/cancel-in-progress: "false"
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
-      == "main" && ( "v4.16/policy-controller-operator/***".pathChanged() || ".tekton/pco-fbc-v4-16-pull-request.yaml".pathChanged()
+      == "pco-tech-preview" && ( "v4.16/policy-controller-operator/***".pathChanged() || ".tekton/pco-fbc-v4-16-pull-request.yaml".pathChanged()
       )
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: pco-fbc-v4-16
-    appstudio.openshift.io/component: pco-fbc-v4-16
+    appstudio.openshift.io/application: pco-fbc-v4-16-tech-preview
+    appstudio.openshift.io/component: pco-fbc-v4-16-tech-preview
     pipelines.appstudio.openshift.io/type: build
-  name: pco-fbc-v4-16-on-push
+  name: pco-fbc-v4-16-tech-preview-on-push
   namespace: rhtas-tenant
 spec:
   params:
@@ -42,7 +42,7 @@ spec:
       value: pipelines/fbc-builder.yaml
     resolver: git
   taskRunTemplate:
-    serviceAccountName: build-pipeline-pco-fbc-v4-16
+    serviceAccountName: build-pipeline-pco-fbc-v4-16-tech-preview
   workspaces:
   - name: git-auth
     secret:
