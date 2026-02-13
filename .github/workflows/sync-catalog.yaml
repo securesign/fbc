@@ -1,0 +1,123 @@
+name: Update OCP Catalogs
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+  pull_request:
+
+permissions:
+  contents: write
+
+env:
+  SUPPORTED_PACKAGES: "rhtas-operator|model-validation-operator|policy-controller-operator"
+
+jobs:
+  update-catalogs:
+    name: Process OCP ${{ matrix.ocp_version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ocp_version: ["v4.15", "v4.16", "v4.17", "v4.18", "v4.19", "v4.20", "v4.21"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: sync_job
+
+      - name: Install OPM
+        run: |
+          curl -L https://github.com/operator-framework/operator-registry/releases/latest/download/linux-amd64-opm -o opm
+          chmod +x opm
+          sudo mv opm /usr/local/bin/
+
+      - name: Login to Red Hat Registry
+        uses: docker/login-action@v3
+        with:
+          registry: registry.redhat.io
+          username: ${{ secrets.RH_REGISTRY_USERNAME }}
+          password: ${{ secrets.RH_REGISTRY_PASSWORD }}
+
+      - name: Render Catalog
+        run: |
+          echo "Rendering catalog for registry.redhat.io/redhat/redhat-operator-index:${{ matrix.ocp_version }}..."
+          opm render registry.redhat.io/redhat/redhat-operator-index:${{ matrix.ocp_version }} -o yaml > raw-catalog-${{ matrix.ocp_version }}.yaml
+          
+          if [ ! -s raw-catalog-${{ matrix.ocp_version }}.yaml ]; then
+            echo "Error: Catalog file is empty or missing!"
+            exit 1
+          fi
+
+      - name: Run Sync Script
+        env:
+          OCP_VERSION: ${{ matrix.ocp_version }}
+          RELEASED_CATALOG: "raw-catalog-${{ matrix.ocp_version }}.yaml"
+        run: |
+          PACKAGES=$(yq eval -N ". | select(.schema == \"olm.package\" and (.name | test(\"$SUPPORTED_PACKAGES\"))) | .name" "${{ env.RELEASED_CATALOG }}")
+          echo "Supported packages on OCP $OCP_VERSION are: $(echo "$PACKAGES" | tr '\n' ' ')"
+          
+          for pkg in $(echo "${{ env.SUPPORTED_PACKAGES }}" | tr '|' ' '); do
+            if [[ ! "$PACKAGES" =~ "$pkg" ]]; then
+              echo "::warning title=Unsupported Package::$pkg is not supported on ${{ matrix.ocp_version }} (Missing from Red Hat Index)"
+            fi
+          done
+    
+          for PACKAGE_NAME in $PACKAGES; do
+            echo "Synchronizating $PACKAGE_NAME"
+            PACKAGE_NAME="$PACKAGE_NAME" ./utils/sync_graph.sh
+            FBC_DIR=$PACKAGE_NAME CATALOG_FILE="$OCP_VERSION/$PACKAGE_NAME/catalog/$PACKAGE_NAME/catalog.json" ./utils/render_catalog.sh
+            
+            echo "Validating ${{ matrix.ocp_version }}/$PACKAGE_NAME/catalog/$PACKAGE_NAME"
+            opm validate ${{ matrix.ocp_version }}/$PACKAGE_NAME/catalog/$PACKAGE_NAME/
+          done
+
+      # FIX 1: Tar the output to preserve directory structure
+      - name: Compress Artifacts
+        run: |
+          tar -czvf artifact-${{ matrix.ocp_version }}.tar.gz ${{ matrix.ocp_version }}
+
+      # FIX 2: Upload only the tarball
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: catalog-archive-${{ matrix.ocp_version }}
+          path: artifact-${{ matrix.ocp_version }}.tar.gz
+          retention-days: 1
+
+  commit-and-push:
+    name: Consolidate and Push
+    needs: update-catalogs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: sync_job
+
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: catalog-archive-*
+          merge-multiple: true
+
+      - name: Decompress and Commit
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          echo "Decompressing artifacts..."
+          for f in *.tar.gz; do tar -xzvf "$f"; done
+          rm *.tar.gz
+          
+          git add v4.*/
+                    
+          if git diff --staged --quiet; then
+            echo "No changes detected."
+          else
+            echo "Changes detected. Committing..."
+            git commit -m "chore: update OCP catalogs via cron"
+            git push origin HEAD:sync_job
+          fi
