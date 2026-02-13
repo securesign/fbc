@@ -1,0 +1,140 @@
+name: Update OCP Catalogs
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  # TODO: Uncomment this when are sure that we want to sync all packages
+  #SUPPORTED_PACKAGES: "rhtas-operator|model-validation-operator|policy-controller-operator"
+  SUPPORTED_PACKAGES: "rhtas-operator"
+
+jobs:
+  update-catalogs:
+    name: Process OCP ${{ matrix.ocp_version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ocp_version: ["v4.15", "v4.16", "v4.17", "v4.18", "v4.19", "v4.20", "v4.21"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install OPM
+        run: |
+          curl -L https://github.com/operator-framework/operator-registry/releases/latest/download/linux-amd64-opm -o opm
+          chmod +x opm
+          sudo mv opm /usr/local/bin/
+
+      - name: Login to Red Hat Registry
+        uses: docker/login-action@v3
+        with:
+          registry: registry.redhat.io
+          username: ${{ secrets.RH_REGISTRY_USERNAME }}
+          password: ${{ secrets.RH_REGISTRY_PASSWORD }}
+
+      - name: Render Catalog
+        run: |
+          echo "Rendering catalog for registry.redhat.io/redhat/redhat-operator-index:${{ matrix.ocp_version }}..."
+          opm render registry.redhat.io/redhat/redhat-operator-index:${{ matrix.ocp_version }} -o yaml > raw-catalog-${{ matrix.ocp_version }}.yaml
+          
+          if [ ! -s raw-catalog-${{ matrix.ocp_version }}.yaml ]; then
+            echo "Error: Catalog file is empty or missing!"
+            exit 1
+          fi
+
+      - name: Run Sync Script
+        env:
+          OCP_VERSION: ${{ matrix.ocp_version }}
+          RELEASED_CATALOG: "raw-catalog-${{ matrix.ocp_version }}.yaml"
+        run: |
+          PACKAGES=$(yq eval -N ". | select(.schema == \"olm.package\" and (.name | test(\"$SUPPORTED_PACKAGES\"))) | .name" "${{ env.RELEASED_CATALOG }}")
+          echo "Supported packages on OCP $OCP_VERSION are: $(echo "$PACKAGES" | tr '\n' ' ')"
+          
+          for pkg in $(echo "${{ env.SUPPORTED_PACKAGES }}" | tr '|' ' '); do
+            if [[ ! "$PACKAGES" =~ "$pkg" ]]; then
+              echo "::warning title=Unsupported Package::$pkg is not supported on ${{ matrix.ocp_version }} (Missing from Red Hat Index)"
+            fi
+          done
+    
+          for PACKAGE_NAME in $PACKAGES; do
+            echo "Synchronizating $PACKAGE_NAME"
+            yq "select(.package == \"$PACKAGE_NAME\" or .name == \"$PACKAGE_NAME\")" $RELEASED_CATALOG | opm alpha convert-template basic - -o yaml > $OCP_VERSION/$PACKAGE_NAME/graph.yaml
+            FBC_DIR=$PACKAGE_NAME CATALOG_FILE="$OCP_VERSION/$PACKAGE_NAME/catalog/$PACKAGE_NAME/catalog.json" ./utils/render_catalog.sh
+            
+            echo "Validating ${{ matrix.ocp_version }}/$PACKAGE_NAME/catalog/$PACKAGE_NAME"
+            opm validate ${{ matrix.ocp_version }}/$PACKAGE_NAME/catalog/$PACKAGE_NAME/
+          done
+
+      # FIX 1: Tar the output to preserve directory structure
+      - name: Compress Artifacts
+        run: |
+          tar -czvf artifact-${{ matrix.ocp_version }}.tar.gz ${{ matrix.ocp_version }}
+
+      # FIX 2: Upload only the tarball
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: catalog-archive-${{ matrix.ocp_version }}
+          path: artifact-${{ matrix.ocp_version }}.tar.gz
+          retention-days: 1
+
+  commit-and-push:
+    name: Consolidate and Push
+    needs: update-catalogs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Required for the ancestor/drift check
+
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: catalog-archive-*
+          merge-multiple: true
+
+      - name: Decompress and Commit
+        id: commit_step
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          echo "Decompressing artifacts..."
+          for f in *.tar.gz; do tar -xzf "$f"; done
+          rm *.tar.gz
+          
+          git add v4.*/
+                    
+          if git diff --staged --quiet; then
+            echo "No changes detected."
+          else
+            echo "Changes detected. Committing..."
+            git commit -m "chore: update OCP catalogs via cron"
+            git push origin HEAD:${{ github.ref_name }}
+            echo "pushed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Notify affected PRs
+        if: steps.commit_step.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUSHED_BRANCH: ${{ github.ref_name }}
+        run: |
+          git fetch origin
+          gh pr list --base "$PUSHED_BRANCH" --state open --json number,headRefName --jq '.[] | "\(.number) \(.headRefName)"' | while read -r num branch; do
+            # Fail if the pushed branch is not an ancestor of the PR branch
+            if ! git merge-base --is-ancestor "origin/$PUSHED_BRANCH" "origin/$branch"; then
+              echo "PR #$num is out of sync."
+              gh pr comment "$num" --body "⚠️ **Out of Sync:** This branch is behind its target branch ($PUSHED_BRANCH) after the catalog update. Please rebase or merge."
+            fi
+          done
