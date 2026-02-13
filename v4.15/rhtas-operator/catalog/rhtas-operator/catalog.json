@@ -254,6 +254,70 @@
         {
             "name": "",
             "image": "registry.redhat.io/rhtas/rhtas-rhel9-operator@sha256:52ba6cd82bc400a08c6f89811e8086126596a873b9b12619de8c5064a2d4faf7"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/trillian-logsigner-rhel9@sha256:2d707d12e4f65e1a92b4de11465a5976d55e15ad6c9fefe994646ccd44c83840"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/trillian-logserver-rhel9@sha256:7af78c7bc4df097ffeeef345f1d13289695f715221957579ee65daeef2fa3f5b"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/trillian-database-rhel9@sha256:501612745e63e5504017079388bec191ffacf00ffdebde7be6ca5b8e4fd9d323"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/openshift4/ose-tools-rhel8@sha256:486b4d2dd0d10c5ef0212714c94334e04fe8a3d36cf619881986201a50f123c7"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/fulcio-rhel9@sha256:4b5765bbfd3dac5fa027d2fb3d672b6ebffbc573b9413ab4cb189c50fa6f9a09"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/trillian-redis-rhel9@sha256:18820b1fbdbc2cc3e917822974910332d937b03cfe781628bd986fd6a5ee318e"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/rekor-server-rhel9@sha256:81e10e34f02b21bb8295e7b5c93797fc8c0e43a1a0d8304cca1b07415a3ed6f5"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/rekor-search-ui-rhel9@sha256:3c93c15fc5c918a91b3da9f5bf2276e4d46d881b1031287e6ab28e6aeb23e019"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/rekor-backfill-redis-rhel9@sha256:c5995c88063bd9875ae61c299bcf549002fcde724aab09807c70934e73daf356"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/tuf-server-rhel9@sha256:6987dfce53541679ff5b9d7b03e9891a3986270fdaa90817923e0ca585e5267f"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/certificate-transparency-rhel9@sha256:31e7318a9b19ed04ef0f25949f1f1709d293b532316b27a06f83fa5174547b17"
+        },
+        {
+            "name": "",
+            "image": "registry.access.redhat.com/ubi9/httpd-24@sha256:7874b82335a80269dcf99e5983c2330876f5fe8bdc33dc6aa4374958a2ffaaee"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/client-server-rhel9@sha256:9537329d0166b8d41ffd5f5d79c052fc27abe426a20cba5733c84030013c4e29"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/segment-reporting-rhel9@sha256:1b87ff1ad02c476c08e06038a26af7abe61f177e491a9ff42d507550a8587ac8"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/timestamp-authority-rhel9@sha256:fce0a22c8872309554236bab3457715dda0a83eb40dc6a9ecd3477b8023369d0"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/tuffer-rhel9@sha256:79340be7918034c68a334a210ab872161827c99c2a1551a4fce8d5d27560a234"
         }
     ]
 }
@@ -401,6 +465,70 @@
         {
             "name": "",
             "image": "registry.redhat.io/rhtas/rhtas-rhel9-operator@sha256:2e8f98e18ac3aba2adcfbe4e1f87fb6f664ef42ae4d22b03975668aba830f819"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/trillian-logsigner-rhel9@sha256:0a9713466a55b5c79eae8dce71fd33184fdd07e59ffd530ca17b60895374902c"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/trillian-logserver-rhel9@sha256:89eec6d832ff3cd032ace453f950c88b075994e5b905d5347fd927202876c512"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/trillian-database-rhel9@sha256:614ba2e79a5f5230bea925d001756c66ac09deac24aa529628095540d8219180"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/openshift4/ose-tools-rhel8@sha256:486b4d2dd0d10c5ef0212714c94334e04fe8a3d36cf619881986201a50f123c7"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/fulcio-rhel9@sha256:f58588d336b578da548831d555d627614eabf993a693f570047c2a2bafff5b1b"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/trillian-redis-rhel9@sha256:0b708607468e175139de6838b90b7fa2fb22985e2f0e8caa81e0f97b0a1a590c"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/rekor-server-rhel9@sha256:993394a07f178f89eb103b33fbf7bc007db3cca98eaa79e01b6e6a1ba2a302e6"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/rekor-search-ui-rhel9@sha256:1432b47ddd881eb1909453e939c791825e7853b4abc00a12dddd948f99022ab3"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/rekor-backfill-redis-rhel9@sha256:59b06a2fc7290b0dd7738f09c0d3fe19eab69f2bea10c998c481da3139c25c78"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/tuf-server-rhel9@sha256:16d4ccca29c5b0adae1627f9bbda217a9a0462a4fad32c1b48cce91d400272d3"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/certificate-transparency-rhel9@sha256:5e85b4eb162c1d136add09491af72413a5d7475df041ce4340b919302bee6600"
+        },
+        {
+            "name": "",
+            "image": "registry.access.redhat.com/ubi9/httpd-24@sha256:7874b82335a80269dcf99e5983c2330876f5fe8bdc33dc6aa4374958a2ffaaee"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/client-server-rhel9@sha256:ce30450e9e3aee7368bd9ba7f756d7af0f7c0e052cd57951256adaa9c78fb562"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/segment-reporting-rhel9@sha256:53a7929f6426f460e5386c505957b0de0b4a92c6f6bad8dd678851e2867f42af"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/timestamp-authority-rhel9@sha256:0fdd5e119325e8c30f5ef0da9b0a78469143a3d222e8b92d0d972acbed8db99c"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/tuffer-rhel9@sha256:c327853589a048b0848773bc19e74edc598498eda2021914e92b4fcfd1059a02"
         }
     ]
 }
@@ -547,7 +675,67 @@
         },
         {
             "name": "",
+            "image": "registry.redhat.io/openshift4/ose-tools-rhel9@sha256:09b8259ec9e982a33bde84c7c901ad70c79f3e5f6dd7880b1b1e573dafcbd56c"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/certificate-transparency-rhel9@sha256:dc994a95be22b0f4bab022fc362c4f44c6a7d1887a2eb0d04870d75654ec013b"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/client-server-rhel9@sha256:75f1049431f9e92898a4217870309cbbb3b39c8362e929c0bad3b53cad4459db"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/fulcio-rhel9@sha256:329a0dad7842d4ef60430b0e3f188231bea9e579427443ecd42eb62a5c282266"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/rekor-backfill-redis-rhel9@sha256:6131053778ea04e437f3005f90d1138aa11ebc58e3a9295e2a8d8ef6713a52be"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/rekor-search-ui-rhel9@sha256:571c48ecb2658ce70199c06dc483ea48a16e032a764a6830388ad845f508d981"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/rekor-server-rhel9@sha256:3b8f49c41df15022f8ffdf3a8f8605b14c14f4e10eae754a06a86b6585d158b3"
+        },
+        {
+            "name": "",
             "image": "registry.redhat.io/rhtas/rhtas-rhel9-operator@sha256:e52d07e2cd8cbdc2ccd0336a4fd29cbb2e5b8a1be628350294a54579cc2636ed"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/segment-reporting-rhel9@sha256:540556453c98db3919e5f305a99c699e767e2891a95fe7527ace578f3c67a308"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/timestamp-authority-rhel9@sha256:796860a3e85712c60398c36983e0ff4d45325c7a4de869da2ebf1b6ba4b19825"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/trillian-database-rhel9@sha256:7ce611aefdfedd8b2a633def482cf41f390c95b8f8c800b6163a585f117a9e2e"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/trillian-logserver-rhel9@sha256:76c24a38ac89ed632d38e44049f37e4997abfa27fa8cadbb8afb42575031296f"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/trillian-logsigner-rhel9@sha256:1f5a30a285a16635a7234c3c1763dfb385c8bffd605fc862b782bdb5c6c61ea3"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/trillian-redis-rhel9@sha256:5a752cefdaf28bfc53847185cdd5fef1ee47e3dcff8472f8a8bf7bbdc224ef57"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/tuffer-rhel9@sha256:775b261b8f258b369213246f2da5c91218678acb5e3b8bb4670b143f487767af"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/ubi9/httpd-24@sha256:366cc5bc3b96069fecaa0abeb9d3510c507e69a20de1d205d881da8ae8561ab4"
         }
     ]
 }
