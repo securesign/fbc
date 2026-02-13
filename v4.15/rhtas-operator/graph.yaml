@@ -57,12 +57,6 @@ entries:
           - rhtas-operator.v1.1.1
           - rhtas-operator.v1.1.2
           - rhtas-operator.v1.2.0
-      - name: rhtas-operator.v1.3.0
-        replaces: rhtas-operator.v1.2.0
-        skips:
-          - rhtas-operator.v1.2.0
-          - rhtas-operator.v1.2.1
-          - rhtas-operator.v1.2.2
       - name: rhtas-operator.v1.2.2
         replaces: rhtas-operator.v1.2.1
         skips:
