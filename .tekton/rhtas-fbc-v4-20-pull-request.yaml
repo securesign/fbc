@@ -9,14 +9,14 @@ metadata:
     pipelinesascode.tekton.dev/cancel-in-progress: "true"
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "pull_request" && target_branch
-      == "main" && ( "v4.20/policy-controller-operator/***".pathChanged() || ".tekton/pco-fbc-v4-20-pull-request.yaml".pathChanged()
+      == "stage" && ( "v4.20/rhtas-operator/***".pathChanged() || ".tekton/rhtas-fbc-v4-20-pull-request.yaml".pathChanged()
       )
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: pco-fbc-v4-20
-    appstudio.openshift.io/component: pco-fbc-v4-20
+    appstudio.openshift.io/application: rhtas-fbc-stage
+    appstudio.openshift.io/component: rhtas-fbc-stage-v4-20
     pipelines.appstudio.openshift.io/type: build
-  name: pco-fbc-v4-20-on-pull-request
+  name: rhtas-fbc-v4-20-on-pull-request
   namespace: rhtas-tenant
 spec:
   params:
@@ -25,7 +25,7 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/securesign/pco-fbc-v4-20:on-pr-{{revision}}
+    value: quay.io/securesign/fbc-v4-20:on-pr-{{revision}}
   - name: image-expires-after
     value: 5d
   - name: build-platforms
@@ -34,7 +34,7 @@ spec:
   - name: dockerfile
     value: catalog.Dockerfile
   - name: path-context
-    value: v4.20/policy-controller-operator
+    value: v4.20/rhtas-operator
   - name: ocp-release-version
     value: "v4.20"
   pipelineRef:
@@ -47,7 +47,7 @@ spec:
       value: pipelines/fbc-builder.yaml
     resolver: git
   taskRunTemplate:
-    serviceAccountName: build-pipeline-pco-fbc-v4-20
+    serviceAccountName: build-pipeline-rhtas-fbc-stage-v4-20
   workspaces:
   - name: git-auth
     secret:

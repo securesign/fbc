@@ -1,8 +1,0 @@
-apiVersion: projctl.konflux.dev/v1beta1
-kind: Project
-metadata:
-  name: fbc
-spec:
-  displayName: "Multi-version fbc project"
-  description: |
-    Multi-version fbc project.
