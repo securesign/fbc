@@ -8,9 +8,14 @@ entries:
       mediatype: image/svg+xml
   - entries:
       - name: policy-controller-operator.v0.0.1-techpreview
+      - name: policy-controller-operator.v0.0.2-techpreview
+        replaces: policy-controller-operator.v0.0.1-techpreview
     name: tech-preview
     package: policy-controller-operator
     schema: olm.channel
   - image: registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:0f31421a30a1cefa861e3edd4c3ca740afe4bef9a9fd0e2857a3a6529a675d95
     name: policy-controller-operator.v0.0.1-techpreview
+    schema: olm.bundle
+  - image: registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:a6d8fff6a86e35e6f51248b9a15a3a848e4ef76672696a3817aa9ee9f55457ba
+    name: policy-controller-operator.v0.0.2-techpreview
     schema: olm.bundle
