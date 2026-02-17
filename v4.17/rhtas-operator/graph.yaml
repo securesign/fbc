@@ -106,28 +106,28 @@ entries:
           schema: olm.bundle
     package: rhtas-operator
     schema: olm.deprecations
-  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:d423c8f491a008886926520e12fdd86a5878ce6b5b169100ba495689cff42f2c
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:89e7a209ba0d87eb565b8882ecc24cd8ca239cd27e485942876ad3c0ff34833b
     name: rhtas-operator.v1.1.0
     schema: olm.bundle
-  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:b1d631bc3fc76af8154e900b34aabcc0192b3f9ca930d4bec35d6c0a22de1e11
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:89e7a209ba0d87eb565b8882ecc24cd8ca239cd27e485942876ad3c0ff34833b
     name: rhtas-operator.v1.1.1
     schema: olm.bundle
-  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:603a2ffa54df0bd45ff42ac710dd16331560eda2be93442232b045c959773c4d
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:89e7a209ba0d87eb565b8882ecc24cd8ca239cd27e485942876ad3c0ff34833b
     name: rhtas-operator.v1.1.2
     schema: olm.bundle
-  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:47933b3e4c66935cdf3b404f1fb7c30adedc69e437399936f4872443b92f9f9b
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:89e7a209ba0d87eb565b8882ecc24cd8ca239cd27e485942876ad3c0ff34833b
     name: rhtas-operator.v1.2.0
     schema: olm.bundle
-  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:7c4e739622f68cd924afcb41cc788cdadc34c725283a097e564d620f39637bac
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:89e7a209ba0d87eb565b8882ecc24cd8ca239cd27e485942876ad3c0ff34833b
     name: rhtas-operator.v1.2.1
     schema: olm.bundle
-  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:a910a6fb09bb6332b8f28a93a0420cdc5876cc2dd512afb44afa508311700fbc
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:89e7a209ba0d87eb565b8882ecc24cd8ca239cd27e485942876ad3c0ff34833b
     name: rhtas-operator.v1.3.0
     schema: olm.bundle
-  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:1c0f0f18fdb80179d431e0fe63f4517f323b97d4adad556131281efa20798823
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:89e7a209ba0d87eb565b8882ecc24cd8ca239cd27e485942876ad3c0ff34833b
     name: rhtas-operator.v1.3.1
     schema: olm.bundle
-  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:3fedef0ee6c83c4a9b37ada2d183acf6f3e13b01ffa55c307ed7243d2fcb944c
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:89e7a209ba0d87eb565b8882ecc24cd8ca239cd27e485942876ad3c0ff34833b
     name: rhtas-operator.v1.3.2
     schema: olm.bundle
 schema: olm.template.basic
