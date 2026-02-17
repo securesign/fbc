@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: '0 0 * * *'
   workflow_dispatch:
+  pull_request:
+
 
 permissions:
   contents: write
@@ -19,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ocp_version: ["v4.15", "v4.16", "v4.17", "v4.18", "v4.19", "v4.20", "v4.21"]
+        ocp_version: ["v4.13", "v4.14", "v4.15", "v4.16", "v4.17", "v4.18", "v4.19", "v4.20", "v4.21"]
 
     steps:
       - name: Checkout repository
@@ -118,7 +120,7 @@ jobs:
           else
             echo "Changes detected. Committing..."
             git commit -m "chore: update OCP catalogs via cron"
-            git push origin HEAD:${{ github.ref_name }}
+            git push origin HEAD:refs/heads/render_catalogs
             echo "pushed=true" >> $GITHUB_OUTPUT
           fi
 
