@@ -37,7 +37,7 @@ spec:
     - name: url
       value: https://github.com/securesign/pipelines.git
     - name: revision
-      value: main
+      value: fix-for-fbc-builds-KONFLUX-12211
     - name: pathInRepo
       value: pipelines/fbc-builder.yaml
     resolver: git
