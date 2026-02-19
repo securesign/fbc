@@ -1,0 +1,93 @@
+name: Update FBC Catalogs
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_branch:
+        description: 'Branch to push changes to (created if it does not exist)'
+        required: true
+        default: 'release-1.4.0'
+      ocp_versions:
+        description: 'Comma-separated list of OCP versions'
+        required: true
+        default: 'v4.17,v4.18,v4.19,v4.20,v4.21'
+      bundle_image:
+        description: 'The bundle image reference'
+        required: true
+        default: 'registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:e1ada27b4195280e194295397becb7addfde1f94de2d1ed460cdf158c10a592e'
+      bundle_name:
+        description: 'The name of the bundle'
+        required: true
+        default: 'rhtas-operator.v1.4.0'
+      channels:
+        description: 'Comma-separated list of channels'
+        required: true
+        default: 'stable,stable-v1.4'
+      fbc_dir:
+        description: 'The FBC directory name'
+        required: true
+        default: 'rhtas-operator'
+
+jobs:
+  update-catalogs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Login to Red Hat Registry
+        uses: docker/login-action@v3
+        with:
+          registry: registry.redhat.io
+          username: ${{ secrets.RH_REGISTRY_USERNAME }}
+          password: ${{ secrets.RH_REGISTRY_PASSWORD }}
+
+      - name: Configure Podman Registry Mirror
+        run: |
+          mkdir -p ~/.config/containers
+          cat <<EOF > ~/.config/containers/registries.conf
+          [[registry]]
+          prefix = "registry.redhat.io/rhtas/rhtas-operator-bundle"
+          location = "registry.redhat.io/rhtas/rhtas-operator-bundle"
+          
+          [[registry.mirror]]
+          location = "quay.io/securesign/rhtas-operator-bundle"
+          EOF
+          
+          echo "Registry mirror configured successfully."
+
+      - name: Process FBC Utilities
+        env:
+          BUNDLE_IMAGE: ${{ github.event.inputs.bundle_image }}
+          BUNDLE_NAME: ${{ github.event.inputs.bundle_name }}
+          CHANNELS: ${{ github.event.inputs.channels }}
+          FBC_DIR: ${{ github.event.inputs.fbc_dir }}
+          VERSIONS: ${{ github.event.inputs.ocp_versions }}
+        run: |          
+          for version in $(echo $VERSIONS | tr ',' ' '); do
+            export OCP_VERSION="$version"
+            export GRAPH="${OCP_VERSION}/${FBC_DIR}/graph.yaml"
+            export CATALOG_FILE="${OCP_VERSION}/${FBC_DIR}/catalog/${FBC_DIR}/catalog.json"
+            
+            echo "Processing ${OCP_VERSION}..."
+            ./utils/configure_bundles.sh
+            ./utils/configure_channels.sh
+            ./utils/render_catalog.sh
+          done
+
+      - name: Commit and Push Changes
+        env:
+          TARGET_BRANCH: ${{ github.event.inputs.target_branch }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git checkout -B "$TARGET_BRANCH"
+          git add .
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: update FBC catalogs for $BUNDLE_NAME"
+            git push -u origin "$TARGET_BRANCH"
+          fi
