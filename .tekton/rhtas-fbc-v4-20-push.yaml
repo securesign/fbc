@@ -24,7 +24,7 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/jbouska/securesign:{{revision}}
+    value: quay.io/securesign/fbc-v4-20:{{revision}}
   - name: build-platforms
     value:
     - linux/x86_64
