@@ -34,6 +34,31 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Branch and Synchronize
+        env:
+          TARGET_BRANCH: ${{ github.event.inputs.target_branch }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Check if branch exists on the remote
+          if git ls-remote --exit-code --heads origin "$TARGET_BRANCH" > /dev/null; then
+            echo "Branch $TARGET_BRANCH exists. Checking out and synchronizing..."
+            git checkout "$TARGET_BRANCH"
+            
+            echo "Rebasing onto origin/main..."
+            git rebase origin/main || {
+              echo "Error: Rebase onto main failed. Please resolve conflicts manually."
+              git rebase --abort
+              exit 1
+            }
+          else
+            echo "Branch $TARGET_BRANCH does not exist. Creating it from main..."
+            git checkout -b "$TARGET_BRANCH" origin/main
+          fi
 
       - name: Install OPM
         uses: ./.github/actions/install-opm
@@ -82,15 +107,13 @@ jobs:
         env:
           TARGET_BRANCH: ${{ github.event.inputs.target_branch }}
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
-          git checkout -B "$TARGET_BRANCH"
           git add .
           
           if git diff --staged --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "chore: update FBC catalogs for $BUNDLE_NAME"
-            git push -u origin "$TARGET_BRANCH"
+            git commit -m "chore: update FBC catalogs for ${{ github.event.inputs.bundle_name }}"
+            
+            # A standard push will automatically fail with an error if it is not a fast-forward
+            git push origin "$TARGET_BRANCH"
           fi
