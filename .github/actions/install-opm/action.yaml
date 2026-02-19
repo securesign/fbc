@@ -1,0 +1,11 @@
+name: 'Install OPM'
+description: 'Installs the Operator Package Manager (OPM) tool'
+runs:
+  using: 'composite'
+  steps:
+    - name: Install OPM
+      shell: bash
+      run: |
+        curl -L https://github.com/operator-framework/operator-registry/releases/latest/download/linux-amd64-opm -o opm
+        chmod +x opm
+        sudo mv opm /usr/local/bin/

@@ -28,10 +28,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install OPM
-        run: |
-          curl -L https://github.com/operator-framework/operator-registry/releases/latest/download/linux-amd64-opm -o opm
-          chmod +x opm
-          sudo mv opm /usr/local/bin/
+        uses: ./.github/actions/install-opm
 
       - name: Login to Red Hat Registry
         uses: docker/login-action@v3
@@ -63,12 +60,12 @@ jobs:
               echo "::warning title=Unsupported Package::$pkg is not supported on ${{ matrix.ocp_version }} (Missing from Red Hat Index)"
             fi
           done
-    
+
           for PACKAGE_NAME in $PACKAGES; do
             echo "Synchronizating $PACKAGE_NAME"
             yq "select(.package == \"$PACKAGE_NAME\" or .name == \"$PACKAGE_NAME\")" $RELEASED_CATALOG | opm alpha convert-template basic - -o yaml > $OCP_VERSION/$PACKAGE_NAME/graph.yaml
             FBC_DIR=$PACKAGE_NAME CATALOG_FILE="$OCP_VERSION/$PACKAGE_NAME/catalog/$PACKAGE_NAME/catalog.json" ./utils/render_catalog.sh
-            
+          
             echo "Validating ${{ matrix.ocp_version }}/$PACKAGE_NAME/catalog/$PACKAGE_NAME"
             opm validate ${{ matrix.ocp_version }}/$PACKAGE_NAME/catalog/$PACKAGE_NAME/
           done
@@ -114,7 +111,7 @@ jobs:
           rm *.tar.gz
           
           git add v4.*/
-                    
+          
           if git diff --staged --quiet; then
             echo "No changes detected."
           else
