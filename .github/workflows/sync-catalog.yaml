@@ -5,10 +5,6 @@ on:
     - cron: '0 0 * * *'
   workflow_dispatch:
 
-permissions:
-  contents: write
-  pull-requests: write
-
 env:
   # TODO: Uncomment this when are sure that we want to sync all packages
   #SUPPORTED_PACKAGES: "rhtas-operator|model-validation-operator|policy-controller-operator"
@@ -89,10 +85,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Generate token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.PR_MANAGER_APP_ID }}
+          private-key: ${{ secrets.PR_MANAGER_APP_KEY }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Required for the ancestor/drift check
+          token: ${{ steps.generate_token.outputs.token }}
 
       - name: Download All Artifacts
         uses: actions/download-artifact@v4
@@ -124,7 +130,7 @@ jobs:
       - name: Notify affected PRs
         if: steps.commit_step.outputs.pushed == 'true'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.generate_token.outputs.token }}
           PUSHED_BRANCH: ${{ github.ref_name }}
         run: |
           git fetch origin
