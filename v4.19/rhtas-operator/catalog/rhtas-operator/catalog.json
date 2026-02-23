@@ -1854,10 +1854,6 @@
     ],
     "relatedImages": [
         {
-            "name": "",
-            "image": "registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:9e4a194864b8530f442aba5e8300e348dcfa0cb9a5957e1ad9f22474ebd8b343"
-        },
-        {
             "name": "trillian-netcat",
             "image": "registry.redhat.io/openshift4/ose-tools-rhel9@sha256:12f84700a69f6ce62efca960c2e4b6e3566b7065c97b9bb30376de37a0ca829f"
         },
@@ -1884,6 +1880,10 @@
         {
             "name": "rekor-server",
             "image": "registry.redhat.io/rhtas/rekor-server-rhel9@sha256:4afca53f27929243177a80a08e1ca77bd8978a50e8e0e7929781bb7b14a85cd2"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:9e4a194864b8530f442aba5e8300e348dcfa0cb9a5957e1ad9f22474ebd8b343"
         },
         {
             "name": "",
