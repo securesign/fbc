@@ -86,6 +86,7 @@ jobs:
 
     steps:
       - name: Generate token
+        id: generate_token
         uses: actions/create-github-app-token@v1
         with:
           app-id: ${{ secrets.PR_MANAGER_APP_ID }}
