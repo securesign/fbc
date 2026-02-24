@@ -16,6 +16,6 @@ entries:
   - image: registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:0f31421a30a1cefa861e3edd4c3ca740afe4bef9a9fd0e2857a3a6529a675d95
     name: policy-controller-operator.v0.0.1-techpreview
     schema: olm.bundle
-  - image: registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:7c8448510f125bb3a45381f8d9ccab819351052cbff8bb9e8880bcaa348a6241
+  - image: registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:3ee43eb08dc00cb0935faf2e3098e91650b82c87d961bfe80f40fe16bb28e254
     name: policy-controller-operator.v0.0.2-techpreview
     schema: olm.bundle
