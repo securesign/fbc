@@ -60,6 +60,8 @@ jobs:
           for PACKAGE_NAME in $PACKAGES; do
             echo "Synchronizating $PACKAGE_NAME"
             yq "select(.package == \"$PACKAGE_NAME\" or .name == \"$PACKAGE_NAME\")" $RELEASED_CATALOG | opm alpha convert-template basic - -o yaml > $OCP_VERSION/$PACKAGE_NAME/graph.yaml
+            # normalize the graph.yaml file to limit diff lines
+            yq eval -i -P '.' $OCP_VERSION/$PACKAGE_NAME/graph.yaml
             FBC_DIR=$PACKAGE_NAME CATALOG_FILE="$OCP_VERSION/$PACKAGE_NAME/catalog/$PACKAGE_NAME/catalog.json" ./utils/render_catalog.sh
           
             echo "Validating ${{ matrix.ocp_version }}/$PACKAGE_NAME/catalog/$PACKAGE_NAME"
