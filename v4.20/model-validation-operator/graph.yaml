@@ -10,6 +10,10 @@ entries:
       - name: model-validation-operator.v0.0.1
       - name: model-validation-operator.v0.0.2
         replaces: model-validation-operator.v0.0.1
+      - name: model-validation-operator.v0.0.3
+        replaces: model-validation-operator.v0.0.2
+        skips:
+          - model-validation-operator.v0.0.1
     name: tech-preview
     package: model-validation-operator
     schema: olm.channel
@@ -18,4 +22,7 @@ entries:
     schema: olm.bundle
   - image: registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:a48214bb858cb4f05c580e0d1e0bd2f246fc8185420d0f6a2a3e39eecabc947f
     name: model-validation-operator.v0.0.2
+    schema: olm.bundle
+  - image: registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:ce70bddc396d42faf81f8096fe034fd76dc7274bdc0ea01dc53e7e5d26e2de80
+    name: model-validation-operator.v0.0.3
     schema: olm.bundle
