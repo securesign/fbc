@@ -16,6 +16,6 @@ entries:
     name: stable
     package: policy-controller-operator
     schema: olm.channel
-  - image: registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:5fc84a0c6e851a524c505240f9692cc9519f25a83cbae8917ef824b2f4fdcc55
+  - image: registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:edab8448f3ce2162d04c9541f9d3d6460f724f59fbbf0e116f1f38a4e61d40ea
     name: policy-controller-operator.v1.0.0
     schema: olm.bundle
