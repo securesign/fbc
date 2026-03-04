@@ -9,7 +9,6 @@ metadata:
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "push"
       && target_branch.matches('^release-.*$')
-      && ( "v4.20/rhtas-operator/***".pathChanged() || ".tekton/rhtas-fbc-v4-20-push.yaml".pathChanged() )
   creationTimestamp: null
   labels:
     appstudio.openshift.io/application: rhtas-fbc
