@@ -23,6 +23,6 @@ entries:
   - image: registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:a48214bb858cb4f05c580e0d1e0bd2f246fc8185420d0f6a2a3e39eecabc947f
     name: model-validation-operator.v0.0.2
     schema: olm.bundle
-  - image: registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:ce70bddc396d42faf81f8096fe034fd76dc7274bdc0ea01dc53e7e5d26e2de80
+  - image: quay.io/securesign/model-validation-operator-bundle@sha256:8471c015335f643ecd982a5afd1d54d257d05941e7411a2f3df08d8dd0a0e7e5
     name: model-validation-operator.v0.0.3
     schema: olm.bundle
