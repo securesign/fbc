@@ -47,6 +47,13 @@ entries:
           - rhtas-operator.v1.2.0
           - rhtas-operator.v1.2.1
           - rhtas-operator.v1.3.0
+      - name: rhtas-operator.v1.3.3
+        replaces: rhtas-operator.v1.3.2
+        skips:
+          - rhtas-operator.v1.2.0
+          - rhtas-operator.v1.2.1
+          - rhtas-operator.v1.3.0
+          - rhtas-operator.v1.3.1
     name: stable
     package: rhtas-operator
     schema: olm.channel
@@ -83,6 +90,11 @@ entries:
         replaces: rhtas-operator.v1.3.1
         skips:
           - rhtas-operator.v1.3.0
+      - name: rhtas-operator.v1.3.3
+        replaces: rhtas-operator.v1.3.2
+        skips:
+          - rhtas-operator.v1.3.0
+          - rhtas-operator.v1.3.1
     name: stable-v1.3
     package: rhtas-operator
     schema: olm.channel
@@ -121,4 +133,7 @@ entries:
           schema: olm.bundle
     package: rhtas-operator
     schema: olm.deprecations
+  - image: quay.io/securesign/rhtas-operator-bundle-v1-3@sha256:32e72247b14ffbf95f4a25e0950d30d61e227d15145ca5a4a410d15c26bf454c
+    name: rhtas-operator.v1.3.3
+    schema: olm.bundle
 schema: olm.template.basic
