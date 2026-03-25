@@ -1,6 +1,6 @@
 schema: olm.template.basic
 entries:
-  - defaultChannel: tech-preview
+  - defaultChannel: stable
     name: model-validation-operator
     schema: olm.package
     icon:
@@ -17,6 +17,24 @@ entries:
     name: tech-preview
     package: model-validation-operator
     schema: olm.channel
+  - entries:
+      - name: model-validation-operator.v1.0.0
+        replaces: model-validation-operator.v0.0.3
+        skips: 
+          - model-validation-operator.v0.0.1
+          - model-validation-operator.v0.0.2
+    name: stable-v1.0
+    package: model-validation-operator
+    schema: olm.channel
+  - entries:
+      - name: model-validation-operator.v1.0.0
+        replaces: model-validation-operator.v0.0.3
+        skips: 
+          - model-validation-operator.v0.0.1
+          - model-validation-operator.v0.0.2
+    name: stable
+    package: model-validation-operator
+    schema: olm.channel
   - image: registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:9b89c809d36c124a80fc210e111cc3fc22513c77bd37b1dd18360a5b85066bac
     name: model-validation-operator.v0.0.1
     schema: olm.bundle
@@ -26,3 +44,25 @@ entries:
   - image: registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:8471c015335f643ecd982a5afd1d54d257d05941e7411a2f3df08d8dd0a0e7e5
     name: model-validation-operator.v0.0.3
     schema: olm.bundle
+  - image: registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:f30c80be7cefa5c16f7a9203eef4d141dfa83d818f8869b7193c7833c91d3998
+    name: model-validation-operator.v1.0.0
+    schema: olm.bundle
+  - entries:
+      - message: tech-preview is no longer supported. Please switch to channel 'stable' for continued support.
+        reference:
+          name: tech-preview
+          schema: olm.channel
+      - message: model-validation-operator.v0.0.1 is deprecated. Please update for continued support.
+        reference:
+          name: model-validation-operator.v0.0.1
+          schema: olm.bundle
+      - message: model-validation-operator.v0.0.2 is deprecated. Please update for continued support.
+        reference:
+          name: model-validation-operator.v0.0.2
+          schema: olm.bundle
+      - message: model-validation-operator.v0.0.3 is deprecated. Please update for continued support.
+        reference:
+          name: model-validation-operator.v0.0.3
+          schema: olm.bundle
+    package:  model-validation-operator
+    schema: olm.deprecations
