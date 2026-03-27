@@ -1,0 +1,49 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  annotations:
+    build.appstudio.openshift.io/repo: https://github.com/securesign/fbc?rev={{revision}}
+    build.appstudio.redhat.com/commit_sha: '{{revision}}'
+    build.appstudio.redhat.com/target_branch: '{{target_branch}}'
+    pipelinesascode.tekton.dev/cancel-in-progress: "false"
+    pipelinesascode.tekton.dev/max-keep-runs: "3"
+    pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
+      == "production" && ( "v4.18/rhtas-operator/***".pathChanged() || ".tekton/fbc-v4-18-production-push.yaml".pathChanged()
+      || "trigger-konflux-builds.txt".pathChanged() )
+  creationTimestamp: null
+  labels:
+    appstudio.openshift.io/application: fbc-v4-18
+    appstudio.openshift.io/component: fbc-v4-18-production
+    pipelines.appstudio.openshift.io/type: build
+  name: fbc-v4-18-production-on-push
+  namespace: rhtas-tenant
+spec:
+  params:
+  - name: git-url
+    value: '{{source_url}}'
+  - name: revision
+    value: '{{revision}}'
+  - name: output-image
+    value: quay.io/securesign/fbc-v4-18-production:{{revision}}
+  - name: dockerfile
+    value: catalog.Dockerfile
+  - name: path-context
+    value: v4.18/rhtas-operator
+  - name: ocp-release-version
+    value: "v4.18"
+  pipelineRef:
+    params:
+    - name: url
+      value: https://github.com/securesign/pipelines.git
+    - name: revision
+      value: main
+    - name: pathInRepo
+      value: pipelines/fbc-builder.yaml
+    resolver: git
+  taskRunTemplate:
+    serviceAccountName: build-pipeline-fbc-v4-18
+  workspaces:
+  - name: git-auth
+    secret:
+      secretName: '{{ git_auth_secret }}'
+status: {}
