@@ -76,11 +76,14 @@ jobs:
           [[registry]]
           prefix = "registry.redhat.io/rhtas/rhtas-operator-bundle"
           location = "registry.redhat.io/rhtas/rhtas-operator-bundle"
-          
+
           [[registry.mirror]]
           location = "quay.io/securesign/rhtas-operator-bundle"
+
+          [[registry.mirror]]
+          location = "quay.io/securesign/rhtas-operator-bundle-v1-3"
           EOF
-          
+
           echo "Registry mirror configured successfully."
 
       - name: Process FBC Utilities
