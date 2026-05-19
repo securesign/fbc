@@ -88,7 +88,7 @@ entries:
     schema: olm.bundle
   - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:6b541f305ebc586c5885db3f6724dc0c1bcb1f76ee41c6e1324bbd633af0eb37
     schema: olm.bundle
-  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:77737a3c7014faff695fbf27facadf7976fc7f7b7c01f628f014c8a05fc31499
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:eb03f2bfb13b70eefff7eaa741bb0c8a1eb53d009b5e8f204037e0d9d9a0885c
     name: rhtas-operator.v1.4.1
     schema: olm.bundle
 schema: olm.template.basic
