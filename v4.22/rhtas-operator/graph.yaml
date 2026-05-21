@@ -5,5 +5,4 @@ entries:
       mediatype: image/svg+xml
     name: rhtas-operator
     schema: olm.package
-  - entries:
 schema: olm.template.basic
