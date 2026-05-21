@@ -5,4 +5,17 @@ entries:
       mediatype: image/svg+xml
     name: rhtas-operator
     schema: olm.package
+  - entries:
+      - name: rhtas-operator.v1.4.1
+    name: stable-v1.4
+    package: rhtas-operator
+    schema: olm.channel
+  - entries:
+      - name: rhtas-operator.v1.4.1
+    name: stable
+    package: rhtas-operator
+    schema: olm.channel
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:eb03f2bfb13b70eefff7eaa741bb0c8a1eb53d009b5e8f204037e0d9d9a0885c
+    name: rhtas-operator.v1.4.1
+    schema: olm.bundle
 schema: olm.template.basic
