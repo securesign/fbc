@@ -1,3 +1,4 @@
+---
 entries:
   - defaultChannel: stable
     icon:
@@ -5,4 +6,16 @@ entries:
       mediatype: image/svg+xml
     name: rhtas-operator
     schema: olm.package
+  - entries:
+      - name: rhtas-operator.v1.4.1
+    name: stable
+    package: rhtas-operator
+    schema: olm.channel
+  - entries:
+      - name: rhtas-operator.v1.4.1
+    name: stable-v1.4
+    package: rhtas-operator
+    schema: olm.channel
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:cfc6901c867e00010bc303692b00f6787b2e3ec3a79bc320e53774918cbc16b4
+    schema: olm.bundle
 schema: olm.template.basic
