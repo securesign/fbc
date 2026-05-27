@@ -33,6 +33,16 @@ jobs:
           username: ${{ secrets.RH_REGISTRY_USERNAME }}
           password: ${{ secrets.RH_REGISTRY_PASSWORD }}
 
+      - name: Fix registries.conf format
+        run: |
+          sudo mkdir -p /etc/containers
+          sudo tee /etc/containers/registries.conf > /dev/null <<EOF
+          unqualified-search-registries = ["docker.io"]
+
+          [[registry]]
+          location = "registry.redhat.io"
+          EOF
+
       - name: Render Catalog
         run: |
           echo "Rendering catalog for registry.redhat.io/redhat/redhat-operator-index:${{ matrix.ocp_version }}..."
