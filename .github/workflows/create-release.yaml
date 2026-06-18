@@ -70,21 +70,21 @@ jobs:
           password: ${{ secrets.RH_REGISTRY_PASSWORD }}
 
       - name: Configure Podman Registry Mirror
+        env:
+          FBC_DIR: ${{ github.event.inputs.fbc_dir }}
         run: |
+          BUNDLE_REPO="${FBC_DIR}-bundle"
           mkdir -p ~/.config/containers
           cat <<EOF > ~/.config/containers/registries.conf
           [[registry]]
-          prefix = "registry.redhat.io/rhtas/rhtas-operator-bundle"
-          location = "registry.redhat.io/rhtas/rhtas-operator-bundle"
+          prefix = "registry.redhat.io/rhtas/${BUNDLE_REPO}"
+          location = "registry.redhat.io/rhtas/${BUNDLE_REPO}"
 
           [[registry.mirror]]
-          location = "quay.io/securesign/rhtas-operator-bundle"
-
-          [[registry.mirror]]
-          location = "quay.io/securesign/rhtas-operator-bundle-v1-3"
+          location = "quay.io/securesign/${BUNDLE_REPO}"
           EOF
 
-          echo "Registry mirror configured successfully."
+          echo "Registry mirror configured for ${BUNDLE_REPO}."
 
       - name: Process FBC Utilities
         env:
