@@ -6,9 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  # TODO: Uncomment this when are sure that we want to sync all packages
-  #SUPPORTED_PACKAGES: "rhtas-operator|model-validation-operator|policy-controller-operator"
-  SUPPORTED_PACKAGES: "rhtas-operator"
+  SUPPORTED_PACKAGES: "rhtas-operator|policy-controller-operator"
 
 jobs:
   update-catalogs:
