@@ -98,8 +98,26 @@ jobs:
             export OCP_VERSION="$version"
             export GRAPH="${OCP_VERSION}/${FBC_DIR}/graph.yaml"
             export CATALOG_FILE="${OCP_VERSION}/${FBC_DIR}/catalog/${FBC_DIR}/catalog.json"
-          
+
             echo "Processing ${OCP_VERSION}..."
+
+            if [[ ! -f "$GRAPH" ]]; then
+              echo "graph.yaml not found for ${OCP_VERSION}/${FBC_DIR}. Creating seed..."
+              yq -n '
+                .entries[0].defaultChannel = "stable" |
+                .entries[0].name = env(FBC_DIR) |
+                .entries[0].schema = "olm.package" |
+                .schema = "olm.template.basic"
+              ' > "$GRAPH"
+              echo "Created seed graph.yaml for ${OCP_VERSION}/${FBC_DIR}"
+            fi
+
+            mkdir -p "$(dirname "$CATALOG_FILE")"
+            if [[ ! -f "$CATALOG_FILE" ]]; then
+              : > "$CATALOG_FILE"
+              echo "Created empty catalog.json for ${OCP_VERSION}/${FBC_DIR}"
+            fi
+
             ./utils/configure_bundles.sh
             ./utils/configure_channels.sh
             ./utils/render_catalog.sh
