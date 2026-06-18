@@ -533,12 +533,12 @@
     ],
     "relatedImages": [
         {
-            "name": "",
-            "image": "registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:edab8448f3ce2162d04c9541f9d3d6460f724f59fbbf0e116f1f38a4e61d40ea"
-        },
-        {
             "name": "ose-cli",
             "image": "registry.redhat.io/openshift4/ose-cli@sha256:eba94f94949aca0330425b1ae3897f37b2365fc09fc88d60615ca7d02b06e8a9"
+        },
+        {
+            "name": "",
+            "image": "registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:edab8448f3ce2162d04c9541f9d3d6460f724f59fbbf0e116f1f38a4e61d40ea"
         },
         {
             "name": "",
