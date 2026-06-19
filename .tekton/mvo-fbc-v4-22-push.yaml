@@ -7,15 +7,16 @@ metadata:
     build.appstudio.redhat.com/target_branch: '{{target_branch}}'
     pipelinesascode.tekton.dev/cancel-in-progress: "false"
     pipelinesascode.tekton.dev/max-keep-runs: "3"
-    pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
-      == "main" && ( "v4.15/model-validation-operator/***".pathChanged() || ".tekton/mvo-fbc-v4-15-push.yaml".pathChanged()
-      )
+    pipelinesascode.tekton.dev/on-cel-expression: |
+      event == "push"
+        && target_branch.matches('^release-.*$')
+        && ( "v4.22/model-validation-operator/**".pathChanged() || ".tekton/mvo-fbc-v4-22-push.yaml".pathChanged() )
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: mvo-fbc-v4-15
-    appstudio.openshift.io/component: mvo-fbc-v4-15
+    appstudio.openshift.io/application: mvo-fbc
+    appstudio.openshift.io/component: mvo-fbc-v4-22
     pipelines.appstudio.openshift.io/type: build
-  name: mvo-fbc-v4-15-on-push
+  name: mvo-fbc-v4-22-on-push
   namespace: rhtas-tenant
 spec:
   params:
@@ -24,14 +25,16 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/securesign/mvo-fbc-v4-15:{{revision}}
+    value: quay.io/securesign/mvo-fbc-v4-22:{{revision}}
   - name: build-platforms
     value:
     - linux/x86_64
   - name: dockerfile
     value: catalog.Dockerfile
   - name: path-context
-    value: v4.15/model-validation-operator
+    value: v4.22/model-validation-operator
+  - name: ocp-release-version
+    value: "v4.22"
   pipelineRef:
     params:
     - name: url
@@ -42,7 +45,7 @@ spec:
       value: pipelines/fbc-builder.yaml
     resolver: git
   taskRunTemplate:
-    serviceAccountName: build-pipeline-mvo-fbc-v4-15
+    serviceAccountName: build-pipeline-mvo-fbc-v4-22
   workspaces:
   - name: git-auth
     secret:
