@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  SUPPORTED_PACKAGES: "rhtas-operator|policy-controller-operator"
+  SUPPORTED_PACKAGES: "rhtas-operator|policy-controller-operator|model-validation-operator"
 
 jobs:
   update-catalogs:
