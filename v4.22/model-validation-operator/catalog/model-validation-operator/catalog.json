@@ -1,7 +1,7 @@
 {
     "schema": "olm.package",
     "name": "model-validation-operator",
-    "defaultChannel": "stable"
+    "defaultChannel": "tech-preview"
 }
 {
     "schema": "olm.channel",

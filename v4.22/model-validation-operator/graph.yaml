@@ -1,5 +1,5 @@
 entries:
-  - defaultChannel: stable
+  - defaultChannel: tech-preview
     name: model-validation-operator
     schema: olm.package
   - entries:
