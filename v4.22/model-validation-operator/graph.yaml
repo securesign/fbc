@@ -1,0 +1,13 @@
+---
+entries:
+  - defaultChannel: tech-preview
+    name: model-validation-operator
+    schema: olm.package
+  - entries:
+      - name: model-validation-operator.v0.1.1
+    name: tech-preview
+    package: model-validation-operator
+    schema: olm.channel
+  - image: registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:eb42bac42219880d3e454871f55b4cdb6792e1509f4722981485f32abff8674c
+    schema: olm.bundle
+schema: olm.template.basic
