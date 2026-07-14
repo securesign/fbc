@@ -72,8 +72,10 @@ jobs:
       - name: Configure Podman Registry Mirror
         env:
           FBC_DIR: ${{ github.event.inputs.fbc_dir }}
+          BUNDLE_NAME: ${{ github.event.inputs.bundle_name }}
         run: |
           BUNDLE_REPO="${FBC_DIR}-bundle"
+          VERSION=$(echo "${BUNDLE_NAME}" | grep -oP 'v\d+\.\d+' | sed 's/\./-/')
           mkdir -p ~/.config/containers
           cat <<EOF > ~/.config/containers/registries.conf
           [[registry]]
@@ -82,9 +84,12 @@ jobs:
 
           [[registry.mirror]]
           location = "quay.io/securesign/${BUNDLE_REPO}"
+
+          [[registry.mirror]]
+          location = "quay.io/securesign/${BUNDLE_REPO}-${VERSION}"
           EOF
 
-          echo "Registry mirror configured for ${BUNDLE_REPO}."
+          echo "Registry mirror configured for ${BUNDLE_REPO} (with ${VERSION} variant)."
 
       - name: Process FBC Utilities
         env:
