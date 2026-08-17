@@ -5,7 +5,9 @@ set -euo pipefail
 #FBC_DIR="rhtas-operator"
 #CATALOG_FILE="v4.19/${FBC_DIR}/catalog/rhtas-operator/catalog.json"
 
-minor=${OCP_VERSION#v4.}
+ver=${OCP_VERSION#v}
+major=${ver%%.*}
+minor=${ver#*.}
 minor=${minor%%.*}
 
 # Anything related to related_images can be removed once we deprecate 1.1.x
@@ -25,7 +27,7 @@ reduce .[] as $item ({};
 )' "$CATALOG_FILE")
 
 migrate_flag=""
-if (( minor >= 17 )); then
+if (( major > 4 || (major == 4 && minor >= 17) )); then
     migrate_flag="--migrate-level=bundle-object-to-csv-metadata"
 fi
 
