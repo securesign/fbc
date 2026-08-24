@@ -108,3 +108,21 @@ spec:
     - mirrors:
         - quay.io/securesign/model-validation-operator
       source: registry.redhat.io/rhtas/model-validation-rhel9-operator
+    - mirrors:
+        - quay.io/securesign/tufcli-init
+      source: registry.redhat.io/rhtas/tufcli-init-rhel9
+    - mirrors:
+        - quay.io/securesign/rekor-monitor
+      source: registry.redhat.io/rhtas/rekor-monitor-rhel9
+    - mirrors:
+        - quay.io/securesign/tufcli-init
+      source: registry.redhat.io/rhtas/tufcli-init-rhel9
+    - mirrors:
+        - quay.io/securesign/ctlog-monitor
+      source: registry.redhat.io/rhtas/ctlog-monitor-rhel9
+    - mirrors:
+        - quay.io/securesign/rhtas-console
+      source: registry.redhat.io/rhtas/rhtas-console-rhel9
+    - mirrors:
+        - quay.io/securesign/rhtas-console-ui
+      source: registry.redhat.io/rhtas/rhtas-console-ui-rhel9
