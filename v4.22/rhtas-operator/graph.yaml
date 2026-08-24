@@ -7,6 +7,11 @@ entries:
     name: rhtas-operator
     schema: olm.package
   - entries:
+      - name: rhtas-operator.v1.5.0
+    name: stable-v1.5
+    package: rhtas-operator
+    schema: olm.channel
+  - entries:
       - name: rhtas-operator.v1.4.1
       - name: rhtas-operator.v1.4.2
         replaces: rhtas-operator.v1.4.1
@@ -14,6 +19,11 @@ entries:
         replaces: rhtas-operator.v1.4.2
         skips:
           - rhtas-operator.v1.4.1
+      - name: rhtas-operator.v1.5.0
+        replaces: rhtas-operator.v1.4.1
+        skips:
+          - rhtas-operator.v1.4.2
+          - rhtas-operator.v1.4.3
     name: stable
     package: rhtas-operator
     schema: olm.channel
@@ -33,5 +43,8 @@ entries:
   - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:3f3082e2abf1663a373c744c4e9bb33d6ba893c03f0502ac01e5b2c73d2aad34
     schema: olm.bundle
   - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:195df73746aaab5f31babde709336f74c9bda535cd064585afac38a53b919195
+    schema: olm.bundle
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:899b5ae9461516f39c6fd659704cee097a9abbb9161bcbba8ac38d67ffc58482
+    name: rhtas-operator.v1.5.0
     schema: olm.bundle
 schema: olm.template.basic
