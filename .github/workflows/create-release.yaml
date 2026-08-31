@@ -32,10 +32,18 @@ jobs:
   update-catalogs:
     runs-on: ubuntu-latest
     steps:
+      - name: Generate token
+        id: generate_token
+        uses: actions/create-github-app-token@v3.2.0
+        with:
+          client-id: ${{ secrets.PR_MANAGER_CLIENT_ID }}
+          private-key: ${{ secrets.PR_MANAGER_APP_KEY }}
+
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ steps.generate_token.outputs.token }}
 
       - name: Setup Branch and Synchronize
         env:
