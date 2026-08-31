@@ -1,0 +1,90 @@
+name: Add new OCP version
+
+# Bootstraps a brand-new, EMPTY OCP version across both repos:
+#  - securesign/fbc:       per-operator skeleton + .tekton PipelineRuns + cron matrix entry
+#  - securesign/pipelines: Konflux component onboarding (CaC)
+# main mirrors the published Red Hat catalog, so the new version starts empty; the
+# nightly "Update OCP Catalogs" cron populates it once the operators ship upstream.
+
+on:
+  workflow_dispatch:
+    inputs:
+      ocp_version:
+        description: 'New OCP version to add (e.g. v4.23 or v5.0)'
+        required: true
+      source_version:
+        description: 'Version to template from (optional; defaults to the highest existing)'
+        required: false
+        default: ''
+
+jobs:
+  add-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate token (fbc + pipelines)
+        id: token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.PR_MANAGER_APP_ID }}
+          private-key: ${{ secrets.PR_MANAGER_APP_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            fbc
+            pipelines
+
+      # ---- fbc side ----
+      - name: Checkout fbc
+        uses: actions/checkout@v4
+        with:
+          path: fbc
+          token: ${{ steps.token.outputs.token }}
+
+      - name: Install OPM
+        uses: ./fbc/.github/actions/install-opm
+
+      - name: Generate fbc skeleton
+        working-directory: fbc
+        run: ./utils/new_ocp_version.sh "${{ inputs.ocp_version }}" ${{ inputs.source_version }}
+
+      - name: Open fbc PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ steps.token.outputs.token }}
+          path: fbc
+          branch: add-ocp-${{ inputs.ocp_version }}
+          base: main
+          commit-message: "chore: add OCP ${{ inputs.ocp_version }} FBC skeleton"
+          title: "chore: add OCP ${{ inputs.ocp_version }} FBC skeleton"
+          body: |
+            Automated empty FBC skeleton for **${{ inputs.ocp_version }}**
+            (per-operator dirs, `.tekton` PipelineRuns, cron matrix entry).
+            The catalog is intentionally empty until the operators ship upstream.
+
+            Companion CaC PR onboards the Konflux components in `securesign/pipelines`.
+
+      # ---- pipelines (CaC) side ----
+      - name: Checkout pipelines
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/pipelines
+          path: pipelines
+          token: ${{ steps.token.outputs.token }}
+
+      - name: Generate CaC onboarding
+        run: ./fbc/utils/new_cac_version.sh pipelines "${{ inputs.ocp_version }}" ${{ inputs.source_version }}
+
+      - name: Open pipelines PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ steps.token.outputs.token }}
+          path: pipelines
+          branch: add-ocp-${{ inputs.ocp_version }}
+          base: main
+          commit-message: "chore: onboard OCP ${{ inputs.ocp_version }} FBC components"
+          title: "chore: onboard OCP ${{ inputs.ocp_version }} FBC components"
+          body: |
+            Automated Konflux onboarding for **${{ inputs.ocp_version }}** FBC components
+            (Component + IntegrationTestScenarios + ImageRepository, wired into the overlays).
+
+            Merge this **before** the companion `securesign/fbc` PR so the build
+            service accounts exist when the Tekton PipelineRuns first fire.
