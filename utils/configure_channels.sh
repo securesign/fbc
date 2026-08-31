@@ -58,8 +58,12 @@ for channel in "${channel_list[@]}"; do
       if version_lt "$ENTRY_VERSION" "$BUNDLE_VERSION"; then
         if [[ "$ENTRY_MINOR" == "$BUNDLE_MINOR" ]]; then
           [[ -z "$REPLACES" || $(version_lt "$(get_version "$REPLACES")" "$ENTRY_VERSION" && echo 1) ]] && REPLACES="$entry"
-        elif [[ "$entry" == *".0" ]]; then
-          [[ -z "$REPLACES_FALLBACK" || $(version_lt "$(get_version "$REPLACES_FALLBACK")" "$ENTRY_VERSION" && echo 1) ]] && REPLACES_FALLBACK="$entry"
+        elif [[ "$ENTRY_MINOR" == "$PREV_MINOR" ]]; then
+          # Pick the lowest entry in prev minor as the cross-minor upgrade base.
+          # Using lowest (not .0) handles channels that start at a non-.0 patch (e.g. v4.22 starts at v1.4.1).
+          if [[ -z "$REPLACES_FALLBACK" ]] || version_lt "$ENTRY_VERSION" "$(get_version "$REPLACES_FALLBACK")"; then
+            REPLACES_FALLBACK="$entry"
+          fi
         fi
         if [[ "$ENTRY_MINOR" == "$BUNDLE_MINOR" || "$ENTRY_MINOR" == "$PREV_MINOR" ]]; then
           SKIPS="${SKIPS:+$SKIPS,}$entry"
