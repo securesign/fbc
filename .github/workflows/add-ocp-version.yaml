@@ -23,9 +23,9 @@ jobs:
     steps:
       - name: Generate token (fbc + pipelines)
         id: token
-        uses: actions/create-github-app-token@v1
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
-          app-id: ${{ secrets.PR_MANAGER_APP_ID }}
+          client-id: ${{ secrets.PR_MANAGER_CLIENT_ID }}
           private-key: ${{ secrets.PR_MANAGER_APP_KEY }}
           owner: ${{ github.repository_owner }}
           repositories: |
@@ -34,7 +34,7 @@ jobs:
 
       # ---- fbc side ----
       - name: Checkout fbc
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           path: fbc
           token: ${{ steps.token.outputs.token }}
@@ -47,24 +47,33 @@ jobs:
         run: ./utils/new_ocp_version.sh "${{ inputs.ocp_version }}" ${{ inputs.source_version }}
 
       - name: Open fbc PR
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ steps.token.outputs.token }}
-          path: fbc
-          branch: add-ocp-${{ inputs.ocp_version }}
-          base: main
-          commit-message: "chore: add OCP ${{ inputs.ocp_version }} FBC skeleton"
-          title: "chore: add OCP ${{ inputs.ocp_version }} FBC skeleton"
-          body: |
+        working-directory: fbc
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+          BRANCH: add-ocp-${{ inputs.ocp_version }}
+          TITLE: "chore: add OCP ${{ inputs.ocp_version }} FBC skeleton"
+          BODY: |
             Automated empty FBC skeleton for **${{ inputs.ocp_version }}**
             (per-operator dirs, `.tekton` PipelineRuns, cron matrix entry).
             The catalog is intentionally empty until the operators ship upstream.
 
             Companion CaC PR onboards the Konflux components in `securesign/pipelines`.
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git switch -c "$BRANCH"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No fbc changes detected."
+            exit 0
+          fi
+          git commit -m "$TITLE"
+          git push --set-upstream origin "$BRANCH"
+          gh pr create --repo "${{ github.repository_owner }}/fbc" --base main --head "$BRANCH" --title "$TITLE" --body "$BODY"
 
       # ---- pipelines (CaC) side ----
       - name: Checkout pipelines
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           repository: ${{ github.repository_owner }}/pipelines
           path: pipelines
@@ -74,17 +83,26 @@ jobs:
         run: ./fbc/utils/new_cac_version.sh pipelines "${{ inputs.ocp_version }}" ${{ inputs.source_version }}
 
       - name: Open pipelines PR
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ steps.token.outputs.token }}
-          path: pipelines
-          branch: add-ocp-${{ inputs.ocp_version }}
-          base: main
-          commit-message: "chore: onboard OCP ${{ inputs.ocp_version }} FBC components"
-          title: "chore: onboard OCP ${{ inputs.ocp_version }} FBC components"
-          body: |
+        working-directory: pipelines
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+          BRANCH: add-ocp-${{ inputs.ocp_version }}
+          TITLE: "chore: onboard OCP ${{ inputs.ocp_version }} FBC components"
+          BODY: |
             Automated Konflux onboarding for **${{ inputs.ocp_version }}** FBC components
             (Component + IntegrationTestScenarios + ImageRepository, wired into the overlays).
 
             Merge this **before** the companion `securesign/fbc` PR so the build
             service accounts exist when the Tekton PipelineRuns first fire.
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git switch -c "$BRANCH"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No pipelines changes detected."
+            exit 0
+          fi
+          git commit -m "$TITLE"
+          git push --set-upstream origin "$BRANCH"
+          gh pr create --repo "${{ github.repository_owner }}/pipelines" --base main --head "$BRANCH" --title "$TITLE" --body "$BODY"
