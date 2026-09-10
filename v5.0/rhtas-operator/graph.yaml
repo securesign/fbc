@@ -1,2 +1,18 @@
 schema: olm.template.basic
-entries: []
+entries:
+  - defaultChannel: stable
+    name: rhtas-operator
+    schema: olm.package
+  - entries:
+      - name: rhtas-operator.v1.4.3
+    name: stable-v1.4
+    package: rhtas-operator
+    schema: olm.channel
+  - entries:
+      - name: rhtas-operator.v1.4.3
+    name: stable
+    package: rhtas-operator
+    schema: olm.channel
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:195df73746aaab5f31babde709336f74c9bda535cd064585afac38a53b919195
+    name: rhtas-operator.v1.4.3
+    schema: olm.bundle
