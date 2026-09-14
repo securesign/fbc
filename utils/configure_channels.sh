@@ -34,7 +34,7 @@ get_prev_minor() {
 
 export PACKAGE_NAME=$(yq e '.entries[] | select(.schema=="olm.package") | .name' $GRAPH)
 BUNDLE_VERSION=$(get_version "$BUNDLE_NAME")
-BUNDLE_MINOR=$(get_minor "$BUNDLE_NAME")
+export BUNDLE_MINOR=$(get_minor "$BUNDLE_NAME")
 PREV_MINOR=$(get_prev_minor "$BUNDLE_NAME")
 
 echo "Bundle: $BUNDLE_NAME (minor: $BUNDLE_MINOR, prev: ${PREV_MINOR:-none})"
@@ -48,39 +48,32 @@ for channel in "${channel_list[@]}"; do
   if [[ "$CHANNEL_EXISTS" == "true" ]]; then
     echo "Channel $channel exists. Updating..."
 
-    REPLACES="" REPLACES_FALLBACK="" SKIPS="" GREATER=""
+    REPLACES="" REPLACES_FALLBACK=""
     for entry in $(yq e ".entries[] | select(.schema==\"olm.channel\" and .name==\"$channel\").entries[].name" $GRAPH); do
       [[ "$entry" == "$BUNDLE_NAME" ]] && continue
       ENTRY_VERSION=$(get_version "$entry")
       [[ -z "$ENTRY_VERSION" ]] && continue
       ENTRY_MINOR=$(get_minor "$entry")
-      ENTRY_PREV_MINOR=$(get_prev_minor "$entry")
       if version_lt "$ENTRY_VERSION" "$BUNDLE_VERSION"; then
         if [[ "$ENTRY_MINOR" == "$BUNDLE_MINOR" ]]; then
           [[ -z "$REPLACES" || $(version_lt "$(get_version "$REPLACES")" "$ENTRY_VERSION" && echo 1) ]] && REPLACES="$entry"
         elif [[ "$ENTRY_MINOR" == "$PREV_MINOR" ]]; then
-          # Pick the lowest entry in prev minor as the cross-minor upgrade base.
-          # Using lowest (not .0) handles channels that start at a non-.0 patch (e.g. v4.22 starts at v1.4.1).
-          if [[ -z "$REPLACES_FALLBACK" ]] || version_lt "$ENTRY_VERSION" "$(get_version "$REPLACES_FALLBACK")"; then
+          # Pick the highest entry in prev minor as the cross-minor upgrade base, to prevent forking
+          if [[ -z "$REPLACES_FALLBACK" ]] || version_lt "$(get_version "$REPLACES_FALLBACK")" "$ENTRY_VERSION"; then
             REPLACES_FALLBACK="$entry"
           fi
-        fi
-        if [[ "$ENTRY_MINOR" == "$BUNDLE_MINOR" || "$ENTRY_MINOR" == "$PREV_MINOR" ]]; then
-          SKIPS="${SKIPS:+$SKIPS,}$entry"
-        fi
-      elif version_lt "$BUNDLE_VERSION" "$ENTRY_VERSION"; then
-        if [[ "$BUNDLE_MINOR" == "$ENTRY_MINOR" || "$BUNDLE_MINOR" == "$ENTRY_PREV_MINOR" ]]; then
-          GREATER="${GREATER:+$GREATER }$entry"
         fi
       fi
     done
     [[ -z "$REPLACES" ]] && REPLACES="$REPLACES_FALLBACK"
-    [[ -n "$REPLACES" ]] && SKIPS=$(echo "$SKIPS" | tr ',' '\n' | { grep -v "^${REPLACES}$" || true; } | paste -sd ',' -)
 
-    # Add or update bundle with replaces/skips (preserves existing order)
-    export REPLACES SKIPS
-    if [[ -n "$REPLACES" && -n "$SKIPS" ]]; then
-      NEW_ENTRY="{\"name\": env(BUNDLE_NAME), \"replaces\": env(REPLACES), \"skips\": (env(SKIPS) | split(\",\"))}"
+    SKIP_RANGE=""
+    [[ -n "$PREV_MINOR" ]] && SKIP_RANGE=">=${PREV_MINOR#v}.0 <${BUNDLE_VERSION}"
+
+    # Add or update bundle with replaces/skipRange
+    export REPLACES SKIP_RANGE
+    if [[ -n "$REPLACES" && -n "$SKIP_RANGE" ]]; then
+      NEW_ENTRY="{\"name\": env(BUNDLE_NAME), \"replaces\": env(REPLACES), \"skipRange\": strenv(SKIP_RANGE)}"
     elif [[ -n "$REPLACES" ]]; then
       NEW_ENTRY="{\"name\": env(BUNDLE_NAME), \"replaces\": env(REPLACES)}"
     else
@@ -94,12 +87,14 @@ for channel in "${channel_list[@]}"; do
       yq -i -P eval "(.entries[] | select(.schema == \"olm.channel\" and .name == env(channel)).entries) += [${NEW_ENTRY}]" $GRAPH
     fi
 
-    # Add bundle to skips for greater versions
-    for entry in $GREATER; do
-      export entry
-      yq -i -P eval "(.entries[] | select(.schema == \"olm.channel\" and .name == env(channel)).entries[] |
-        select(.name == env(entry)).skips) |= ((. // []) + [env(BUNDLE_NAME)] | unique)" $GRAPH
-    done
+    # Keep the replaces chain linear across minor boundaries
+    yq -i -P eval '
+      (.entries[] | select(.schema == "olm.channel" and .name == env(channel)).entries[] |
+       select(.name != env(BUNDLE_NAME) and .replaces and
+              (.name | match("v[0-9]+\.[0-9]+").string != env(BUNDLE_MINOR)) and
+              (.replaces | match("v[0-9]+\.[0-9]+").string == env(BUNDLE_MINOR)))
+      ).replaces = env(BUNDLE_NAME)
+    ' $GRAPH
   else
     yq -i -P eval '
       (.entries) |= (.[0:1] + [{
