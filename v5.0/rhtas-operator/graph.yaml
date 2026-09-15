@@ -8,14 +8,23 @@ entries:
       mediatype: image/svg+xml
   - entries:
       - name: rhtas-operator.v1.4.0
+      - name: rhtas-operator.v1.4.1
+        replaces: rhtas-operator.v1.4.0
+        skipRange: '>=1.3.0 <1.4.1'
     name: stable-v1.4
     package: rhtas-operator
     schema: olm.channel
   - entries:
       - name: rhtas-operator.v1.4.0
+      - name: rhtas-operator.v1.4.1
+        replaces: rhtas-operator.v1.4.0
+        skipRange: '>=1.3.0 <1.4.1'
     name: stable
     package: rhtas-operator
     schema: olm.channel
   - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:6b541f305ebc586c5885db3f6724dc0c1bcb1f76ee41c6e1324bbd633af0eb37
     name: rhtas-operator.v1.4.0
+    schema: olm.bundle
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:cfc6901c867e00010bc303692b00f6787b2e3ec3a79bc320e53774918cbc16b4
+    name: rhtas-operator.v1.4.1
     schema: olm.bundle
