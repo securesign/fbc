@@ -23,6 +23,10 @@ on:
         description: 'Comma-separated list of channels'
         required: true
         default: 'stable,stable-v1.4'
+      default_channel:
+        description: 'Default channel for the package'
+        required: true
+        default: 'stable'
       fbc_dir:
         description: 'The FBC directory name'
         required: true
@@ -104,6 +108,7 @@ jobs:
           BUNDLE_IMAGE: ${{ github.event.inputs.bundle_image }}
           BUNDLE_NAME: ${{ github.event.inputs.bundle_name }}
           CHANNELS: ${{ github.event.inputs.channels }}
+          DEFAULT_CHANNEL: ${{ github.event.inputs.default_channel }}
           FBC_DIR: ${{ github.event.inputs.fbc_dir }}
           VERSIONS: ${{ github.event.inputs.ocp_versions }}
         run: |
@@ -122,7 +127,7 @@ jobs:
               echo "olm.package not found for ${OCP_VERSION}/${FBC_DIR}. Creating seed..."
               yq -i '
                 .entries = [{
-                  "defaultChannel": "stable",
+                  "defaultChannel": env(DEFAULT_CHANNEL),
                   "name": env(FBC_DIR),
                   "schema": "olm.package",
                   "icon": {
