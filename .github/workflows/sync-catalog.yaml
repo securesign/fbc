@@ -110,7 +110,7 @@ jobs:
           for f in *.tar.gz; do tar -xzf "$f"; done
           rm *.tar.gz
 
-          git add v4.*/
+          git add v4.*/ v5.*/
 
           if git diff --staged --quiet; then
             echo "No changes detected."
