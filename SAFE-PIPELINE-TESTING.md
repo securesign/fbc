@@ -10,3 +10,6 @@ Safety changes in `.tekton/rhtas-fbc-v4-20-push.yaml`:
 Intended use:
 - push changes on this branch to exercise the updated Tekton pipeline
 - validate the pre-build FBC checks without building or publishing catalog images
+
+Trigger note:
+- README-only updates can be used as no-op commits when you need to rerun this test branch manually
