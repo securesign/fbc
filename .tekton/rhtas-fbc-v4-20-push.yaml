@@ -9,14 +9,14 @@ metadata:
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: |
       event == "push"
-        && target_branch.matches('^release-.*$')
+        && target_branch == "fbc-test-v4-20"
         && ( "v4.20/rhtas-operator/**".pathChanged() || ".tekton/rhtas-fbc-v4-20-push.yaml".pathChanged() )
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: rhtas-fbc
-    appstudio.openshift.io/component: rhtas-fbc-v4-20
+    appstudio.openshift.io/application: rhtas-fbc-test
+    appstudio.openshift.io/component: rhtas-fbc-v4-20-test
     pipelines.appstudio.openshift.io/type: build
-  name: fbc-v4-20-on-push
+  name: fbc-v4-20-test-on-push
   namespace: rhtas-tenant
 spec:
   params:
@@ -25,7 +25,7 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/securesign/fbc-v4-20:{{revision}}
+    value: quay.io/securesign/fbc-v4-20-pipeline-test:{{revision}}
   - name: build-platforms
     value:
     - linux/x86_64
@@ -40,7 +40,7 @@ spec:
     - name: url
       value: https://github.com/securesign/pipelines.git
     - name: revision
-      value: main
+      value: validate-fbc-graph-sync
     - name: pathInRepo
       value: pipelines/fbc-builder.yaml
     resolver: git
