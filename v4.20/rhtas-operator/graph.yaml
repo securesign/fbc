@@ -86,6 +86,7 @@ entries:
           - rhtas-operator.v1.3.4
           - rhtas-operator.v1.3.5
           - rhtas-operator.v1.3.6
+          - rhtas-operator.v1.3.8
       - name: rhtas-operator.v1.3.5
         replaces: rhtas-operator.v1.3.4
         skips:
