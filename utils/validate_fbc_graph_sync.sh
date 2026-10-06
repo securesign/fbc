@@ -60,49 +60,44 @@ opm validate "${catalog_dir}"
 
 echo "Checking graph.yaml and catalog.json stay in sync..."
 graph_norm="$(mktemp)"
-converted_template="$(mktemp)"
 committed_norm="$(mktemp)"
-trap 'rm -f "${graph_norm}" "${converted_template}" "${committed_norm}"' EXIT
+trap 'rm -f "${graph_norm}" "${committed_norm}"' EXIT
 
-normalize_template() {
-    awk '
-        function flush() {
-            if (current != "") {
-                if (!(previous ~ /^image:/ && current ~ /^name: /)) {
-                    print current
-                }
-                previous = current
-                current = ""
-            }
-        }
-        {
-            sub(/[[:space:]]+$/, "", $0)
-            if ($0 ~ /^[[:space:]]*$/ || $0 == "---") {
-                next
-            }
+canonicalize_template() {
+    local source_kind="$1"
 
-            line = $0
-            sub(/^[[:space:]]+/, "", line)
+    jq -S --arg source_kind "${source_kind}" '
+        def canonical:
+            if type == "array" then
+                map(canonical) | sort_by(tojson)
+            elif type == "object" then
+                to_entries
+                | sort_by(.key)
+                | map(.value |= canonical)
+                | from_entries
+                # convert-template derives bundle names from images and omits them.
+                | if .schema == "olm.bundle" and has("image") then del(.name) else . end
+            else
+                .
+            end;
 
-            if (line ~ /^- / || line ~ /^[A-Za-z0-9_.-]+:/) {
-                flush()
-                sub(/^- /, "", line)
-                current = line
-            } else if (current == "") {
-                current = line
-            } else {
-                current = current " " line
-            }
-        }
-        END {
-            flush()
-        }
-    ' "$1" | sort
+        (if $source_kind == "graph" then
+            if (.entries | length) == 1 and .entries[0].schema == "olm.template.basic" then
+                .entries[0]
+            else
+                error("graph did not convert to a single basic template")
+            end
+        else
+            .
+        end)
+        | canonical
+    '
 }
 
-opm alpha convert-template basic "${catalog_file}" -o yaml > "${converted_template}"
-normalize_template "${graph_file}" > "${graph_norm}"
-normalize_template "${converted_template}" > "${committed_norm}"
+opm alpha convert-template basic "${graph_file}" -o json \
+    | canonicalize_template graph > "${graph_norm}"
+opm alpha convert-template basic "${catalog_file}" -o json \
+    | canonicalize_template catalog > "${committed_norm}"
 
 if ! diff -q "${graph_norm}" "${committed_norm}" >/dev/null 2>&1; then
     echo "graph.yaml and catalog.json are out of sync" >&2

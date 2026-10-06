@@ -33,5 +33,5 @@ passing the catalog context to the validation script:
 ./utils/validate_fbc_graph_sync.sh v4.20/rhtas-operator
 ```
 
-The script requires `opm` and validates both the committed catalog and its
-synchronization with `graph.yaml`.
+The script requires `opm` and `jq`. It validates both the committed catalog
+and its synchronization with `graph.yaml`.
