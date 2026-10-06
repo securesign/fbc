@@ -23,3 +23,15 @@ Once you execute the workflow, it will automatically install the necessary OPM t
 ## Release Process
 
 Releases in this repository follow a snapshot-based workflow. First, candidate releases generated from the `release-.*` branches undergo standard QE validation. Once a candidate is approved, the official release is performed directly from the corresponding snapshots as usual. After the release is successfully completed, the specific release branch is tagged with the release version and subsequently closed.
+
+## Validating a Catalog Locally
+
+Run the same graph and catalog validation used by the FBC builder pipeline by
+passing the catalog context to the validation script:
+
+```bash
+./utils/validate_fbc_graph_sync.sh v4.20/rhtas-operator
+```
+
+The script requires `opm` and validates both the committed catalog and its
+synchronization with `graph.yaml`.
