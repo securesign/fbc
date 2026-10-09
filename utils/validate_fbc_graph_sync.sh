@@ -99,9 +99,15 @@ opm alpha convert-template basic "${graph_file}" -o json \
 opm alpha convert-template basic "${catalog_file}" -o json \
     | canonicalize_template catalog > "${committed_norm}"
 
-if ! diff -q "${graph_norm}" "${committed_norm}" >/dev/null 2>&1; then
+if ! jq -e -n \
+    --slurpfile graph "${graph_norm}" \
+    --slurpfile committed "${committed_norm}" \
+    '$graph == $committed' >/dev/null; then
     echo "graph.yaml and catalog.json are out of sync" >&2
-    diff -u "${graph_norm}" "${committed_norm}" | head -50 || true
+    echo "Canonical graph template (first 50 lines):" >&2
+    head -50 "${graph_norm}" >&2
+    echo "Canonical committed catalog (first 50 lines):" >&2
+    head -50 "${committed_norm}" >&2
     exit 1
 fi
 
