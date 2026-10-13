@@ -18,8 +18,10 @@ entries:
         skips:
           - policy-controller-operator.v1.0.0
       - name: policy-controller-operator.v1.1.0
-        replaces: policy-controller-operator.v1.0.2
+        replaces: policy-controller-operator.v1.0.3
         skipRange: '>=1.0.0 <1.1.0'
+      - name: policy-controller-operator.v1.0.3
+        replaces: policy-controller-operator.v1.0.2
     name: stable
     package: policy-controller-operator
     schema: olm.channel
@@ -34,6 +36,8 @@ entries:
         replaces: policy-controller-operator.v1.0.1
         skips:
           - policy-controller-operator.v1.0.0
+      - name: policy-controller-operator.v1.0.3
+        replaces: policy-controller-operator.v1.0.2
     name: stable-v1.0
     package: policy-controller-operator
     schema: olm.channel
@@ -76,4 +80,7 @@ entries:
           schema: olm.bundle
     package: policy-controller-operator
     schema: olm.deprecations
+  - image: registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:432457feaee36f2370e990cfd7b43d9f144a31d6c94fb95b137429c4b9d8b687
+    name: policy-controller-operator.v1.0.3
+    schema: olm.bundle
 schema: olm.template.basic
