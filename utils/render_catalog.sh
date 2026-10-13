@@ -33,6 +33,9 @@ fi
 
 opm alpha render-template $migrate_flag basic "${OCP_VERSION}/${FBC_DIR}/graph.yaml" > "$CATALOG_FILE"
 
+# Remove lifecycle schema entries to prevent lifecycle metadata from being included
+jq 'select(.schema != "io.openshift.operators.lifecycles.v1alpha1")' "$CATALOG_FILE" > "${CATALOG_FILE}.tmp" && mv "${CATALOG_FILE}.tmp" "$CATALOG_FILE"
+
 jq -s --indent 4 --argjson related_images "$related_images" '
     map(
         if .schema == "olm.bundle" then
