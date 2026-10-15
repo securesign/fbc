@@ -18,8 +18,11 @@ entries:
         replaces: rhtas-operator.v1.4.2
         skipRange: '>=1.3.0 <1.4.3'
       - name: rhtas-operator.v1.5.0
-        replaces: rhtas-operator.v1.4.3
+        replaces: rhtas-operator.v1.4.4
         skipRange: '>=1.4.0 <1.5.0'
+      - name: rhtas-operator.v1.4.4
+        replaces: rhtas-operator.v1.4.3
+        skipRange: '>=1.3.0 <1.4.4'
     name: stable
     package: rhtas-operator
     schema: olm.channel
@@ -34,6 +37,9 @@ entries:
       - name: rhtas-operator.v1.4.3
         replaces: rhtas-operator.v1.4.2
         skipRange: '>=1.3.0 <1.4.3'
+      - name: rhtas-operator.v1.4.4
+        replaces: rhtas-operator.v1.4.3
+        skipRange: '>=1.3.0 <1.4.4'
     name: stable-v1.4
     package: rhtas-operator
     schema: olm.channel
@@ -49,6 +55,8 @@ entries:
   - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:3f3082e2abf1663a373c744c4e9bb33d6ba893c03f0502ac01e5b2c73d2aad34
     schema: olm.bundle
   - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:195df73746aaab5f31babde709336f74c9bda535cd064585afac38a53b919195
+    schema: olm.bundle
+  - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:0326e0f5e3d5bab97c931429f03859c8b8a4481284b5146f819728a0e5c3256b
     schema: olm.bundle
   - image: registry.redhat.io/rhtas/rhtas-operator-bundle@sha256:2076b50d7075f87c4e6d1b6c8438695802a30386c0366d6edeac15063b3560ed
     schema: olm.bundle
@@ -133,4 +141,19 @@ entries:
               - "4.20"
               - "4.19"
               - "4.18"
+      - name: "1.5"
+        phases:
+          - endDate: "2027-02-28"
+            name: Full support
+            startDate: "2026-10-06"
+          - endDate: "2027-06-30"
+            name: Maintenance support
+            startDate: "2027-03-01"
+        platformCompatibility:
+          - name: openshift
+            versions:
+              - "4.22"
+              - "4.21"
+              - "4.20"
+              - "4.19"
 schema: olm.template.basic
