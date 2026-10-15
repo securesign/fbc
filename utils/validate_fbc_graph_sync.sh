@@ -99,9 +99,37 @@ opm alpha convert-template basic "${graph_file}" -o json \
 opm alpha convert-template basic "${catalog_file}" -o json \
     | canonicalize_template catalog > "${committed_norm}"
 
-if ! diff -q "${graph_norm}" "${committed_norm}" >/dev/null 2>&1; then
+if ! jq -e -n \
+    --slurpfile graph "${graph_norm}" \
+    --slurpfile committed "${committed_norm}" \
+    '$graph == $committed' >/dev/null; then
     echo "graph.yaml and catalog.json are out of sync" >&2
-    diff -u "${graph_norm}" "${committed_norm}" | head -50 || true
+    jq -n \
+        --slurpfile graph "${graph_norm}" \
+        --slurpfile committed "${committed_norm}" '
+        def channel_entries($document):
+            [$document.entries[]?
+                | select(.schema == "olm.channel")
+                | . as $channel
+                | .entries[]?
+                | {
+                    package: $channel.package,
+                    channel: $channel.name,
+                    entry: .
+                }];
+
+        (channel_entries($graph[0])) as $graph_entries
+        | (channel_entries($committed[0])) as $committed_entries
+        | {
+            graph_only_entries: ($graph_entries - $committed_entries),
+            committed_only_entries: ($committed_entries - $graph_entries)
+        }
+        | if ([.graph_only_entries, .committed_only_entries] | map(length) | add) > 0 then
+            .
+        else
+            {detail: "Canonical data differs outside channel entries."}
+        end
+    ' >&2
     exit 1
 fi
 
