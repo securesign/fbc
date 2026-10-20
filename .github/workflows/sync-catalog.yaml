@@ -61,6 +61,8 @@ jobs:
             yq "select(.package == \"$PACKAGE_NAME\" or .name == \"$PACKAGE_NAME\")" $RELEASED_CATALOG | opm alpha convert-template basic - -o yaml > $OCP_VERSION/$PACKAGE_NAME/graph.yaml
             # normalize the graph.yaml file to limit diff lines
             yq eval -i -P '.' $OCP_VERSION/$PACKAGE_NAME/graph.yaml
+            # Remove lifecycle schema entries to keep graph.yaml in sync with the rendered catalog
+            yq eval -i 'del(.entries[] | select(.schema == "io.openshift.operators.lifecycles.v1alpha1"))' $OCP_VERSION/$PACKAGE_NAME/graph.yaml
             FBC_DIR=$PACKAGE_NAME CATALOG_FILE="$OCP_VERSION/$PACKAGE_NAME/catalog/$PACKAGE_NAME/catalog.json" ./utils/render_catalog.sh
 
             echo "Validating ${{ matrix.ocp_version }}/$PACKAGE_NAME/catalog/$PACKAGE_NAME"
