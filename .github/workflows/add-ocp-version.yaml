@@ -46,7 +46,23 @@ jobs:
         working-directory: fbc
         run: ./utils/new_ocp_version.sh "${{ inputs.ocp_version }}" ${{ inputs.source_version }}
 
+      - name: Stage fbc changes
+        working-directory: fbc
+        run: git add -A
+
+      - name: Commit fbc changes
+        id: commit_fbc
+        uses: securesign/actions/signed-commit@signed-commit-action # PR #26; pin to merged SHA before merging
+        with:
+          token: ${{ steps.token.outputs.token }}
+          working-directory: fbc
+          branch: add-ocp-${{ inputs.ocp_version }}
+          base-ref: HEAD
+          create-branch: 'true'
+          message: "chore: add OCP ${{ inputs.ocp_version }} FBC skeleton"
+
       - name: Open fbc PR
+        if: steps.commit_fbc.outputs.committed == 'true'
         working-directory: fbc
         env:
           GH_TOKEN: ${{ steps.token.outputs.token }}
@@ -59,16 +75,6 @@ jobs:
 
             Companion CaC PR onboards the Konflux components in `securesign/pipelines`.
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git switch -c "$BRANCH"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "No fbc changes detected."
-            exit 0
-          fi
-          git commit -m "$TITLE"
-          git push --set-upstream origin "$BRANCH"
           gh pr create --repo "${{ github.repository_owner }}/fbc" --base main --head "$BRANCH" --title "$TITLE" --body "$BODY"
 
       # ---- pipelines (CaC) side ----
@@ -82,7 +88,23 @@ jobs:
       - name: Generate CaC onboarding
         run: ./fbc/utils/new_cac_version.sh pipelines "${{ inputs.ocp_version }}" ${{ inputs.source_version }}
 
+      - name: Stage pipelines changes
+        working-directory: pipelines
+        run: git add -A
+
+      - name: Commit pipelines changes
+        id: commit_pipelines
+        uses: securesign/actions/signed-commit@signed-commit-action # PR #26; pin to merged SHA before merging
+        with:
+          token: ${{ steps.token.outputs.token }}
+          working-directory: pipelines
+          branch: add-ocp-${{ inputs.ocp_version }}
+          base-ref: HEAD
+          create-branch: 'true'
+          message: "chore: onboard OCP ${{ inputs.ocp_version }} FBC components"
+
       - name: Open pipelines PR
+        if: steps.commit_pipelines.outputs.committed == 'true'
         working-directory: pipelines
         env:
           GH_TOKEN: ${{ steps.token.outputs.token }}
@@ -95,14 +117,4 @@ jobs:
             Merge this **before** the companion `securesign/fbc` PR so the build
             service accounts exist when the Tekton PipelineRuns first fire.
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git switch -c "$BRANCH"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "No pipelines changes detected."
-            exit 0
-          fi
-          git commit -m "$TITLE"
-          git push --set-upstream origin "$BRANCH"
           gh pr create --repo "${{ github.repository_owner }}/pipelines" --base main --head "$BRANCH" --title "$TITLE" --body "$BODY"
