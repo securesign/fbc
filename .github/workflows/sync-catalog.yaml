@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ocp_version: ["v4.15", "v4.16", "v4.17", "v4.18", "v4.19", "v4.20", "v4.21", "v4.22", v5.0]
+        ocp_version: ["v4.15", "v4.16", "v4.17", "v4.18", "v4.19", "v4.20", "v4.21", "v4.22", v5.0, v4.23]
     steps:
       - name: Checkout repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
@@ -107,7 +107,6 @@ jobs:
           rm *.tar.gz
 
           git add v4.*/ v5.*/
-
       - name: Commit catalog changes
         id: commit_step
         uses: securesign/actions/signed-commit@signed-commit-action # PR #26; pin to merged SHA before merging
@@ -115,7 +114,6 @@ jobs:
           token: ${{ steps.generate_token.outputs.token }}
           branch: ${{ github.ref_name }}
           message: "chore: update OCP catalogs via cron"
-
       - name: Notify affected PRs
         if: steps.commit_step.outputs.committed == 'true'
         env:
