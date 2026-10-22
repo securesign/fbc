@@ -50,25 +50,31 @@ jobs:
           token: ${{ steps.generate_token.outputs.token }}
 
       - name: Setup Branch and Synchronize
+        id: branch
         env:
           TARGET_BRANCH: ${{ github.event.inputs.target_branch }}
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # Check if branch exists on the remote
-          if git ls-remote --exit-code --heads origin "$TARGET_BRANCH" > /dev/null; then
-            echo "Branch $TARGET_BRANCH exists. Checking out and synchronizing..."
+          git check-ref-format --branch "$TARGET_BRANCH"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if git show-ref --verify --quiet "refs/remotes/origin/$TARGET_BRANCH"; then
             git checkout "$TARGET_BRANCH"
-          
-            echo "Merging origin/main into $TARGET_BRANCH..."
-            git merge origin/main --no-edit || {
-              echo "Error: Merge failed due to conflicts. Please resolve manually."
-              exit 1
-            }
+            echo "base-ref=origin/$TARGET_BRANCH" >> "$GITHUB_OUTPUT"
+            echo "create-branch=false" >> "$GITHUB_OUTPUT"
+
+            if ! git merge-base --is-ancestor origin/main HEAD; then
+              # Keep the merged tree staged; the action creates the signed merge commit.
+              git merge origin/main --no-commit --no-ff || {
+                echo "Error: Merge failed due to conflicts. Please resolve manually."
+                exit 1
+              }
+              echo "extra-parent=origin/main" >> "$GITHUB_OUTPUT"
+            fi
           else
-            echo "Branch $TARGET_BRANCH does not exist. Creating it from main..."
             git checkout -b "$TARGET_BRANCH" origin/main
+            echo "base-ref=origin/main" >> "$GITHUB_OUTPUT"
+            echo "create-branch=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Install OPM
@@ -150,17 +156,15 @@ jobs:
             ./utils/render_catalog.sh
           done
 
-      - name: Commit and Push Changes
-        env:
-          TARGET_BRANCH: ${{ github.event.inputs.target_branch }}
-        run: |
-          git add .
-          
-          if git diff --staged --quiet; then
-            echo "No changes to commit."
-          else
-            git commit -m "chore: update FBC catalogs for ${{ github.event.inputs.bundle_name }}"
-          
-            # A standard push will automatically fail with an error if it is not a fast-forward
-            git push origin "$TARGET_BRANCH"
-          fi
+      - name: Stage catalog changes
+        run: git add .
+
+      - name: Commit catalog changes
+        uses: securesign/actions/signed-commit@signed-commit-action # PR #26; pin to merged SHA before merging
+        with:
+          token: ${{ steps.generate_token.outputs.token }}
+          branch: ${{ github.event.inputs.target_branch }}
+          base-ref: ${{ steps.branch.outputs.base-ref }}
+          create-branch: ${{ steps.branch.outputs.create-branch }}
+          extra-parent: ${{ steps.branch.outputs.extra-parent }}
+          message: "chore: update FBC catalogs for ${{ github.event.inputs.bundle_name }}"
