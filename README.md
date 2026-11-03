@@ -26,8 +26,8 @@ Releases in this repository follow a snapshot-based workflow. First, candidate r
 
 ## Validating a Catalog Locally
 
-Run the same graph and catalog validation used by the FBC builder pipeline by
-passing the catalog context to the validation script:
+Run the same graph and catalog validation used by repository CI by passing the
+catalog context to the validation script:
 
 ```bash
 ./utils/validate_fbc_graph_sync.sh v4.20/rhtas-operator
@@ -35,3 +35,14 @@ passing the catalog context to the validation script:
 
 The script requires `opm` and `jq`. It validates both the committed catalog
 and its synchronization with `graph.yaml`.
+
+GitHub Actions runs the `Validate changed FBC catalogs` check for every pull
+request and for every commit pushed to `main` or a `release-*` branch. Changes
+to validation tooling cause all catalogs to be checked; otherwise only changed
+catalog contexts are validated.
+
+The release-creation and nightly synchronization workflows run this validation
+before creating their signed commits. This prevents invalid automated catalog
+content from being pushed and triggering a Konflux snapshot. A Release CR must
+only reference a snapshot whose source commit has a successful `Validate changed
+FBC catalogs` check.
