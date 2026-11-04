@@ -30,7 +30,20 @@ elif [[ $# -ge 1 && $# -le 2 ]]; then
         echo "Base revision is unavailable; validating all catalogs."
         mapfile -t contexts < <(all_contexts)
     else
-        changed_files="$(git diff --name-only --diff-filter=ACDMRT "${base_revision}" "${head_revision}")"
+        changed_files="$(
+            git diff --name-status --find-renames --find-copies --diff-filter=ACDMRT \
+                "${base_revision}" "${head_revision}" \
+                | awk -F '\t' '
+                    $1 ~ /^[RC]/ {
+                        print $2
+                        print $3
+                        next
+                    }
+                    {
+                        print $2
+                    }
+                '
+        )"
 
         if grep -Eq '^utils/|^\.github/actions/install-opm/action\.yaml$|^\.github/workflows/(create-release|sync-catalog|validate-fbc-catalogs)\.yaml$' \
             <<< "${changed_files}"; then
