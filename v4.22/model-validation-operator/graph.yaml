@@ -10,6 +10,9 @@ entries:
       - name: model-validation-operator.v0.1.3
         replaces: model-validation-operator.v0.1.2
         skipRange: '>=0.0.0 <0.1.3'
+      - name: model-validation-operator.v0.1.4
+        replaces: model-validation-operator.v0.1.3
+        skipRange: '>=0.0.0 <0.1.4'
     name: tech-preview
     package: model-validation-operator
     schema: olm.channel
@@ -18,5 +21,7 @@ entries:
   - image: registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:5ee2989bd15baaaf11684cfcb3b79183d1958be048303235d04c4a14a261718b
     schema: olm.bundle
   - image: registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:020cc0460ee19972d0b66c5c63721b3e75acd211767550e0bdacf25945a1db71
+    schema: olm.bundle
+  - image: registry.redhat.io/rhtas/model-validation-operator-bundle@sha256:8248434445ae5d6a896dd0f1bc6e1a5d1202a5578691ba7596db86d4f32ac093
     schema: olm.bundle
 schema: olm.template.basic
