@@ -156,6 +156,17 @@ jobs:
             ./utils/render_catalog.sh
           done
 
+      - name: Validate updated catalog sources
+        env:
+          FBC_DIR: ${{ github.event.inputs.fbc_dir }}
+          VERSIONS: ${{ github.event.inputs.ocp_versions }}
+        run: |
+          IFS=',' read -ra versions <<< "${VERSIONS}"
+          for version in "${versions[@]}"; do
+            version="${version//[[:space:]]/}"
+            ./utils/validate_fbc_graph_sync.sh "${version}/${FBC_DIR}"
+          done
+
       - name: Stage catalog changes
         run: git add .
 
