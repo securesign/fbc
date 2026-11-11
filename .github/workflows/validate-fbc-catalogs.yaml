@@ -1,0 +1,41 @@
+name: FBC source validation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'release-*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fbc-source-validation-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate changed FBC catalogs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Install OPM
+        uses: ./.github/actions/install-opm
+
+      - name: Validate catalog sources
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" || -z "${BASE_SHA}" ]]; then
+            ./utils/validate_changed_fbc_catalogs.sh --all
+          else
+            ./utils/validate_changed_fbc_catalogs.sh "${BASE_SHA}" "${HEAD_SHA}"
+          fi
