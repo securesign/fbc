@@ -13,7 +13,7 @@ entries:
       - name: policy-controller-operator.v1.0.2
         replaces: policy-controller-operator.v1.0.1
       - name: policy-controller-operator.v1.1.0
-        replaces: policy-controller-operator.v1.0.3
+        replaces: policy-controller-operator.v1.0.4
         skipRange: '>=1.0.0 <1.1.0'
       - name: policy-controller-operator.v1.0.3
         replaces: policy-controller-operator.v1.0.2
@@ -23,6 +23,8 @@ entries:
       - name: policy-controller-operator.v1.1.2
         replaces: policy-controller-operator.v1.1.1
         skipRange: '>=1.0.0 <1.1.2'
+      - name: policy-controller-operator.v1.0.4
+        replaces: policy-controller-operator.v1.0.3
     name: stable
     package: policy-controller-operator
     schema: olm.channel
@@ -34,6 +36,8 @@ entries:
         replaces: policy-controller-operator.v1.0.1
       - name: policy-controller-operator.v1.0.3
         replaces: policy-controller-operator.v1.0.2
+      - name: policy-controller-operator.v1.0.4
+        replaces: policy-controller-operator.v1.0.3
     name: stable-v1.0
     package: policy-controller-operator
     schema: olm.channel
@@ -55,6 +59,8 @@ entries:
   - image: registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:b5c08c17bd9c60a295f9e557371da76d5bad9e87071c478e4caef82fefc375fd
     schema: olm.bundle
   - image: registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:432457feaee36f2370e990cfd7b43d9f144a31d6c94fb95b137429c4b9d8b687
+    schema: olm.bundle
+  - image: registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:46da951aa23f38721c520bcc9f43752b9f612eb71735421e81218368a8e73607
     schema: olm.bundle
   - image: registry.redhat.io/rhtas/policy-controller-operator-bundle@sha256:43fb5fe102219bd26574aaedc9ca515861bab03b7a9b4a5b93416d66619e403e
     schema: olm.bundle
